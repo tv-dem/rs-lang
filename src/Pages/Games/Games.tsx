@@ -1,8 +1,8 @@
 import React from 'react';
 import NawPages from "../../Components/NavPages/NawPages";
 
-const MainPage = () => {
-    return <h1>MainPage</h1>
+const Games = () => {
+    return <h1>Games(links to games)</h1>
 }
 
-export default MainPage;
+export default Games;

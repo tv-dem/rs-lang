@@ -1,0 +1,33 @@
+.nav-pages{
+  background-color: black;
+  border: 2px solid black;
+  color: #fff;
+  ul{
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    a{
+      text-decoration: none;
+      color: white;
+      display: block;
+      background-color: black;
+      font-size: 22px;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+      padding: 20px 10px;
+      cursor: pointer;
+      transition: background-color .3s ease-out;
+      &.active{
+        background-color: #a1a2a2;
+        &:hover{
+          color: white;
+          background-color: #a1a2a2;
+        }
+      }
+      &:hover{
+        color: black;
+        background-color: white;
+      }
+    }
+  }
+}
