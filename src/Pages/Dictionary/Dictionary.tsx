@@ -1,8 +1,10 @@
 import React from 'react';
 import NawPages from "../../Components/NavPages/NawPages";
+import Header from "../../Components/Header/Header";
 
 const Dictionary = () => {
-    return <h1>Словарь</h1>
+    return <>
+    </>
 }
 
 export default Dictionary;

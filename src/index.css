@@ -1,4 +1,10 @@
-*{
+/*@import '~antd/dist/antd.css';*/
+
+.content{
+    margin-left: 100px;
+}
+
+body{
   font-family: Arial;
   margin: 0;
   padding: 0;
