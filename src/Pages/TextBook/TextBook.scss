@@ -1,21 +1,38 @@
-.text-book__pagination{
-  //width: 380px;
-  //margin: 20px auto;
-  padding: 20px 0;
-  ul{
-    margin: 0;
-  }
-  .ant-pagination{
-    font-size: 20px;
-    &-item {
-      border: none;
-      &-link{
-        border: none!important;
-        color: red;
-      }
+@import './.././../styles/variables';
+
+.text-book {
+  .button-wrapper{
+    display: flex;
+    justify-content: space-around;
+    margin: 25px 0 0 0;
+    button{
+      background-color: $primary-4;
     }
-    a, span{
-      color: #3b0072!important;
+  }
+  &__pagination {
+    //width: 380px;
+    //margin: 20px auto;
+    padding: 20px 0;
+
+    ul {
+      margin: 0;
+    }
+
+    .ant-pagination {
+      font-size: 20px;
+
+      &-item {
+        border: none;
+
+        &-link {
+          border: none !important;
+          color: red;
+        }
+      }
+
+      a, span {
+        color: #3b0072 !important;
+      }
     }
   }
 }

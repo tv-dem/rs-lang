@@ -6,7 +6,7 @@ const Panel = ({panelInfo}: any) => {
         {panelInfo.map((el:any, i:number) => (
             <div className="item">
             <span className="item__text">
-                {`level ${i+1}`}
+                {el.title}
             </span>
                 <div className={`item__bar b${i + 1}`}/>
             </div>

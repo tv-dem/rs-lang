@@ -8,10 +8,12 @@
   & .item{
     transition: transform .2s ease-in;
     &:hover{
-      transform: scale(1.2);
+      transform: scale(1.05);
     }
     cursor: pointer;
+    flex-grow: 1;
     min-width: 100px;
+    max-width: 300px;
     margin: 10px;
     display: flex;
     flex-direction: column;
