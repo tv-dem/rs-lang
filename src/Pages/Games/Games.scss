@@ -1,0 +1,26 @@
+.game-page {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.game-page__link {
+    margin: 10px;
+}
+
+.card-item {
+    border: 13px solid rgb(112, 109, 208);
+    width: 270px;
+    height: 270px;
+    text-align: center;
+}
+
+.card-item_img-logo {
+    padding: 5px;
+}
+
+.card-item_title:first-child {
+    color: white;
+}

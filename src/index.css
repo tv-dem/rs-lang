@@ -1,27 +1,42 @@
-/*@import '~antd/dist/antd.css';*/
+@import '~antd/dist/antd.css';
+#root {
+    height: 100%;
+}
 
-.content{
+.content {
+    height: 85%;
     margin-left: 100px;
 }
 
-body{
-  font-family: Arial;
-  margin: 0;
-  padding: 0;
+.transition-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+body {
+    font-family: Arial;
+    margin: 0;
+    padding: 0;
 }
 
 .fade-enter {
-  opacity: 0;
-  z-index: 1;
+    opacity: 0;
+    z-index: 1;
 }
 
 .fade-enter.fade-enter-active {
-  height: 100%;
-  background-color: white;
-  opacity: 1;
-  transition: opacity 900ms ease-in;
+    height: 100%;
+    background-color: white;
+    opacity: 1;
+    transition: opacity 900ms ease-in;
 }
 
-.fade-exit{
-  opacity: 0;
+.fade-exit {
+    opacity: 0;
 }

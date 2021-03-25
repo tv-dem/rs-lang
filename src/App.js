@@ -12,6 +12,8 @@ import {
 } from "react-transition-group";
 import TextBook from "./Pages/TextBook/TextBook";
 import HeaderContainer from "./Components/Header/HeaderContainer";
+import FooterContainer from "./Components/Footer/FooterContainer";
+
 import {Redirect} from "react-router-dom";
 
 function App() {
@@ -20,7 +22,7 @@ function App() {
     <NawPages/>
     <HeaderContainer/>
     <div className='content'>
-      <TransitionGroup>
+      <TransitionGroup className="transition-group">
         <CSSTransition
           key={location.key}
           classNames="fade"
@@ -37,6 +39,8 @@ function App() {
       </TransitionGroup>
       <Redirect from='/' to='/'/>
     </div>
+    <FooterContainer/>
+
     </>
   );
 }
