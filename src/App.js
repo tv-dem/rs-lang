@@ -10,9 +10,13 @@ import {
   TransitionGroup,
   CSSTransition
 } from "react-transition-group";
-import TextBook from "./Pages/TextBook/TextBook";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import {Redirect} from "react-router-dom";
+import MainPageContainer from "./Pages/MainPage/MainPageContainer";
+import TextBookContainer from "./Pages/TextBook/TextBookContainer";
+import GamesContainer from "./Pages/Games/GamesContainer";
+import StatisticContainer from "./Pages/Statistic/StatisticContainer";
+import DictionaryContainer from "./Pages/Dictionary/DictionaryContainer";
 
 function App() {
   let location = useLocation();
@@ -27,15 +31,15 @@ function App() {
           timeout={500}
         >
           <Switch>
-            <Route path='/games' component={Games} />
-            <Route path='/statistic' component={Statistic} />
-            <Route path='/dictionary' component={Dictionary} />
-            <Route path='/textbook' component={TextBook} />
-            <Route path='/' component={MainPage} />
+            <Route path='/games' component={GamesContainer} />
+            <Route path='/statistic' component={StatisticContainer} />
+            <Route path='/dictionary' component={DictionaryContainer} />
+            <Route path='/textbook' component={TextBookContainer} />
+            <Route path='/home' component={MainPageContainer} />
           </Switch>
         </CSSTransition>
       </TransitionGroup>
-      <Redirect from='/' to='/'/>
+      {/*<Redirect from='/' to='/'/>*/}
     </div>
     </>
   );

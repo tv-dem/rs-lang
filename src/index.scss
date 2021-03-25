@@ -1,10 +1,14 @@
-/*@import '~antd/dist/antd.css';*/
-
-.content{
-    margin-left: 100px;
+@import '~antd/dist/antd.css';
+@import "./styles/variables";
+.content {
+  margin-left: 60px;
 }
 
-body{
+.wrapper {
+  padding: 0 20px;
+}
+
+body {
   font-family: Arial;
   margin: 0;
   padding: 0;
@@ -22,6 +26,6 @@ body{
   transition: opacity 900ms ease-in;
 }
 
-.fade-exit{
+.fade-exit {
   opacity: 0;
 }

@@ -1,0 +1,21 @@
+.text-book__pagination{
+  //width: 380px;
+  //margin: 20px auto;
+  padding: 20px 0;
+  ul{
+    margin: 0;
+  }
+  .ant-pagination{
+    font-size: 20px;
+    &-item {
+      border: none;
+      &-link{
+        border: none!important;
+        color: red;
+      }
+    }
+    a, span{
+      color: #3b0072!important;
+    }
+  }
+}
