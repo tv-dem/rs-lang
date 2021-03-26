@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Header from "../../Components/Header/Header";
 
-const Statistic = () => {
+const Statistic = ({onLoad}:any) => {
+    useEffect(() => onLoad(), [onLoad])
     return <>
     </>
 }
