@@ -1,4 +1,4 @@
-import {CHANGE_PAGE,} from "./actionTypes";
+import {CHANGE_PAGE, CHANGE_SECTION,} from "./actionTypes";
 
 const initState = { // заглушка, изначально будет пустой массив, после запроса обновится
     words:[
@@ -323,13 +323,30 @@ const initState = { // заглушка, изначально будет пус�
             "wordTranslate": "проливать"
         }
     ],
+    sections: [
+        {
+            title: 'Изучаемые',
+            section: 'learn',
+        },
+        {
+            title: 'Сложные',
+            section: 'hard',
+        },
+        {
+            title: 'Удаленные',
+            section: 'delete',
+        },
+    ],
+    currPage: 1,
+    currSection: 'learn',
 }
 
 const DictionaryReducer = (state = initState, action:any) => {
     switch(action.type){
         case CHANGE_PAGE:
-            console.log(action)
-            return state
+            return {...state, currPage: action.page}
+        case CHANGE_SECTION:
+            return {...state, currSection: action.section}
         default:
             return state
     }

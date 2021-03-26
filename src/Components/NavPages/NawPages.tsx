@@ -10,9 +10,8 @@ import {
     ReadOutlined
 } from "@ant-design/icons";
 
-const NawPages = () => {
+const NawPages = ({currLevel, currPage, currDictSection, currDictPage}:any) => {
     const ref = useRef<HTMLInputElement>(null);
-
     return (
         <nav className='nav-pages' ref={ref}>
             <div className='nav-pages__top'>
@@ -22,7 +21,7 @@ const NawPages = () => {
             </div>
             <ul>
                 <li>
-                    <NavLink activeClassName='active' to='home'>
+                    <NavLink activeClassName='active' to='/home'>
                         <div className='li-item'>
                             <h2>Домой</h2>
                             <HomeOutlined style={{fontSize: '40px'}}/>
@@ -30,7 +29,7 @@ const NawPages = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink activeClassName='active' to='textbook'>
+                    <NavLink activeClassName='active' to={`/textbook/${currLevel}/${currPage}`}>
                         <div className='li-item'>
                             <h2>Учебник</h2>
                             <BookOutlined style={{fontSize: '40px'}}/>
@@ -38,7 +37,7 @@ const NawPages = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink activeClassName='active' to='games'>
+                    <NavLink activeClassName='active' to='/games'>
                         <div className='li-item'>
                             <h2>Игры</h2>
                             <BuildOutlined style={{fontSize: '40px'}}/>
@@ -46,7 +45,7 @@ const NawPages = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink activeClassName='active' to='dictionary'>
+                    <NavLink activeClassName='active' to={`/dictionary/${currDictSection}/${currDictPage}`}>
                         <div className='li-item'>
                             <h2>Словарь</h2>
                             <ReadOutlined style={{fontSize: '40px'}}/>
@@ -54,7 +53,7 @@ const NawPages = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink activeClassName='active' to='statistic'>
+                    <NavLink activeClassName='active' to='/statistic'>
                         <div className='li-item'>
                             <h2>Статистика</h2>
                             <BarChartOutlined style={{fontSize: '40px'}}/>

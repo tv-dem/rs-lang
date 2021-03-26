@@ -5,30 +5,12 @@ import './TextBook.scss'
 import TextBookContentContainer from "./TextBookContent/TextBookContentContainer";
 import { Drawer, Button } from 'antd';
 import GamePreview from "../../Components/GamePreview/GamePreview";
+import {useParams} from "react-router";
 
-const panelInfo = [
-    {
-        title: 'level 1'
-    },
-    {
-        title: 'level 2'
-    },
-    {
-        title: 'level 3'
-    },
-    {
-        title: 'level 4'
-    },
-    {
-        title: 'level 5'
-    },
-    {
-        title: 'level 6'
-    },
-]
-
-const TextBook: FC = ({onLoad, words}:any) => {
-    useEffect(() => onLoad(), [onLoad])
+const TextBook: FC = ({onLoad, onSelectLevel, levels, currPage, onSelectPage, currLevel}:any) => {
+    useEffect(() => {
+        onLoad();
+    }, [onLoad])
     const [visible, setVisible] = useState(false);
     const showDrawer = () => {
         setVisible(true);
@@ -38,7 +20,14 @@ const TextBook: FC = ({onLoad, words}:any) => {
     };
     return <div className='wrapper'>
         <div className="text-book">
-            <Panel panelInfo={panelInfo}/>
+            <Panel panelInfo={levels.map(({title}: any, i:number) => ({
+                title,
+                onSelect: () => {
+                    onSelectLevel(i + 1)
+                    onSelectPage(1)
+                },
+                link: `/textbook/${i+1}/1`
+            }))}/>
             <TextBookContentContainer />
             <div className="button-wrapper">
                 <Button type='primary' onClick={showDrawer}>повторить слова</Button>
@@ -57,10 +46,9 @@ const TextBook: FC = ({onLoad, words}:any) => {
             </Drawer>
             <div className="text-book__pagination">
                 <Pagination
-                    // onChange={(page, sizePage) => console.log(page, sizePage)} - сюда передадим коллбэк, который сделает запрос
-                    hideOnSinglePage={true}
+                    onChange={(page) => onSelectPage(page, currLevel)}
                     showSizeChanger={false}
-                    defaultCurrent={1}
+                    defaultCurrent={currPage}
                     pageSize={20}
                     total={600}
                 />

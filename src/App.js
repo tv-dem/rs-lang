@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Route, Switch, useLocation} from "react-router";
 import MainPage from "./Pages/MainPage/MainPage";
-import NawPages from "./Components/NavPages/NawPages";
+import NavPagesContainer from "./Components/NavPages/NavPagesContainer";
 import Games from "./Pages/Games/Games";
 import Statistic from "./Pages/Statistic/Statistic";
 import Dictionary from "./Pages/Dictionary/Dictionary";
@@ -19,9 +19,12 @@ import StatisticContainer from "./Pages/Statistic/StatisticContainer";
 import DictionaryContainer from "./Pages/Dictionary/DictionaryContainer";
 
 function App() {
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  })
   let location = useLocation();
-  return ( <>
-    <NawPages/>
+  return ( <div className='app'>
+    <NavPagesContainer/>
     <HeaderContainer/>
     <div className='content'>
       <TransitionGroup>
@@ -33,15 +36,15 @@ function App() {
           <Switch>
             <Route path='/games' component={GamesContainer} />
             <Route path='/statistic' component={StatisticContainer} />
-            <Route path='/dictionary' component={DictionaryContainer} />
-            <Route path='/textbook' component={TextBookContainer} />
+            <Route path='/dictionary/:section/:page' component={DictionaryContainer} />
+            <Route path='/textbook/:level/:page' component={TextBookContainer} />
             <Route path='/home' component={MainPageContainer} />
           </Switch>
         </CSSTransition>
       </TransitionGroup>
       {/*<Redirect from='/' to='/'/>*/}
     </div>
-    </>
+    </div>
   );
 }
 

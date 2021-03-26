@@ -4,31 +4,25 @@ import Panel from "../../Components/Panel/Panel";
 import DictionaryContentContainer from "./DictionaryContent/DictionaryContentContainer";
 
 
-const panelInfo = [
-    {
-        title: 'Изучаемые'
-    },
-    {
-        title: 'Сложные'
-    },
-    {
-        title: 'Удаленные'
-    },
-]
-
-
-const TextBook: FC = ({onLoad, words}:any) => {
+const TextBook: FC = ({onLoad, sections, words, onSelectPage, onSelectSection, currSection, currPage}:any) => {
     useEffect(() => onLoad(), [onLoad])
     return <div className='wrapper'>
         <div className="text-book">
-            <Panel panelInfo={panelInfo}/>
+            <Panel panelInfo={sections.map(({title, section}: any) => ({
+                title,
+                onSelect: () => {
+                    onSelectSection(section)
+                    onSelectPage(1)
+                },
+                link: `/dictionary/${section}/1`
+            }))}/>
             <DictionaryContentContainer />
             <div className="text-book__pagination">
                 <Pagination
-                    // onChange={(page, sizePage) => console.log(page, sizePage)} - сюда передадим коллбэк, который сделает запрос
+                    onChange={(page) => onSelectPage(page, currSection)}
                     hideOnSinglePage={true}
                     showSizeChanger={false}
-                    defaultCurrent={1}
+                    defaultCurrent={currPage}
                     pageSize={20}
                     total={600}
                 />

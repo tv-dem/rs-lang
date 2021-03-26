@@ -1,6 +1,11 @@
-import {CHANGE_PAGE} from "./actionTypes";
+import {CHANGE_LEVEL, CHANGE_PAGE} from "./actionTypes";
 
-export const changeTextBookPageAC = (title: string) => ({
+export const changeTextBookPageAC = (page:number) => ({
     type: CHANGE_PAGE,
-    title
+    page
+})
+
+export const changeLevelAC = (level: number) => ({
+    type: CHANGE_LEVEL,
+    level
 })

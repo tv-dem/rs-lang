@@ -1,4 +1,4 @@
-import {CHANGE_PAGE,} from "./actionTypes";
+import {CHANGE_LEVEL, CHANGE_PAGE,} from "./actionTypes";
 
 const initState = { // заглушка, изначально будет пустой массив, после запроса обновится
     words:[
@@ -323,13 +323,38 @@ const initState = { // заглушка, изначально будет пус�
             "wordTranslate": "проливать"
         }
     ],
+    currPage: 1,
+    currLevel: 1,
+    levels: [
+        {
+            title: 'level 1'
+        },
+        {
+            title: 'level 2'
+        },
+        {
+            title: 'level 3'
+        },
+        {
+            title: 'level 4'
+        },
+        {
+            title: 'level 5'
+        },
+        {
+            title: 'level 6'
+        },
+    ]
 }
 
 const TextBookReducer = (state = initState, action:any) => {
     switch(action.type){
         case CHANGE_PAGE:
             console.log(action)
-            return state
+            return {...state, currPage: Number(action.page)}
+        case CHANGE_LEVEL:
+            console.log(action)
+            return {...state, currLevel: Number(action.level)}
         default:
             return state
     }
