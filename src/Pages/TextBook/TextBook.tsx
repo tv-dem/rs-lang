@@ -8,9 +8,10 @@ import GamePreview from "../../Components/GamePreview/GamePreview";
 import {useParams} from "react-router";
 
 const TextBook: FC = ({onLoad, onSelectLevel, levels, currPage, onSelectPage, currLevel}:any) => {
+    const {level, page}:any = useParams();
     useEffect(() => {
         onLoad();
-    }, [onLoad])
+    }, [currPage])
     const [visible, setVisible] = useState(false);
     const showDrawer = () => {
         setVisible(true);
@@ -48,7 +49,7 @@ const TextBook: FC = ({onLoad, onSelectLevel, levels, currPage, onSelectPage, cu
                 <Pagination
                     onChange={(page) => onSelectPage(page, currLevel)}
                     showSizeChanger={false}
-                    defaultCurrent={currPage}
+                    defaultCurrent={page}
                     pageSize={20}
                     total={600}
                 />

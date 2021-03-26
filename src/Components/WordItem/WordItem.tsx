@@ -3,7 +3,8 @@ import {Popover} from 'antd';
 import './WordItem.scss';
 import {CustomerServiceOutlined} from "@ant-design/icons";
 
-const WordItem = ({word, textMeaning, textExample, transcription, textExampleTranslate, textMeaningTranslate, wordTranslate}: any) => {
+const WordItem = ({word, textMeaning, textExample, transcription, textExampleTranslate, textMeaningTranslate, wordTranslate, options}: any) => {
+    console.log('worditem', options);
     return <div className='word-item'>
         <div className="word-item__info">
             <img
@@ -26,8 +27,7 @@ const WordItem = ({word, textMeaning, textExample, transcription, textExampleTra
             </Popover>
         </div>
         <div className="word-item__setting">
-            <span>в сложные</span>
-            <span>в изучаемые</span>
+            {options.map(({title, onClick}:any) => <span onClick={onClick}>{title}</span>)}
         </div>
     </div>
 }

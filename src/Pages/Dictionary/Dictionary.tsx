@@ -8,14 +8,18 @@ const TextBook: FC = ({onLoad, sections, words, onSelectPage, onSelectSection, c
     useEffect(() => onLoad(), [onLoad])
     return <div className='wrapper'>
         <div className="text-book">
-            <Panel panelInfo={sections.map(({title, section}: any) => ({
-                title,
-                onSelect: () => {
-                    onSelectSection(section)
-                    onSelectPage(1)
-                },
-                link: `/dictionary/${section}/1`
-            }))}/>
+            <Panel panelInfo={sections.map((el: any) => {
+                const {title, section} = el;
+                return {
+                    title,
+                    onSelect: () => {
+                        onSelectSection(el)
+                        onSelectPage(1, el)
+                    },
+
+                    link: `/dictionary/${section}/1`
+                }
+            })}/>
             <DictionaryContentContainer />
             <div className="text-book__pagination">
                 <Pagination

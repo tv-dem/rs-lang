@@ -5,11 +5,17 @@
   flex-direction: row;
   justify-content: space-around;
   flex-wrap: wrap;
+  &__active{
+    .item__bar{
+      box-shadow: 0 0 15px 5px $s-primary-2;
+    }
+  }
   & .item{
     transition: transform .2s ease-in;
     &:hover{
       transform: scale(1.05);
     }
+    color: black;
     cursor: pointer;
     flex-grow: 1;
     min-width: 100px;

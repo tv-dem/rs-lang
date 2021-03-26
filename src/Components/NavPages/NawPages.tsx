@@ -45,7 +45,8 @@ const NawPages = ({currLevel, currPage, currDictSection, currDictPage}:any) => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink activeClassName='active' to={`/dictionary/${currDictSection}/${currDictPage}`}>
+
+                    <NavLink activeClassName='active' to={`/dictionary/${currDictSection.section}/${currDictPage}`}>
                         <div className='li-item'>
                             <h2>Словарь</h2>
                             <ReadOutlined style={{fontSize: '40px'}}/>

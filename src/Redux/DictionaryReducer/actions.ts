@@ -5,7 +5,7 @@ export const changeDictionaryPageAC = (page: number) => ({
     page
 })
 
-export const changeSectionAC = (section: string) => ({
+export const changeSectionAC = (section:Object) => ({
     type: CHANGE_SECTION,
     section
 })

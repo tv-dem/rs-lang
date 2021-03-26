@@ -12,10 +12,10 @@ const mapStateToProps = ({dictionary}:any) => ({
 
 const MapDispatchToProps = (dispatch:any) => ({
     onLoad: () => dispatch(changeHeaderTitleAC('Словарь')),
-    onSelectSection: (section:string) => dispatch(changeSectionAC(section)),
-    onSelectPage: (page:number, currSection:string) =>{
+    onSelectSection: (section:any) => dispatch(changeSectionAC(section)),
+    onSelectPage: (page:number, currSection:any) =>{
         dispatch(changeDictionaryPageAC(page))
-        dispatch(push(`/dictionary/${currSection}/${page}`))
+        dispatch(push(`/dictionary/${currSection.section}/${page}`))
     },
 })
 

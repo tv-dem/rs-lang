@@ -1,6 +1,7 @@
 @import '~antd/dist/antd.css';
 @import "./styles/variables";
 .content {
+  scroll-behavior: smooth;
   margin-left: 60px;
 }
 
