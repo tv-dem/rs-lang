@@ -13,7 +13,7 @@ import {
 import TextBook from "./Pages/TextBook/TextBook";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import FooterContainer from "./Components/Footer/FooterContainer";
-
+import WelcomForm from './Components/Games/Menu/WelcomForm'
 import {Redirect} from "react-router-dom";
 
 function App() {
@@ -29,11 +29,13 @@ function App() {
           timeout={500}
         >
           <Switch>
+            <Route path='/games/:game' render={()=><WelcomForm/>} />
             <Route path='/games' component={Games} />
             <Route path='/statistic' component={Statistic} />
             <Route path='/dictionary' component={Dictionary} />
             <Route path='/textbook' component={TextBook} />
             <Route path='/' component={MainPage} />
+            
           </Switch>
         </CSSTransition>
       </TransitionGroup>
