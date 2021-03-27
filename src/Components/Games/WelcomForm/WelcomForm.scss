@@ -1,0 +1,12 @@
+.welcomeForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    height: 200px;
+}
+
+.welcomeForm__form {
+    width: 20%;
+}
