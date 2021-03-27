@@ -1,16 +1,14 @@
 import React, {useEffect} from 'react';
 import {Route, Switch, useLocation} from "react-router";
-import MainPage from "./Pages/MainPage/MainPage";
 import NavPagesContainer from "./Components/NavPages/NavPagesContainer";
-import Games from "./Pages/Games/Games";
-import Statistic from "./Pages/Statistic/Statistic";
-import Dictionary from "./Pages/Dictionary/Dictionary";
 
 import {
   TransitionGroup,
   CSSTransition
 } from "react-transition-group";
 import HeaderContainer from "./Components/Header/HeaderContainer";
+import FooterContainer from "./Components/Footer/FooterContainer";
+import WelcomForm from './Components/Games/WelcomForm/WelcomForm'
 import {Redirect} from "react-router-dom";
 import MainPageContainer from "./Pages/MainPage/MainPageContainer";
 import TextBookContainer from "./Pages/TextBook/TextBookContainer";
@@ -27,13 +25,14 @@ function App() {
     <NavPagesContainer/>
     <HeaderContainer/>
     <div className='content'>
-      <TransitionGroup>
+      <TransitionGroup className="transition-group">
         <CSSTransition
           key={location.key}
           classNames="fade"
           timeout={500}
         >
           <Switch>
+            <Route path='/games/:game' render={()=><WelcomForm/>} />
             <Route path='/games' component={GamesContainer} />
             <Route path='/statistic' component={StatisticContainer} />
             <Route path='/dictionary/:section/:page' component={DictionaryContainer} />
@@ -44,6 +43,7 @@ function App() {
       </TransitionGroup>
       {/*<Redirect from='/' to='/'/>*/}
     </div>
+    <FooterContainer/>
     </div>
   );
 }

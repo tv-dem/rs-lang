@@ -1,11 +1,10 @@
-import {changeHeaderTitleAC} from "../../Redux/HeaderReducer/actions";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import Games from "./Games";
 
-const MapDispatchToProps = (dispatch:any) => ({
-    onLoad: () => dispatch(changeHeaderTitleAC('Игры'))
-})
+const mapStateToProps = (state: any) => ({
+  cards: state.games.cards,
+});
 
-const GamesContainer = connect(null, MapDispatchToProps)(Games)
+const GamesContainer = connect(mapStateToProps)(Games);
 
 export default GamesContainer;
