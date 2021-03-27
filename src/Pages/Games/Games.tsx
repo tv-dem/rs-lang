@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {Route} from "react-router";
 import { Link } from "react-router-dom";
 import GameCards from './GameCards/GameCards.json'
@@ -8,7 +8,9 @@ import './Games.scss'
 const { Meta } = Card;
 
 
-const Games: React.FC = () => (
+const Games: React.FC = ({onLoad}:any) => {
+useEffect(() => onLoad(), [onLoad])
+return (
     <div className="game-page" >
             {GameCards.map((game) => {
 
@@ -47,6 +49,7 @@ const Games: React.FC = () => (
       
 
     </div>
-)
+)}
+
 
 export default Games;

@@ -3,9 +3,13 @@ import './Header.scss';
 
 const Header = ({title}:any) => {
     return (
-        <header className='header'>
-            {/*<h1>{title}</h1>*/}
-        </header>
+        <div className='content'>
+            <header className="header">
+                <div className="wrapper">
+                    <h1>{title}</h1>
+                </div>
+            </header>
+        </div>
     )
 }
 

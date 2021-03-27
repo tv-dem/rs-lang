@@ -1,0 +1,55 @@
+@import "../../styles/variables";
+.word-item{
+  &:last-child{
+    border-bottom: none;
+  }
+  margin-bottom: 10px;
+  padding: 20px;
+  border-bottom: 2px solid #efefef;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &__info{
+    display: flex;
+    align-items: center;
+    &>span{
+      cursor: pointer;
+      font-size: 22px;
+      transition: color .2s ease-in;
+      &:hover {
+        color: #3b0072;
+      }
+    }
+    &>*{
+      font-size: 20px;
+      margin: 0 10px;
+    }
+    &>.words{
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      &*>{
+        margin: 5px 0;
+      }
+    }
+    img{
+      height: 50px;
+      width: 100px;
+      border-radius: 10px;
+    }
+  }
+  &__setting{
+    &>*:first-child{
+      cursor: pointer;
+      color: $primary-5;
+    }
+    &>*:last-child{
+      cursor: pointer;
+      color: $primary-2;
+    }
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+

@@ -1,25 +1,27 @@
+@import "../../styles/variables";
+
 .nav-pages{
+  a{
+    text-decoration: none;
+  }
   &.active{
     left: 0;
-    &.nav-pages__nav-pages span {
-      color: red;
-    }
   }
   transition: left .2s ease-in;
   &__top{
     & span{
+      transition: transform .2s ease-in;
+      color: white;
       position: absolute;
-      right: 30px;
+      right: 10px;
       &:hover{
-        color:#ffff40;
+        color:$s-primary-3;
       }
     }
     height: 100px;
     width: 100%;
-    background-color: #3b0072;
-    -webkit-box-shadow: 0 6px 7px 0 rgba(0, 0, 0, 0.22);
-    -moz-box-shadow:    0 6px 7px 0 rgba(0, 0, 0, 0.22);
-    box-shadow:         0 6px 7px 0 rgba(0, 0, 0, 0.22);
+    background-color: $primary-5;
+    box-shadow: 0 6px 7px 0 rgba(0, 0, 0, 0.22);
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -30,28 +32,69 @@
   position: fixed;
   height: 100vh;
   width: 300px;
-  left: -200px;
-  background-color: #503696;
+  left: -240px;
+  background-color: $primary-4;
   color: #fff;
     a{
-      color: white;
+      display: block;
+      color: white!important;
       &:hover, &.active{
-        color: #ffff40;
+        color: $s-primary-3;
       }
     }
   ul{
+    padding: 0;
+    box-sizing: border-box;
     position: absolute;
-    right: 30px;
     margin: 0;
-    height: 100%;
+    height: 70%;
+    max-height: 550px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
     list-style: none;
-    padding: 0;
-    li{
-      margin: 0;
+    a.active .li-item{
+      color: $s-primary-3;
+      h2{
+        color: $s-primary-3;
+      }
+      background-color: $primary-5;
+      &:hover{
+        h2{
+          margin-left: 20px;
+        }
+      }
     }
+    a .li-item{
+      padding: 10px;
+      transition: background-color .3s ease-in;
+      &:hover{
+        h2{
+          margin-left: 40px;
+        }
+      }
+      h2{
+        color: white;
+        transition: margin .3s ease-in;
+        margin-left: 20px;
+      }
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }
+    li{
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+.nav-pages.active .nav-pages__top{
+  & span {
+    transform: rotate(-90deg);
+    color: #ffff40;
   }
 }
