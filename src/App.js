@@ -1,10 +1,6 @@
 import React, {useEffect} from 'react';
 import {Route, Switch, useLocation} from "react-router";
-import MainPage from "./Pages/MainPage/MainPage";
 import NavPagesContainer from "./Components/NavPages/NavPagesContainer";
-import Games from "./Pages/Games/Games";
-import Statistic from "./Pages/Statistic/Statistic";
-import Dictionary from "./Pages/Dictionary/Dictionary";
 
 import {
   TransitionGroup,
@@ -12,7 +8,7 @@ import {
 } from "react-transition-group";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import FooterContainer from "./Components/Footer/FooterContainer";
-import WelcomForm from './Components/Games/Menu/WelcomForm'
+import WelcomForm from './Components/Games/WelcomForm/WelcomForm'
 import {Redirect} from "react-router-dom";
 import MainPageContainer from "./Pages/MainPage/MainPageContainer";
 import TextBookContainer from "./Pages/TextBook/TextBookContainer";
