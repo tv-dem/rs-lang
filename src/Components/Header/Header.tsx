@@ -3,13 +3,13 @@ import './Header.scss';
 
 const Header = ({title}:any) => {
     return (
-        <div className='content'>
+   
             <header className="header">
                 <div className="wrapper">
                     <h1>{title}</h1>
                 </div>
             </header>
-        </div>
+
     )
 }
 

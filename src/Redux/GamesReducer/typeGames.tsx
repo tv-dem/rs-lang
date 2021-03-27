@@ -1,0 +1,43 @@
+export type typeCard = {
+  name: string;
+  descriptions: string;
+  howToPlay: string;
+  imageLink: string;
+  imageBackground:string,
+  menuRoute: string;
+  textbookRoute: string;
+  titleColor: string;
+  descriptionColor: string;
+  backgroundColor: string;
+};
+
+export type typeCardObj = {
+  card: typeCard
+};
+
+export type typeWord = {
+  id: string;
+  group: number;
+  page: number;
+  word: string;
+  image: string;
+  audio: string;
+  audioMeaning: string;
+  audioExample: string;
+  textMeaning: string;
+  textExample: string;
+  transcription: string;
+  textExampleTranslate: string;
+  textMeaningTranslate: string;
+  wordTranslate: string;
+};
+
+export type typeGames = {
+  currentGame:null|number,
+  count: number;
+  currentWord: null | typeWord;
+  words?: Array<typeWord>;
+  wrong?: Array<typeWord>;
+  right?: Array<typeWord>;
+  cards: Array<typeCard>;
+};

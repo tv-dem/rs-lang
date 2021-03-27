@@ -8,7 +8,7 @@ import {
 } from "react-transition-group";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import FooterContainer from "./Components/Footer/FooterContainer";
-import WelcomForm from './Components/Games/WelcomForm/WelcomForm'
+import WelcomFormContainer from './Components/Games/WelcomForm/WelcomFormContainer'
 import {Redirect} from "react-router-dom";
 import MainPageContainer from "./Pages/MainPage/MainPageContainer";
 import TextBookContainer from "./Pages/TextBook/TextBookContainer";
@@ -21,9 +21,9 @@ function App() {
     window.scrollTo(0,0)
   })
   let location = useLocation();
-  return ( <div className='app'>
-    <NavPagesContainer/>
+  return ( <>
     <HeaderContainer/>
+    <NavPagesContainer/>
     <div className='content'>
       <TransitionGroup className="transition-group">
         <CSSTransition
@@ -32,7 +32,7 @@ function App() {
           timeout={500}
         >
           <Switch>
-            <Route path='/games/:game' render={()=><WelcomForm/>} />
+            <Route path='/games/:game' component={WelcomFormContainer} />
             <Route path='/games' component={GamesContainer} />
             <Route path='/statistic' component={StatisticContainer} />
             <Route path='/dictionary/:section/:page' component={DictionaryContainer} />
@@ -44,7 +44,7 @@ function App() {
       {/*<Redirect from='/' to='/'/>*/}
     </div>
     <FooterContainer/>
-    </div>
+    </>
   );
 }
 
