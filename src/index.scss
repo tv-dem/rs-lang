@@ -1,26 +1,10 @@
 @import '~antd/dist/antd.css';
 @import "./styles/variables";
-#root {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: center;
-}
-
-.header {
-    height: 10%;
-}
 
 .content {
     scroll-behavior: smooth;
     margin-left: 60px;
-    height: 83%;
-    overflow-y: scroll;
-}
-
-.footer {
-    height: 7%;
+    padding-top: 100px;
 }
 
 .wrapper {
@@ -52,3 +36,11 @@ body {
 .transition-group {
     height: 100%;
 }
+
+::-webkit-scrollbar { width: 3px; height: 3px;}
+::-webkit-scrollbar-button {  background-color: #666; }
+::-webkit-scrollbar-track {  background-color: #999;}
+::-webkit-scrollbar-track-piece { background-color: #ffffff;}
+::-webkit-scrollbar-thumb { height: 50px; background-color: #666; border-radius: 3px;}
+::-webkit-scrollbar-corner { background-color: #999;}
+::-webkit-resizer { background-color: #666;}
