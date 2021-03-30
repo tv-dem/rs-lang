@@ -3,6 +3,7 @@
   &:last-child{
     border-bottom: none;
   }
+  flex-wrap: wrap;
   margin-bottom: 10px;
   padding: 20px;
   border-bottom: 2px solid #efefef;
@@ -11,6 +12,7 @@
   justify-content: space-between;
   &__info{
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     &>span{
       cursor: pointer;

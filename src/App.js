@@ -27,12 +27,6 @@ function App() {
     <NavPagesContainer/>
     <HeaderContainer/>
     <div className='content'>
-      <TransitionGroup>
-        <CSSTransition
-          key={location.key}
-          classNames="fade"
-          timeout={500}
-        >
           <Switch>
             <Route path='/games' component={GamesContainer} />
             <Route path='/statistic' component={StatisticContainer} />
@@ -40,8 +34,6 @@ function App() {
             <Route path='/textbook/:level/:page' component={TextBookContainer} />
             <Route path='/home' component={MainPageContainer} />
           </Switch>
-        </CSSTransition>
-      </TransitionGroup>
       {/*<Redirect from='/' to='/'/>*/}
     </div>
     </div>

@@ -1,8 +1,9 @@
 import {changeHeaderTitleAC} from "../../Redux/HeaderReducer/actions";
 import {connect} from "react-redux";
 import TextBook from "./TextBook";
-import {changeLevelAC, changeTextBookPageAC} from "../../Redux/TextBookReducer/actions";
+import {changeLevelAC, changeTextBookPageAC,} from "../../Redux/TextBookReducer/actions";
 import {push} from "connected-react-router";
+import {getTextBookWordsTC} from "../../Redux/DictionaryReducer/thunk";
 
 const MapStateToProps = ({textBook, router}:any) => ({
     words: textBook.words,
@@ -12,6 +13,7 @@ const MapStateToProps = ({textBook, router}:any) => ({
 })
 
 const MapDispatchToProps = (dispatch:any) => ({
+    fetchWords: (group:number, page:number) => dispatch(getTextBookWordsTC(group, page)),
     onLoad: (page:any,level:any) => {
         dispatch(changeHeaderTitleAC('Учебник'))
     },

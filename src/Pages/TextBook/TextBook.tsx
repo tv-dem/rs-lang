@@ -6,12 +6,14 @@ import TextBookContentContainer from "./TextBookContent/TextBookContentContainer
 import { Drawer, Button } from 'antd';
 import GamePreview from "../../Components/GamePreview/GamePreview";
 import {useParams} from "react-router";
+import SettingsWordsContainer from "../../Components/SettingsWords/SettingsWordsContainer";
 
-const TextBook: FC = ({onLoad, onSelectLevel, levels, currPage, onSelectPage, currLevel}:any) => {
-    const {level, page}:any = useParams();
+const TextBook: FC = ({onLoad, onSelectLevel, levels, currPage, onSelectPage, currLevel, fetchWords}:any) => {
+    const {page}:any = useParams();
     useEffect(() => {
         onLoad();
-    }, [currPage])
+        fetchWords(currLevel - 1, currPage - 1);
+    }, [currPage,currLevel])
     const [visible, setVisible] = useState(false);
     const showDrawer = () => {
         setVisible(true);
@@ -21,6 +23,7 @@ const TextBook: FC = ({onLoad, onSelectLevel, levels, currPage, onSelectPage, cu
     };
     return <div className='wrapper'>
         <div className="text-book">
+            <SettingsWordsContainer/>
             <Panel panelInfo={levels.map(({title}: any, i:number) => ({
                 title,
                 onSelect: () => {

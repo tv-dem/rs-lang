@@ -5,7 +5,7 @@ import WordItem from "../../../Components/WordItem/WordItem";
 
 
 const DictionaryContent: FC = ({words, options}:any) => {
-    console.log('options', options.map((title:any) => ({title, onClick: () => {}})))
+    console.log(words)
     return <div className='text-book__content'>
         {words.map(({id, word, textMeaning, textExample, transcription, textExampleTranslate, textMeaningTranslate, wordTranslate}: any, i:number) => {
             return <WordItem
