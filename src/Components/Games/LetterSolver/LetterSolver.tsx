@@ -1,27 +1,53 @@
-import React,{useRef,useState} from 'react';
-import ProgressBox from '../ProgressBox/ProgressBox'
-import Word from './Word/Word'
+import React, { useEffect, useRef, useState } from "react";
+import ProgressBox from "../ProgressBox/ProgressBox";
+import Word from "./Word/Word";
 
-const LetterSolved: React.FC = () => {
-    const wordRef = useRef(null);
-    const [isCheck, setIsCheck] = useState(false);
+const LetterSolved: React.FC = ({
+  words,
+  count,
+  setCount,
+  currentWord,
+  setCurrentWord,
+}: any) => {
+  const wordRef = useRef(null);
+  const [isCheck, setIsCheck] = useState(false);
 
-const onCheck=()=>{
-    console.log("onCheck")
-}
+  useEffect(() => {
+    if (!currentWord) {
+     if(!count) setCount(0);
+      setCurrentWord(words[count]);
+    }
+  }, []);
 
-const onHandleClickBtnNext = () => {
-  console.log('onHandleClickBtnNext')
+  const splitCurrentWord = () => {
+    return currentWord.word.split("");
   };
 
-    return (
-    <div className="letterSolver" >
-      
-<ProgressBox seconds="60" isCheck={isCheck} onCheck={onCheck}  />
+  const onCheck = () => {
+    console.log("onCheck");
+  };
 
-<Word wordSplit={['q','w','e','r','t','y']} wordRef={wordRef} isCheck={isCheck} onCheck={onCheck} onHandleClickBtnNext={onHandleClickBtnNext} />
+  const onHandleClickBtnNext = () => {
+    console.log("onHandleClickBtnNext");
+  };
 
-    </div>)
-}
+  return (
+    <div className="letterSolver">
+      {currentWord && (
+        <>
+          <ProgressBox seconds="60" isCheck={isCheck} onCheck={onCheck} />
+
+          <Word
+            wordSplit={splitCurrentWord()}
+            wordRef={wordRef}
+            isCheck={isCheck}
+            onCheck={onCheck}
+            onHandleClickBtnNext={onHandleClickBtnNext}
+          />
+        </>
+      )}
+    </div>
+  );
+};
 
 export default LetterSolved;
