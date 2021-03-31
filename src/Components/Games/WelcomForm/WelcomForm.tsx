@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Button, Typography, Form, Select, Input } from "antd";
 import "./WelcomForm.scss";
+
 const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
   useEffect(() => setCurrentCard(pathname), [setCurrentCard]);
 
@@ -24,6 +25,11 @@ const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
     color: currentGame ? currentGame.descriptionColor : "black",
   };
 
+  const startGame = (values: any) => {
+    const { wordsLevel } = values;
+    window.location.href = `${currentGame.menuRoute}/${wordsLevel}`;
+  };
+
   return (
     <>
       {currentGame && (
@@ -40,17 +46,19 @@ const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
             </Text>
           </Title>
 
-          <Form className="welcomeForm__form">
+          <Form className="welcomeForm__form" onFinish={startGame}>
+            <Form.Item
+              name="name"
+              initialValue={currentGame.name}
+              hidden
+            ></Form.Item>
             <Form.Item
               className="welcomeForm__form-item"
-              name={["user", "wordsLevel"]}
-              label="WORD DIFFICULT"
+              name="wordsLevel"
+              label="Выберите уровень сложности слов:"
               initialValue="0"
             >
-              <Select
-                className="welcomeForm__form-select"
-                placeholder="LEVEL DIFFICULT"
-              >
+              <Select className="welcomeForm__form-select">
                 <Select.Option value="0">FIRST</Select.Option>
                 <Select.Option value="1">SECOND</Select.Option>
                 <Select.Option value="2">THIRD</Select.Option>
@@ -61,7 +69,7 @@ const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
             </Form.Item>
 
             <Button
-            style={backgroundLinkStyle}
+              style={backgroundLinkStyle}
               className="welcomeForm__form-btnStart"
               autoFocus
               htmlType="submit"

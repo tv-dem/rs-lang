@@ -15,6 +15,7 @@ import TextBookContainer from "./Pages/TextBook/TextBookContainer";
 import GamesContainer from "./Pages/Games/GamesContainer";
 import StatisticContainer from "./Pages/Statistic/StatisticContainer";
 import DictionaryContainer from "./Pages/Dictionary/DictionaryContainer";
+import LetterSolver from './Components/Games/LetterSolver/LetterSolver'
 
 function App() {
   useEffect(()=>{
@@ -32,6 +33,10 @@ function App() {
           timeout={500}
         >
           <Switch>
+            <Route path='/games/LetterSolver/:level' component={LetterSolver} />
+            <Route path='/games/Sprint/:level' component={LetterSolver} />
+            <Route path='/games/Savanna/:level' component={LetterSolver} />
+            <Route path='/games/AudioCall/:level' component={LetterSolver} />
             <Route path='/games/:game' component={WelcomFormContainer} />
             <Route path='/games' component={GamesContainer} />
             <Route path='/statistic' component={StatisticContainer} />
