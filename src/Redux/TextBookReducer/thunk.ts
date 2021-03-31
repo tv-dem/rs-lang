@@ -20,6 +20,7 @@ export const createUserWordTC = (wordId: string, userId: string, difficulty: str
 export const getAggregatedWordsTC = (userId: string, group: number, page:number, token:string) => (dispatch:any) => {
     API.getAggregatedWords(userId, group, page, token)
         .then(res => {
+            console.log('res', res)
             dispatch(updateWords(res[0].paginatedResults))
         })
 }

@@ -13,6 +13,7 @@ const TextBook: FC = ({onLoad, onSelectLevel, levels, currPage, onSelectPage, cu
     useEffect(() => {
         onLoad();
         getAggregatedWords(userId,currLevel - 1, currPage - 1,token);
+        // fetchWords(currLevel - 1, currPage - 1)
     }, [currPage,currLevel])
     const [visible, setVisible] = useState(false);
     const showDrawer = () => {

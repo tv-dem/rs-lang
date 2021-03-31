@@ -36,7 +36,7 @@ const WordItem = ({word,modificator,option,translate, audio,audioMeaning,audioEx
                 </div>
             </Popover>
         </div>
-        {option && <div className="word-item__setting">
+        {option && options && <div className="word-item__setting">
             {options.map(({title, onClick}: any) => <span onClick={onClick}>{title}</span>)}
         </div>}
     </div>

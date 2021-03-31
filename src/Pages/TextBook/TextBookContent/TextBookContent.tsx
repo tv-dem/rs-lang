@@ -9,14 +9,14 @@ const TextBookContent: FC = ({words, options, createUserWord, userId, token,curr
     }
 
     return <div className={`text-book__content h${currLevel}`}>
-        {words.map(({id, userWord, word, audio, audioMeaning, audioExample, textMeaning, image, textExample, transcription, textExampleTranslate, textMeaningTranslate, wordTranslate}: any, i: number) => {
+        {words.map(({id, _id, userWord, word, audio, audioMeaning, audioExample, textMeaning, image, textExample, transcription, textExampleTranslate, textMeaningTranslate, wordTranslate}: any, i: number) => {
             return <WordItem
                 modificator={userWord ? userWord.difficulty : ''}
                 audioExample={audioExample}
                 audioMeaning={audioMeaning}
                 audio={audio}
                 image={image}
-                key={id}
+                key={id ? id : _id}
                 word={word}
                 textMeaning={textMeaning}
                 textExample={textExample}
@@ -24,10 +24,16 @@ const TextBookContent: FC = ({words, options, createUserWord, userId, token,curr
                 textExampleTranslate={textExampleTranslate}
                 textMeaningTranslate={textMeaningTranslate}
                 wordTranslate={wordTranslate}
-                options={options.map(({title, section}: any) => ({
+                options={!_id ? null : options.map(({title, section}: any) => {
+                    if(userWord){
+                        if(userWord.difficulty === section){
+                            return {};
+                        }
+                    }
+                    return {
                     title,
-                    onClick: () => optionOnClick(id, section),
-                }))}
+                    onClick: () => optionOnClick(_id, section),
+                }})}
             />
         })}
     </div>
