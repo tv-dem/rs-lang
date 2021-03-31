@@ -1,7 +1,10 @@
+@import "../../styles/variables";
 .header{
   display: flex;
   align-items: center;
   height: 100px;
   background-color: #f3f3f3;
+  color: #fff;
   box-shadow: 0 0 10px #efefef;
+
 }

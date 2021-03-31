@@ -3,6 +3,10 @@
   &:last-child{
     border-bottom: none;
   }
+  &.hard{
+      border-left: 8px solid $primary-5;
+  }
+  box-sizing: border-box;
   flex-wrap: wrap;
   margin-bottom: 10px;
   padding: 20px;

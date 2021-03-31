@@ -8,11 +8,11 @@ import GamePreview from "../../Components/GamePreview/GamePreview";
 import {useParams} from "react-router";
 import SettingsWordsContainer from "../../Components/SettingsWords/SettingsWordsContainer";
 
-const TextBook: FC = ({onLoad, onSelectLevel, levels, currPage, onSelectPage, currLevel, fetchWords}:any) => {
+const TextBook: FC = ({onLoad, onSelectLevel, levels, currPage, onSelectPage, currLevel,userId,token, fetchWords,getAggregatedWords}:any) => {
     const {page}:any = useParams();
     useEffect(() => {
         onLoad();
-        fetchWords(currLevel - 1, currPage - 1);
+        getAggregatedWords(userId,currLevel - 1, currPage - 1,token);
     }, [currPage,currLevel])
     const [visible, setVisible] = useState(false);
     const showDrawer = () => {

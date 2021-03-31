@@ -3,25 +3,32 @@ import {connect} from "react-redux";
 import TextBook from "./TextBook";
 import {changeLevelAC, changeTextBookPageAC,} from "../../Redux/TextBookReducer/actions";
 import {push} from "connected-react-router";
-import {getTextBookWordsTC} from "../../Redux/DictionaryReducer/thunk";
+import {createUserWordTC, getAggregatedWordsTC, getTextBookWordsTC} from "../../Redux/TextBookReducer/thunk";
 
-const MapStateToProps = ({textBook, router}:any) => ({
+const MapStateToProps = ({textBook, user}: any) => ({
     words: textBook.words,
     levels: textBook.levels,
     currPage: textBook.currPage,
     currLevel: textBook.currLevel,
+    userId: user.userId,
+    token: user.token,
 })
 
-const MapDispatchToProps = (dispatch:any) => ({
-    fetchWords: (group:number, page:number) => dispatch(getTextBookWordsTC(group, page)),
-    onLoad: (page:any,level:any) => {
+const MapDispatchToProps = (dispatch: any) => ({
+    fetchWords: (group: number, page: number) => {
+        dispatch(getTextBookWordsTC(group, page))
+    },
+    getAggregatedWords: (userId: string, group: number, page:number, token:string) => {
+        dispatch(getAggregatedWordsTC(userId, group, page, token))
+    },
+    onLoad: (page: any, level: any) => {
         dispatch(changeHeaderTitleAC('Учебник'))
     },
-    onSelectLevel: (level:number) => {
+    onSelectLevel: (level: number) => {
         console.log(level)
         dispatch(changeLevelAC(level))
     },
-    onSelectPage: (page:number, currlevel:number) => {
+    onSelectPage: (page: number, currlevel: number) => {
         dispatch(changeTextBookPageAC(page))
         dispatch(push(`/textbook/${currlevel}/${page}`))
     },

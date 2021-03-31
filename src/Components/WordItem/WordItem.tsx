@@ -4,13 +4,13 @@ import './WordItem.scss';
 import {CustomerServiceOutlined} from "@ant-design/icons";
 import {connect} from "react-redux";
 
-const WordItem = ({word,option,translate, audio,audioMeaning,audioExample,textMeaning, textExample, image, transcription, textExampleTranslate, textMeaningTranslate, wordTranslate, options}: any) => {
+const WordItem = ({word,modificator,option,translate, audio,audioMeaning,audioExample,textMeaning, textExample, image, transcription, textExampleTranslate, textMeaningTranslate, wordTranslate, options}: any) => {
     const [audios] = useState([
         new Audio('https://api-rs-lang.herokuapp.com/'+audio),
         new Audio('https://api-rs-lang.herokuapp.com/'+audioMeaning),
         new Audio('https://api-rs-lang.herokuapp.com/'+audioExample),
     ])
-    return <div className='word-item'>
+    return <div className={`word-item ${modificator}`}>
         <div className="word-item__info">
             <img
                 src={'https://api-rs-lang.herokuapp.com/'+image}

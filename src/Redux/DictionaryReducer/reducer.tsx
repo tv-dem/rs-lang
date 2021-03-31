@@ -4,6 +4,7 @@ const initState = { // заглушка, изначально будет пус�
     words: [],
     sections: [
         {
+            number: 1,
             title: 'Изучаемые',
             section: 'learn',
             options: [
@@ -12,6 +13,7 @@ const initState = { // заглушка, изначально будет пус�
             ]
         },
         {
+            number: 2,
             title: 'Сложные',
             section: 'hard',
             options: [
@@ -20,6 +22,7 @@ const initState = { // заглушка, изначально будет пус�
             ]
         },
         {
+            number: 3,
             title: 'Удаленные',
             section: 'delete',
             options: [
@@ -30,6 +33,7 @@ const initState = { // заглушка, изначально будет пус�
     ],
     currPage: 1,
     currSection: {
+        number: 1,
         title: 'Изучаемые',
         section: 'learn',
         options: [
