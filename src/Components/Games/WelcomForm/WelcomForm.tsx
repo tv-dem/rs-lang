@@ -12,17 +12,23 @@ const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
   };
 
   const backgroundCardStyle: React.CSSProperties = {
-    backgroundImage: currentGame ? `url(${currentGame.imageLink})` : "#",
+    backgroundImage: currentGame ? `url(${currentGame.imageBackground})` : "#",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
+    backgroundPosition:"center",
   };
 
   const titleStyle: React.CSSProperties = {
     color: currentGame ? currentGame.titleColor : "black",
+    fontSize:"3rem",
+    textShadow:"2px 0px 2px rgba(86,86,86, 1)",
   };
 
   const descriptionsStyle: React.CSSProperties = {
     color: currentGame ? currentGame.descriptionColor : "black",
+    fontSize:"1.5rem",
+    textShadow:"2px 0px 1px rgba(86,86,86, 1)",
+
   };
 
   const startGame = (values: any) => {
