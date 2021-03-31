@@ -1,10 +1,8 @@
 import React from "react";
-import { Route } from "react-router";
 import { Link } from "react-router-dom";
 import { Card } from "antd";
 import "./Games.scss";
 
-const { Meta } = Card;
 
 const Games: React.FC = ({ cards }: any) => {
   return (
