@@ -1,14 +1,17 @@
 import { connect } from "react-redux";
 import LetterSolver from "./LetterSolver";
-import {setCurrentCard} from "../../../Redux/GamesReducer/actions";
+import {setCurrentWord,setCount} from "../../../Redux/GamesReducer/actions";
 
 const mapStateToProps = (state: any) => ({
   pathname: state.router.location.pathname,
-  currentGame:state.games.currentGame,
+  words:state.games.words,
+  count:state.games.count,
+  currentWord:state.games.currentWord,
 });
 
 const mapDispatchToProps = (dispatch:any) => ({
-    setCurrentCard: (pathRoute:string) => dispatch(setCurrentCard(pathRoute)),
+    setCurrentWord: (word:Object) => dispatch(setCurrentWord(word)),
+    setCount:(count:number)=>dispatch(setCount(count))
 })
 
 const LetterSolverContainer = connect(mapStateToProps,mapDispatchToProps)(LetterSolver);

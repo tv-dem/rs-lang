@@ -1,11 +1,58 @@
-import { CHANGE_COUNT, ADD_WORD, SET_CURRENT_CARD } from "./actionTypes";
+import { SET_COUNT, ADD_WORD, SET_CURRENT_CARD,SET_CURRENT_WORD } from "./actionTypes";
 import { typeGames } from "./typeGames";
 
 const initState: typeGames = {
   currentGame: null,
   count: 0,
   currentWord: null,
-  words: [],
+  words: [{
+    "id": "5e9f5ee35eb9e72bc21af70c",
+    "group": 1,
+    "page": 1,
+    "word": "anxious",
+    "image": "files/02_0621.jpg",
+    "audio": "files/02_0621.mp3",
+    "audioMeaning": "files/02_0621_meaning.mp3",
+    "audioExample": "files/02_0621_example.mp3",
+    "textMeaning": "<i>Anxious</i> means feeling worried or nervous.",
+    "textExample": "She was <b>anxious</b> about not making her appointment on time.",
+    "transcription": "[ǽŋkʃəs]",
+    "textExampleTranslate": "Она беспокоилась о том, чтобы не договориться о встрече вовремя",
+    "textMeaningTranslate": "Тревожно означает чувствовать себя обеспокоенным или нервным",
+    "wordTranslate": "озабоченный"
+},
+{
+    "id": "5e9f5ee35eb9e72bc21af70d",
+    "group": 1,
+    "page": 1,
+    "word": "awful",
+    "image": "files/02_0622.jpg",
+    "audio": "files/02_0622.mp3",
+    "audioMeaning": "files/02_0622_meaning.mp3",
+    "audioExample": "files/02_0622_example.mp3",
+    "textMeaning": "An <i>awful</i> thing is very bad.",
+    "textExample": "Her performance last night was <b>awful</b>.",
+    "transcription": "[ɔ́ːfəl]",
+    "textExampleTranslate": "Ее выступление прошлой ночью было ужасным",
+    "textMeaningTranslate": "Ужасно очень плохо",
+    "wordTranslate": "ужасный"
+},
+{
+    "id": "5e9f5ee35eb9e72bc21af70e",
+    "group": 1,
+    "page": 1,
+    "word": "consist",
+    "image": "files/02_0623.jpg",
+    "audio": "files/02_0623.mp3",
+    "audioMeaning": "files/02_0623_meaning.mp3",
+    "audioExample": "files/02_0623_example.mp3",
+    "textMeaning": "To <i>consist</i> of certain is to be made of parts or things them.",
+    "textExample": "Today’s choices for lunch <b>consisted</b> of pizza, hamburgers, and hot dogs.",
+    "transcription": "[kənsíst]",
+    "textExampleTranslate": "Сегодняшний выбор на обед состоял из пиццы, гамбургеров и хот-догов",
+    "textMeaningTranslate": "Быть состоящим из определенного означает быть составленным из частей или вещей из них",
+    "wordTranslate": "состоят"
+},],
   wrong: [],
   right: [],
   cards: [
@@ -81,7 +128,7 @@ const initState: typeGames = {
 
 const GamesReducer = (state = initState, action: any) => {
   switch (action.type) {
-    case CHANGE_COUNT:
+    case SET_COUNT:
       return { ...state, count: action.count };
     case ADD_WORD:
       return { ...state, currentWord: action.word };
@@ -92,6 +139,11 @@ const GamesReducer = (state = initState, action: any) => {
           (game) => game.menuRoute === action.pathRoute
         ),
       };
+      case SET_CURRENT_WORD:
+        return {
+          ...state,
+          currentWord: action.word,
+        };
     default:
       return state;
   }
