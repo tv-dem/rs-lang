@@ -5,15 +5,17 @@ import createRootReducer from './reducers'
 
 export const history = createBrowserHistory()
 
-export default (preloadedState:any) => {
+const configureStore = (preloadedState:any) => {
     const store = createStore(
-        createRootReducer(history), // root reducer with router state
-        preloadedState,
-        compose(
-            applyMiddleware(
-                routerMiddleware(history), // for dispatching history actions
-            ),
-        ),
+      createRootReducer(history), // root reducer with router state
+      preloadedState,
+      compose(
+          applyMiddleware(
+            routerMiddleware(history), // for dispatching history actions
+          ),
+      ),
     )
     return store
-}
+};
+
+export default configureStore;

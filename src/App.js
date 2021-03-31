@@ -15,7 +15,7 @@ import TextBookContainer from "./Pages/TextBook/TextBookContainer";
 import GamesContainer from "./Pages/Games/GamesContainer";
 import StatisticContainer from "./Pages/Statistic/StatisticContainer";
 import DictionaryContainer from "./Pages/Dictionary/DictionaryContainer";
-import LetterSolverContainer from './Components/Games/LetterSolver/LetterSolverContainer'
+import LetterSolverContainer from './Components/Games/LetterSolver/LetterSolverContainer';
 
 function App() {
   useEffect(() => {
