@@ -3,7 +3,7 @@ export type typeCard = {
   descriptions: string;
   howToPlay: string;
   imageLink: string;
-  imageBackground:string,
+  imageBackground: string;
   menuRoute: string;
   textbookRoute: string;
   titleColor: string;
@@ -12,7 +12,7 @@ export type typeCard = {
 };
 
 export type typeCardObj = {
-  card: typeCard
+  card: typeCard;
 };
 
 export type typeWord = {
@@ -33,10 +33,10 @@ export type typeWord = {
 };
 
 export type typeGames = {
-  currentGame:null|number,
+  currentGame: null | number;
   count: number;
   currentWord: null | typeWord;
-  words?: Array<typeWord>;
+  words: null | Array<typeWord>;
   wrong?: Array<typeWord>;
   right?: Array<typeWord>;
   cards: Array<typeCard>;
