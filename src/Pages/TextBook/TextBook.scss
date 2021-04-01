@@ -10,8 +10,6 @@
     }
   }
   &__pagination {
-    max-width: 450px;
-    margin: 20px auto;
     padding: 20px 0;
 
     ul {
@@ -20,6 +18,8 @@
 
     .ant-pagination {
       font-size: 20px;
+      max-width: 400px;
+      margin: auto;
 
       &-item {
         border: none;

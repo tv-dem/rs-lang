@@ -1,12 +1,22 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import './TextBookContent.scss';
 import WordItem from "../../../Components/WordItem/WordItem";
 
-const TextBookContent: FC = ({words, options}:any) => {
-    return <div className='text-book__content'>
-        {words.map(({id, word, textMeaning, textExample, transcription, textExampleTranslate, textMeaningTranslate, wordTranslate}: any, i:number) => {
+const TextBookContent: FC = ({words, options, createUserWord, userId, token,currLevel}: any) => {
+
+    const optionOnClick = (id: string, section:string) => {
+        createUserWord(id, userId, section, {}, token);
+    }
+
+    return <div className={`text-book__content h${currLevel}`}>
+        {words.map(({id, _id, userWord, word, audio, audioMeaning, audioExample, textMeaning, image, textExample, transcription, textExampleTranslate, textMeaningTranslate, wordTranslate}: any, i: number) => {
             return <WordItem
-                key={id}
+                modificator={userWord ? userWord.difficulty : ''}
+                audioExample={audioExample}
+                audioMeaning={audioMeaning}
+                audio={audio}
+                image={image}
+                key={id ? id : _id}
                 word={word}
                 textMeaning={textMeaning}
                 textExample={textExample}
@@ -14,7 +24,16 @@ const TextBookContent: FC = ({words, options}:any) => {
                 textExampleTranslate={textExampleTranslate}
                 textMeaningTranslate={textMeaningTranslate}
                 wordTranslate={wordTranslate}
-                options={options.map((title:any)=>({title, onClick: ()=>{}}))}
+                options={!_id ? null : options.map(({title, section}: any) => {
+                    if(userWord){
+                        if(userWord.difficulty === section){
+                            return {};
+                        }
+                    }
+                    return {
+                    title,
+                    onClick: () => optionOnClick(_id, section),
+                }})}
             />
         })}
     </div>
