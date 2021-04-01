@@ -1,0 +1,40 @@
+@import "../../styles/variables";
+.settings-words{
+  //display: block;
+  font-size: 30px;
+  padding: 10px 0;
+  color: $primary-5!important;
+  float: right;
+  transition: transform .5s ease-in;
+  cursor: pointer;
+  &:hover{
+    transform: rotate(360deg);
+  }
+}
+.modal-settings{
+  span{
+    margin-right: 10px;
+    font-size: 18px;
+  }
+  display: flex;
+  width: 80%;
+  margin: 10px auto;
+  justify-content: space-between;
+}
+
+
+.ant-modal-footer button{
+  background: $primary-6;
+  color: white;
+}
+
+.ant-switch.ant-switch-checked{
+  background-color: $primary-6;
+}
+
+.ant-modal-footer .ant-btn:hover{
+  background: #fff;
+  color: $primary-6;
+  border-color: $primary-6;
+}
+

@@ -3,6 +3,7 @@ import { connectRouter } from 'connected-react-router'
 import HeaderReducer from "./HeaderReducer/reducer";
 import TextBookReducer from "./TextBookReducer/reducer";
 import DictionaryReducer from "./DictionaryReducer/reducer";
+import UserReducer from "./UserReducer/reducer";
 import GamesReducer from './GamesReducer/reducer';
 
 const createRootReducer = (history: any) => combineReducers({
@@ -10,6 +11,7 @@ const createRootReducer = (history: any) => combineReducers({
     header: HeaderReducer,
     textBook: TextBookReducer,
     dictionary: DictionaryReducer,
+    user: UserReducer,
     games:GamesReducer,
 })
 export default createRootReducer
