@@ -27,17 +27,16 @@ const ProgressBox = ({
     <div className="context-progress_bar">
       <Progress
         className="context-progress_bar-cirle"
-        type="circle"
-        strokeColor
+        type="circle"        
         percent={percent}
         format={(percent) =>
           percent > 1
             ? `${Math.ceil(percent / 100 * seconds)} seconds`
             : `Lose`
         }
-        strokeColor="#2A9C50"
-        trailColor="red"
-        strokeWidth="9"
+        strokeColor="#FFFF40"
+        trailColor="#503696"
+        strokeWidth="10"
         width="60"
         gapPosition="top"
       ></Progress>

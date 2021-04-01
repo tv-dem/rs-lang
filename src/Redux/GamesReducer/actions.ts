@@ -1,4 +1,4 @@
-import { SET_COUNT, ADD_WORD, SET_CURRENT_CARD,SET_CURRENT_WORD } from "./actionTypes";
+import { SET_COUNT, UPDATE_WORDS, SET_CURRENT_CARD,SET_CURRENT_WORD } from "./actionTypes";
 
 
 export const setCount = (count: number) => ({
@@ -6,9 +6,9 @@ export const setCount = (count: number) => ({
     count
 })
 
-export const addWord = (word: string) => ({
-    type: ADD_WORD,
-    word
+export const updateWords = (words: string) => ({
+    type: UPDATE_WORDS,
+    words
 })
 
 export const setCurrentCard = (pathRoute: string) => ({

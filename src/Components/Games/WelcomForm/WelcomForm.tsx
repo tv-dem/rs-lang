@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Button, Typography, Form, Select, Input } from "antd";
 import "./WelcomForm.scss";
 
-const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
-  useEffect(() => setCurrentCard(pathname), [setCurrentCard]);
+const { Text, Title } = Typography;
 
-  const { Text, Title } = Typography;
+const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
+  const [level, setLevel] = useState(0);
+
+  useEffect(() => setCurrentCard(pathname), [setCurrentCard]);
 
   const backgroundLinkStyle: React.CSSProperties = {
     backgroundColor: currentGame ? currentGame.backgroundColor : "red",
@@ -15,25 +18,23 @@ const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
     backgroundImage: currentGame ? `url(${currentGame.imageBackground})` : "#",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
-    backgroundPosition:"center",
+    backgroundPosition: "center",
   };
 
   const titleStyle: React.CSSProperties = {
     color: currentGame ? currentGame.titleColor : "black",
-    fontSize:"3rem",
-    textShadow:"2px 0px 2px rgba(86,86,86, 1)",
+    fontSize: "3rem",
+    textShadow: "2px 0px 2px rgba(86,86,86, 1)",
   };
 
   const descriptionsStyle: React.CSSProperties = {
     color: currentGame ? currentGame.descriptionColor : "black",
-    fontSize:"1.5rem",
-    textShadow:"2px 0px 1px rgba(86,86,86, 1)",
-
+    fontSize: "1.5rem",
+    textShadow: "2px 0px 1px rgba(86,86,86, 1)",
   };
 
-  const startGame = (values: any) => {
-    const { wordsLevel } = values;
-    window.location.href = `${currentGame.menuRoute}/${wordsLevel}`;
+  const onChangeSelect = (value: number) => {
+    setLevel(value);
   };
 
   return (
@@ -52,7 +53,7 @@ const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
             </Text>
           </Title>
 
-          <Form className="welcomeForm__form" onFinish={startGame}>
+          <Form className="welcomeForm__form">
             <Form.Item
               name="name"
               initialValue={currentGame.name}
@@ -64,7 +65,10 @@ const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
               label="Выберите уровень сложности слов:"
               initialValue="0"
             >
-              <Select className="welcomeForm__form-select">
+              <Select
+                className="welcomeForm__form-select"
+                onChange={onChangeSelect}
+              >
                 <Select.Option value="0">FIRST</Select.Option>
                 <Select.Option value="1">SECOND</Select.Option>
                 <Select.Option value="2">THIRD</Select.Option>
@@ -74,14 +78,16 @@ const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
               </Select>
             </Form.Item>
 
-            <Button
-              style={backgroundLinkStyle}
-              className="welcomeForm__form-btnStart"
-              autoFocus
-              htmlType="submit"
-            >
-              START
-            </Button>
+            <Link to={`${currentGame.menuRoute}/${level+1}`}>
+              <Button
+                style={backgroundLinkStyle}
+                className="welcomeForm__form-btnStart"
+                autoFocus
+                htmlType="submit"
+              >
+                START
+              </Button>
+            </Link>
           </Form>
         </div>
       )}

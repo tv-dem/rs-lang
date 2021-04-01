@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Image, Spin } from "antd";
 import ProgressBox from "../ProgressBox/ProgressBox";
 import Word from "./Word/Word";
+import "./LetterSolver.scss";
 
 const LetterSolved: React.FC = ({
   words,
@@ -8,20 +10,24 @@ const LetterSolved: React.FC = ({
   setCount,
   currentWord,
   setCurrentWord,
+  getTextBookWordsTC,
 }: any) => {
   const wordRef = useRef(null);
   const [isCheck, setIsCheck] = useState(false);
 
   useEffect(() => {
-    if (!currentWord) {
-     if(!count) setCount(0);
-      setCurrentWord(words[count]);
-    }
+    getTextBookWordsTC(1, 1);
   }, []);
 
-  const splitCurrentWord = () => {
-    return currentWord.word.split("");
-  };
+  useEffect(() => {
+    if (!count) setCount(0);
+    if (words) setCurrentWord(words[count]);
+  }, [words]);
+
+  useEffect(() => {
+    console.log(`currentWord`);
+    console.log(currentWord);
+  }, [currentWord]);
 
   const onCheck = () => {
     console.log("onCheck");
@@ -33,18 +39,32 @@ const LetterSolved: React.FC = ({
 
   return (
     <div className="letterSolver">
-      {currentWord && (
+      {currentWord ? (
         <>
-          <ProgressBox seconds="60" isCheck={isCheck} onCheck={onCheck} />
-
+          <div className="letterSolver__view-box">
+            <div>
+              <Image
+                className="context_image"
+                alt="Loading"
+                fallback={`Error loading file ${currentWord.image}`}
+                width="300px"
+                height="200px"
+                src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
+              ></Image>
+            </div>
+            <ProgressBox seconds="60" isCheck={isCheck} onCheck={onCheck} />
+          </div>
+          <div className="letterSolver__hide-box"></div>
           <Word
-            wordSplit={splitCurrentWord()}
+            wordSplit={currentWord.letters}
             wordRef={wordRef}
             isCheck={isCheck}
             onCheck={onCheck}
             onHandleClickBtnNext={onHandleClickBtnNext}
           />
         </>
+      ) : (
+        <Spin tip="Loading..." size="large" />
       )}
     </div>
   );
