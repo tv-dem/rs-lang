@@ -1,4 +1,4 @@
-import {CHANGE_LEVEL, CHANGE_PAGE} from "./actionTypes";
+import {CHANGE_LEVEL, CHANGE_PAGE, UPDATE_WORDS} from "./actionTypes";
 
 export const changeTextBookPageAC = (page:number) => ({
     type: CHANGE_PAGE,
@@ -8,4 +8,9 @@ export const changeTextBookPageAC = (page:number) => ({
 export const changeLevelAC = (level: number) => ({
     type: CHANGE_LEVEL,
     level
+})
+
+export const updateWords = (words: any) => ({
+    type: UPDATE_WORDS,
+    words
 })

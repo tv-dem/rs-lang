@@ -47,9 +47,9 @@ function App() {
               <Route path='/textbook/:level/:page' component={TextBookContainer} />
               <Route path='/home' component={MainPageContainer} />
             </Switch>
+            {/*<Redirect to='/'/>*/}
           </CSSTransition>
         </TransitionGroup>
-        {/*<Redirect to='/'/>*/}
       </div>
       <FooterContainer />
     </>

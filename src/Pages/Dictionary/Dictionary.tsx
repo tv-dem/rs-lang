@@ -2,12 +2,14 @@ import React, {FC, useEffect} from 'react';
 import { Pagination } from 'antd';
 import Panel from "../../Components/Panel/Panel";
 import DictionaryContentContainer from "./DictionaryContent/DictionaryContentContainer";
+import SettingsWordsContainer from "../../Components/SettingsWords/SettingsWordsContainer";
 
 
 const TextBook: FC = ({onLoad, sections, words, onSelectPage, onSelectSection, currSection, currPage}:any) => {
     useEffect(() => onLoad(), [onLoad])
     return <div className='wrapper'>
         <div className="text-book">
+            <SettingsWordsContainer/>
             <Panel panelInfo={sections.map((el: any) => {
                 const {title, section} = el;
                 return {
