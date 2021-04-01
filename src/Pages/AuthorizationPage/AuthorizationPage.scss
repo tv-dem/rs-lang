@@ -1,0 +1,27 @@
+.auth-wrapper {
+  min-height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url('../../assets/img/bg-login.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow-y: auto;
+  background-attachment: fixed;
+}
+
+.auth-container {
+  margin-left: auto;
+  margin-right: 30px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 429px;
+  padding: 60px 57px;
+  line-height: 1;
+  background: #fffefe;
+  border-radius: 20px;
+  box-shadow: 1px 5px 14px rgba(0, 0, 0, 0.1);
+}

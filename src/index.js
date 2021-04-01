@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { Route, Switch } from "react-router";
 import { ConnectedRouter } from 'connected-react-router';
 import configureStore, { history } from './Redux/configureStore';
-import LoginPage from './Pages/LoginPage/LoginPage';
+import AuthorizationPage from './Pages/AuthorizationPage/AuthorizationPage';
 
 const store = configureStore(); // null вместо initState
 
@@ -16,7 +16,7 @@ ReactDOM.render(
       <ConnectedRouter history={history}>
         <Switch>
           <Route exact path='/' component={App} />
-          <Route path='/login' component={LoginPage} />
+          <Route path='/authorization' component={AuthorizationPage} />
         </Switch>
       </ConnectedRouter>
     </Provider>

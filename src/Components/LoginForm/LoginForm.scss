@@ -1,0 +1,14 @@
+.login-form {
+  max-width: 300px;
+
+  & .login-form-button {
+    width: 100%;
+  }
+
+  &__title {
+    margin-bottom: 24px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #28374b;
+  }
+}
