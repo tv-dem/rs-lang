@@ -13,7 +13,7 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = (dispatch:any) => ({
     setCurrentWord: (word:Object) => dispatch(setCurrentWord(word)),
     setCount:(count:number)=>dispatch(setCount(count)),
-    getTextBookWordsTC:(group: number, page: number) =>  getTextBookWordsTC(group, page,dispatch)
+    getTextBookWordsTC:(group: number, page: number) => dispatch( getTextBookWordsTC(group, page))
 })
 
 const LetterSolverContainer = connect(mapStateToProps,mapDispatchToProps)(LetterSolver);

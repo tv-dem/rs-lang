@@ -49,7 +49,7 @@ const LetterSolved: React.FC = ({
                 fallback={`Error loading file ${currentWord.image}`}
                 width="300px"
                 height="200px"
-                src={currentWord.image}
+                src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
               ></Image>
             </div>
             <ProgressBox seconds="60" isCheck={isCheck} onCheck={onCheck} />
