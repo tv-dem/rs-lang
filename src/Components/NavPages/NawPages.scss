@@ -1,24 +1,30 @@
 @import "../../styles/variables";
 
-.nav-pages{
-  a{
+.nav-pages {
+  a {
     text-decoration: none;
   }
-  &.active{
+
+  &.active {
     left: 0;
   }
+
   transition: left .2s ease-in;
-  &__top{
-    & span{
+
+  &__top {
+    & span {
       transition: transform .2s ease-in;
       color: white;
       position: absolute;
       right: 10px;
-      &:hover{
-        color:$s-primary-3;
+
+      &:hover {
+        color: $s-primary-3;
       }
     }
-    height: 100px;
+
+    height: 10vh;
+    min-height: 60px;
     width: 100%;
     background-color: $primary-5;
     box-shadow: 0 6px 7px 0 rgba(0, 0, 0, 0.22);
@@ -28,6 +34,7 @@
     cursor: pointer;
     transition: .2s ease;
   }
+
   z-index: 200;
   position: fixed;
   height: 100vh;
@@ -35,14 +42,19 @@
   left: -240px;
   background-color: $primary-4;
   color: #fff;
-    a{
-      display: block;
-      color: white!important;
-      &:hover, &.active{
-        color: $s-primary-3;
-      }
+  top: 0;
+
+  a {
+    display: block;
+    color: white !important;
+
+    &:hover,
+    &.active {
+      color: $s-primary-3;
     }
-  ul{
+  }
+
+  ul {
     padding: 0;
     box-sizing: border-box;
     position: absolute;
@@ -55,44 +67,53 @@
     align-items: center;
     justify-content: space-around;
     list-style: none;
-    a.active .li-item{
+
+    a.active .li-item {
       color: $s-primary-3;
-      h2{
+
+      h2 {
         color: $s-primary-3;
       }
+
       background-color: $primary-5;
-      &:hover{
-        h2{
+
+      &:hover {
+        h2 {
           margin-left: 20px;
         }
       }
     }
-    a .li-item{
+
+    a .li-item {
       padding: 10px;
       transition: background-color .3s ease-in;
-      &:hover{
-        h2{
+
+      &:hover {
+        h2 {
           margin-left: 40px;
         }
       }
-      h2{
+
+      h2 {
         color: white;
         transition: margin .3s ease-in;
         margin-left: 20px;
       }
+
       display: flex;
       width: 100%;
       justify-content: space-between;
       align-items: center;
     }
-    li{
+
+    li {
       display: block;
       width: 100%;
     }
   }
 }
 
-.nav-pages.active .nav-pages__top{
+.nav-pages.active .nav-pages__top {
   & span {
     transform: rotate(-90deg);
     color: #ffff40;

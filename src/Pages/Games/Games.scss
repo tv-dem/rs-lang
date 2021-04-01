@@ -1,0 +1,53 @@
+.game-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-page__link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px;
+    padding: 5px;
+    width: 90%;
+    &:hover {
+        box-shadow: 0 0 10px #c8a0a0;
+    }
+}
+
+.card-item {
+    border: 13px solid rgb(112, 109, 208);
+    width: 300px;
+    height: 150px;
+    text-align: center;
+}
+
+.card-item__box {
+    text-align: center;
+    color: white;
+    font-size: 1.7rem;
+    padding: 10% 5px 0 5px;
+}
+
+.game-page__link_context {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.link_context-title {
+    font-size: 2rem;
+    color: #c8a0a0;
+    text-shadow: 1px 0px 1px rgba(255, 255, 255, 1);
+}
+
+.link_context-descriptions {
+    font-size: 1rem;
+    color: cadetblue;
+    padding: 1px 10px;
+    text-shadow: 1px 0px 1px rgba(255, 255, 255, 0.5);
+}

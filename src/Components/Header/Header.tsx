@@ -9,7 +9,7 @@ const Header = ({title, currLevel}:any) => {
                     <h1>{title}</h1>
                 </div>
             </header>
-        </div>
+         </div>
     )
 }
 

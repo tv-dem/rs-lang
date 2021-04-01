@@ -1,10 +1,15 @@
 @import "../../styles/variables";
 .header{
   display: flex;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 30;
   align-items: center;
-  height: 100px;
+  height: 10vh;
+  min-height: 60px;
   background-color: #f3f3f3;
   color: #fff;
   box-shadow: 0 0 10px #efefef;
-
+  padding-left: 100px;
 }
