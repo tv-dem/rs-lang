@@ -45,6 +45,8 @@ function App() {
             <Route path='/home' component={MainPageContainer} />
           </Switch>
       {/*<Redirect from='/' to='/'/>*/}
+        </CSSTransition>
+      </TransitionGroup>
     </div>
     <FooterContainer/>
     </>
