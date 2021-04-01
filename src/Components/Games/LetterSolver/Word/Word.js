@@ -38,20 +38,18 @@ const Word = ({
                 ref={provided.innerRef}
                 style={{
                   backgroundColor: snapshot.isDraggingOver
-                    ? "#2A9C50"
-                    : "#A7EABD",
+                    ? "#fff9bd"
+                    : "#d19aed",
                 }}
               >
                 {letters.map((e, i) => {
                   let id = `el${i}`;
-
                   return (
                     <Draggable key={id} draggableId={id} index={i}>
                       {(provided) => <Cell valueCell={e} provided={provided} />}
                     </Draggable>
                   );
                 })}
-
                 {provided.placeholder}
               </div>
             )}
