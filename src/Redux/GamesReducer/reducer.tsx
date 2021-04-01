@@ -83,7 +83,7 @@ const initState: typeGames = {
       backgroundColor: "#54026E",
     },
   ],
-};
+}; 
 
 const GamesReducer = (state = initState, action: any) => {
   switch (action.type) {
