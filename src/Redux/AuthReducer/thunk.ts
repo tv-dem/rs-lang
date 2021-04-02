@@ -1,0 +1,47 @@
+import {
+  authUserStarted,
+  createUserSuccess,
+  createUserFailure,
+  authUserSuccess,
+  authUserFailure,
+  setIsAuthUser,
+} from './actions';
+import API from '../../API/API';
+
+export const createUser = (name: string, password: string, email: string) => async (dispatch: any) => {
+  dispatch(authUserStarted());
+
+  try {
+    const json = await API.createUser(name, password, email);
+    dispatch(createUserSuccess(json));
+  } catch (err) {
+    if (err.message === '422') {
+      dispatch(createUserFailure('Incorrect e-mail or password'));
+    } else if (err.message === '417') {
+      dispatch(createUserFailure('User with this e-mail is already exists'));
+    } else {
+      console.error(`Unhandled rejection, status.code=${err.message}`);
+    }
+  }
+};
+
+export const loginUser = (email: string, password: string) => async (dispatch: any) => {
+  dispatch(authUserStarted());
+
+  try {
+    const json = await API.signInUser(email, password);
+    setIsAuthUser(true);
+    dispatch(authUserSuccess(json));
+    console.log(json);
+  } catch (err) {
+    if (err.message === '403') {
+      dispatch(authUserFailure('Incorrect e-mail or password'));
+    } else if (err.message === '404') {
+      dispatch(authUserFailure(`Couldn't find a(an) this email: ${email}`));
+    } else {
+      console.error(`Unhandled rejection, status.code=${err.message}`);
+    }
+
+    setIsAuthUser(false);
+  }
+};
