@@ -37,7 +37,7 @@ export type typeGames = {
   count: number;
   currentWord: null | typeWord;
   words: null | Array<typeWord>;
-  wrong?: Array<typeWord>;
-  right?: Array<typeWord>;
+  wrong: Array<typeWord>;
+  right: Array<typeWord>;
   cards: Array<typeCard>;
 };

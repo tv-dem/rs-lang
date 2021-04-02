@@ -3,6 +3,10 @@ import {
   UPDATE_WORDS,
   SET_CURRENT_CARD,
   SET_CURRENT_WORD,
+  ADD_RIGHT_WORD,
+  ADD_WRONG_WORD,
+  NULLIFY_RIGHT_WORDS,
+  NULLIFY_WRONG_WORDS,
 } from "./actionTypes";
 import { typeGames } from "./typeGames";
 import shuffle from "../../utils/shuffle";
@@ -83,9 +87,11 @@ const initState: typeGames = {
       backgroundColor: "#54026E",
     },
   ],
-}; 
+};
 
 const GamesReducer = (state = initState, action: any) => {
+  console.log(`state.wrong`);
+  console.log(state);
   switch (action.type) {
     case SET_COUNT:
       return { ...state, count: action.count };
@@ -105,6 +111,26 @@ const GamesReducer = (state = initState, action: any) => {
           ...action.word,
           letters: shuffle(action.word.word.split("")),
         },
+      };
+    case ADD_RIGHT_WORD:
+      return {
+        ...state,
+        right: state.right.concat(action.word),
+      };
+    case NULLIFY_RIGHT_WORDS:
+      return {
+        ...state,
+        right: [],
+      };
+    case ADD_WRONG_WORD:
+      return {
+        ...state,
+        wrong: state.wrong.concat(action.word),
+      };
+    case NULLIFY_WRONG_WORDS:
+      return {
+        ...state,
+        wrong: [],
       };
     default:
       return state;

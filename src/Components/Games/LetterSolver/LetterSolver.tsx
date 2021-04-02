@@ -3,38 +3,60 @@ import { Image, Spin } from "antd";
 import ProgressBox from "../ProgressBox/ProgressBox";
 import Word from "./Word/Word";
 import "./LetterSolver.scss";
+import ModalFinishLevel from '../Modal/ModalFinishLevel'
 
 const LetterSolved: React.FC = ({
   words,
   count,
+  right,
+  wrong,
   setCount,
   currentWord,
   setCurrentWord,
-  getTextBookWordsTC,
+  getWords,
+  addRightWord,
+  addWrongWord,
+  nullifyRightWord,
+  nullifyWrongWord
 }: any) => {
+
   const wordRef = useRef(null);
+
   const [isCheck, setIsCheck] = useState(false);
+  const [percent, setPercent] = useState(100);
 
   useEffect(() => {
-    getTextBookWordsTC(1, 1);
+    nullifyRightWord();
+    nullifyWrongWord();
+    if (count !== 0) setCount(0);
+    getWords(0, 0);
   }, []);
 
   useEffect(() => {
-    if (!count) setCount(0);
     if (words) setCurrentWord(words[count]);
   }, [words]);
 
   useEffect(() => {
-    console.log(`currentWord`);
-    console.log(currentWord);
-  }, [currentWord]);
+    if (count) {
+      setCurrentWord(words[count]);
+      setPercent(100);
+    }
+  }, [count]);
 
-  const onCheck = () => {
-    console.log("onCheck");
+  const onCheck = (letters: Array<string>) => {
+    if (letters.length > 1 && letters.join("") === currentWord.word)
+      addRightWord(currentWord)
+    else  addWrongWord(currentWord);
+    setIsCheck(true);
   };
 
-  const onHandleClickBtnNext = () => {
-    console.log("onHandleClickBtnNext");
+  const onHandleClickBtnNext = () => {    
+
+    if (count < words.length - 1) {setCount(count + 1);}
+    else { 
+      ModalFinishLevel(right,wrong)
+      }
+    setIsCheck(false);
   };
 
   return (
@@ -52,7 +74,13 @@ const LetterSolved: React.FC = ({
                 src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
               ></Image>
             </div>
-            <ProgressBox seconds="60" isCheck={isCheck} onCheck={onCheck} />
+            <ProgressBox
+              seconds="60"
+              percent={percent}
+              setPercent={setPercent}
+              isCheck={isCheck}
+              onCheck={onCheck}
+            />
           </div>
           <div className="letterSolver__hide-box"></div>
           <Word

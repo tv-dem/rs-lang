@@ -54,8 +54,7 @@ const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
           </Title>
 
           <Form className="welcomeForm__form">
-            <Form.Item
-              name="name"
+            <Form.Item             
               initialValue={currentGame.name}
               hidden
             ></Form.Item>
