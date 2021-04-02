@@ -10,10 +10,11 @@ import SettingsWordsContainer from "../../Components/SettingsWords/SettingsWords
 import Loading from "../../Components/Loading/Loading";
 
 const TextBook: FC = ({onLoad, pending, onSelectLevel, levels, currPage, onSelectPage, currLevel,userId,token, fetchWords,getAggregatedWords}:any) => {
-    const {page}:any = useParams();
+    const {level, page}:any = useParams();
     console.log('pending',pending)
     useEffect(() => {
         onLoad();
+        onSelectPage(page,level);
         getAggregatedWords(userId,currLevel - 1, currPage - 1,token);
         // fetchWords(currLevel - 1, currPage - 1)
     }, [currPage,currLevel])

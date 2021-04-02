@@ -2,14 +2,19 @@ import React, {FC} from 'react';
 import './TextBookContent.scss';
 import WordItem from "../../../Components/WordItem/WordItem";
 
-const TextBookContent: FC = ({words, options, createUserWord, userId, token,currLevel}: any) => {
+const TextBookContent: FC = ({words, options, createUserWord,updateUserWord, userId, token,currLevel,currPage}: any) => {
 
-    const optionOnClick = (id: string, section:string) => {
-        createUserWord(id, userId, section, {}, token);
+    const optionOnClick = (userWord:any, id: string, section:string) => {
+        if(userWord){
+            updateUserWord(id, userId, section, {}, token,currPage-1,currLevel-1)
+        } else{
+            createUserWord(id, userId, section, {}, token,currPage-1,currLevel-1);
+        }
     }
 
     return <div className={`text-book__content h${currLevel}`}>
-        {words.map(({id, _id, userWord, word, audio, audioMeaning, audioExample, textMeaning, image, textExample, transcription, textExampleTranslate, textMeaningTranslate, wordTranslate}: any, i: number) => {
+        {words.filter(({userWord}:any) => userWord ? userWord.difficulty !== 'delete' : true)
+            .map(({id, _id, userWord, word, audio, audioMeaning, audioExample, textMeaning, image, textExample, transcription, textExampleTranslate, textMeaningTranslate, wordTranslate}: any, i: number) => {
             return <WordItem
                 modificator={userWord ? userWord.difficulty : ''}
                 audioExample={audioExample}
@@ -32,7 +37,7 @@ const TextBookContent: FC = ({words, options, createUserWord, userId, token,curr
                     }
                     return {
                     title,
-                    onClick: () => optionOnClick(_id, section),
+                    onClick: () => optionOnClick(userWord,_id, section),
                 }})}
             />
         })}
