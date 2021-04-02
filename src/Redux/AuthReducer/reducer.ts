@@ -14,7 +14,7 @@ const initialState = {
   user: {} as NewUser,
   authError: '',
   currentUser: {} as CurrentUser,
-  isAuth: false,
+  isAuth: !!(JSON.parse(localStorage.getItem('currentUser') as string)?.token),
 };
 
 type InferValueTypes<T> = T extends { [key: string]: infer U } ? U : never;

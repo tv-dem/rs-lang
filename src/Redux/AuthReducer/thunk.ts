@@ -32,8 +32,9 @@ export const loginUser = (email: string, password: string) => async (dispatch: a
 
   try {
     const json = await API.signInUser(email, password);
-    setIsAuthUser(true);
     dispatch(authUserSuccess(json));
+    dispatch(setIsAuthUser(true));
+    localStorage.setItem('currentUser', JSON.stringify(json));
     dispatch(push('/'));
     console.log(json);
   } catch (err) {
