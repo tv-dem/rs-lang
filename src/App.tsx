@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useLocation } from "react-router";
-import NavPagesContainer from "./Components/NavPages/NavPagesContainer";
-
+import { Redirect } from "react-router-dom";
+import { connect } from 'react-redux';
 import {
   TransitionGroup,
   CSSTransition
 } from "react-transition-group";
+import NavPagesContainer from "./Components/NavPages/NavPagesContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import FooterContainer from "./Components/Footer/FooterContainer";
 import WelcomFormContainer from './Components/Games/WelcomForm/WelcomFormContainer'
-import { Redirect } from "react-router-dom";
 import MainPageContainer from "./Pages/MainPage/MainPageContainer";
 import TextBookContainer from "./Pages/TextBook/TextBookContainer";
 import GamesContainer from "./Pages/Games/GamesContainer";
@@ -17,7 +17,11 @@ import StatisticContainer from "./Pages/Statistic/StatisticContainer";
 import DictionaryContainer from "./Pages/Dictionary/DictionaryContainer";
 import LetterSolverContainer from './Components/Games/LetterSolver/LetterSolverContainer';
 
-function App() {
+interface AppProps {
+  isAuth: boolean;
+}
+
+const App: React.FC<AppProps> = ({ isAuth }) => {
   useEffect(() => {
     window.scrollTo(0, 0)
   });
@@ -42,18 +46,26 @@ function App() {
               <Route path='/games/AudioCall/:level' component={LetterSolverContainer} />
               <Route path='/games/:game' component={WelcomFormContainer} />
               <Route path='/games' component={GamesContainer} />
-              <Route path='/statistic' component={StatisticContainer} />
-              <Route path='/dictionary/:section/:page' component={DictionaryContainer} />
               <Route path='/textbook/:level/:page' component={TextBookContainer} />
-              <Route path='/home' component={MainPageContainer} />
+              <Route exact path='/' component={MainPageContainer} />
+              {isAuth && (
+                <>
+                  <Route path='/statistic' component={StatisticContainer} />
+                  <Route path='/dictionary/:section/:page' component={DictionaryContainer} />
+                </>
+              )}
+              <Redirect to='/home' />
             </Switch>
-            {/*<Redirect to='/'/>*/}
           </CSSTransition>
         </TransitionGroup>
       </div>
       <FooterContainer />
     </>
   );
-}
+};
 
-export default App;
+const mapStateToProps = (state: any) => ({
+  isAuth: state.auth.isAuth,
+});
+
+export default connect(mapStateToProps)(App);
