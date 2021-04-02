@@ -2,16 +2,29 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import Loader from '../Loader';
 import './LoginForm.scss';
 
-const LoginForm: React.FC = () => {
+interface LoginFormProps {
+  loginUser: (email: string, password: string) => void;
+  authUserFailure: (err: string) => void;
+  createUserError: string;
+  createUserLoading: boolean;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ loginUser, authUserFailure, createUserError, createUserLoading }) => {
   const onFinish = (values: any) => {
-    console.log('Success:', values);
+    const { email, password } = values;
+    authUserFailure('');
+    loginUser(email, password);
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+  const onFinishFailed = ({ errorFields }: any) => {
+    console.log('Failed:', errorFields[0].errors);
+    // authUserFailure(errorFields[0].errors);
   };
+
+  const onEmailChange = () => authUserFailure('');
 
   return (
     <>
@@ -27,10 +40,23 @@ const LoginForm: React.FC = () => {
       >
         <Form.Item
           label="E-mail:"
-          name="e-mail"
-          rules={[{ required: true, message: 'Please input your e-mail!' }]}
+          name="email"
+          rules={[
+            {
+              type: 'email',
+              message: 'The input is not valid E-mail!',
+            },
+            {
+              required: true,
+              message: 'Please input your E-mail!',
+            },
+          ]}
         >
-          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Type e-mail" />
+          <Input
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            placeholder="Type e-mail"
+            onChange={onEmailChange}
+          />
         </Form.Item>
 
         <Form.Item
@@ -52,6 +78,13 @@ const LoginForm: React.FC = () => {
           Or <NavLink to="/authorization/registration">register now!</NavLink>
         </Form.Item>
       </Form>
+      {createUserError
+        && (
+          <div className="alert-error">
+            {createUserError}
+          </div>
+        )}
+      {createUserLoading && <Loader />}
     </>
   );
 };

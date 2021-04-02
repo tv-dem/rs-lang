@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import LoginForm from '../../Components/LoginForm/LoginForm';
+import LoginForm from '../../Components/LoginForm/LoginFormContainer';
 import SignInForm from '../../Components/SignInForm/SignInFormContainer';
 import './AuthorizationPage.scss';
 

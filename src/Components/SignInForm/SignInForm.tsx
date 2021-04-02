@@ -52,7 +52,7 @@ const SignInForm: React.FC<SignInFormProps> = ({ createUser, createUserFailure, 
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    createUserFailure(errorInfo);
+    // createUserFailure(errorInfo);
   };
 
   return (

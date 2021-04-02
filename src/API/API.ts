@@ -47,7 +47,13 @@ class API {
       },
       body: JSON.stringify(info)
     })
-      .then(res => res.json());
+      .then(res => {
+        if (res.status !== 200) {
+          throw new Error(`${res.status}`);
+        }
+
+        return res.json();
+      });
   }
 
   //userWords

@@ -1,8 +1,15 @@
-import { AUTH_USER_STARTED } from './actionTypes';
+export interface NewUser {
+  id: string;
+  name: string;
+  email: string;
+}
 
 export interface CurrentUser {
-  id: string;
-  email: string;
+  message: string;
+  token: string;
+  refreshToken: string;
+  userId: string;
+  name: string;
 }
 export interface AuthUserStarted {
   type: string;
@@ -11,10 +18,25 @@ export interface AuthUserStarted {
 
 export interface CreateUserSuccess {
   type: string;
-  payload: CurrentUser;
+  payload: NewUser;
 }
 
 export interface CreateUserFailure {
   type: string;
   payload: string;
+}
+
+export interface AuthUserFailure {
+  type: string;
+  payload: string;
+}
+
+export interface AuthUserSuccess {
+  type: string;
+  payload: CurrentUser;
+}
+
+export interface SetIsAuthUser {
+  type: string;
+  payload: boolean;
 }
