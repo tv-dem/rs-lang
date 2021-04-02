@@ -12,6 +12,7 @@ const MapStateToProps = ({textBook, user}: any) => ({
     currLevel: textBook.currLevel,
     userId: user.userId,
     token: user.token,
+    pending: textBook.pending,
 })
 
 const MapDispatchToProps = (dispatch: any) => ({

@@ -26,12 +26,6 @@ function App() {
     <HeaderContainer/>
     <NavPagesContainer/>
     <div className='content'>
-      <TransitionGroup className="transition-group">
-        <CSSTransition
-          key={location.key}
-          classNames="fade"
-          timeout={500}
-        >
           <Switch>
             <Route path='/games/LetterSolver/:level' component={LetterSolverContainer} />
             <Route path='/games/Sprint/:level' component={LetterSolverContainer} />
@@ -45,8 +39,6 @@ function App() {
             <Route path='/home' component={MainPageContainer} />
           </Switch>
       {/*<Redirect from='/' to='/'/>*/}
-        </CSSTransition>
-      </TransitionGroup>
     </div>
     <FooterContainer/>
     </>
