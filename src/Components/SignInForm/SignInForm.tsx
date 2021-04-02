@@ -1,16 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import Loader from '../Loader';
 import './SignInForm.scss';
 
-const SignInForm: React.FC = () => {
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
+interface SignInFormProps {
+  createUser: (name: string, password: string, email: string) => void;
+  createUserFailure: (err: string) => void;
+  createUserError: string;
+  createUserLoading: boolean;
+}
+
+const SignInForm: React.FC<SignInFormProps> = ({ createUser, createUserFailure, createUserError, createUserLoading }) => {
+  type ValidateStatus = Parameters<typeof Form.Item>[0]['validateStatus'];
+  const [password, setPassword] = useState<{
+    password: string;
+    validateStatus?: ValidateStatus;
+    errorMsg?: string | null;
+  }>({
+    password: '',
+  });
+
+  function validatePassword(
+    value: string,
+  ): { validateStatus: ValidateStatus; errorMsg: string | null } {
+    if (value.length >= 8) {
+      return {
+        validateStatus: 'success',
+        errorMsg: null,
+      };
+    }
+
+    return {
+      validateStatus: 'error',
+      errorMsg: 'The password must contain at least 8 characters!',
+    };
+  };
+
+  const onPasswordChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword({
+      ...validatePassword(target.value),
+      password: target.value,
+    });
+    createUserFailure('');
+  };
+
+  const onFinish = ({ name, email, password }: any) => {
+    createUserFailure('');
+    createUser(name, password, email);
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    createUserFailure(errorInfo);
   };
 
   return (
@@ -25,6 +67,15 @@ const SignInForm: React.FC = () => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
+        <Form.Item
+          name="name"
+          label="Nickname"
+          tooltip="What do you want others to call you?"
+          rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
+        >
+          <Input />
+        </Form.Item>
+
         <Form.Item
           name="email"
           label="E-mail"
@@ -48,14 +99,17 @@ const SignInForm: React.FC = () => {
           rules={[
             {
               required: true,
-              message: 'Please input your password!',
+              message: password.errorMsg as string,
             },
           ]}
+          validateStatus={password.validateStatus}
           hasFeedback
         >
           <Input prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Type your password"
+            value={password.password}
+            onChange={onPasswordChange}
           />
         </Form.Item>
 
@@ -92,6 +146,13 @@ const SignInForm: React.FC = () => {
           Or <NavLink to="/authorization">login now!</NavLink>
         </Form.Item>
       </Form>
+      {createUserError
+        && (
+          <div className="alert-error">
+            {createUserError}
+          </div>
+        )}
+      {createUserLoading && <Loader />}
     </>
   );
 };
