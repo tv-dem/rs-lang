@@ -1,3 +1,4 @@
+import { push } from 'connected-react-router';
 import {
   authUserStarted,
   createUserSuccess,
@@ -14,6 +15,7 @@ export const createUser = (name: string, password: string, email: string) => asy
   try {
     const json = await API.createUser(name, password, email);
     dispatch(createUserSuccess(json));
+    dispatch(push('/authorization'));
   } catch (err) {
     if (err.message === '422') {
       dispatch(createUserFailure('Incorrect e-mail or password'));
@@ -32,6 +34,7 @@ export const loginUser = (email: string, password: string) => async (dispatch: a
     const json = await API.signInUser(email, password);
     setIsAuthUser(true);
     dispatch(authUserSuccess(json));
+    dispatch(push('/'));
     console.log(json);
   } catch (err) {
     if (err.message === '403') {
