@@ -8,6 +8,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import configureStore, { history } from './Redux/configureStore';
 import AuthorizationPage from './Pages/AuthorizationPage/AuthorizationPage';
 
+// @ts-ignore
 const store = configureStore(); // null вместо initState
 
 ReactDOM.render(

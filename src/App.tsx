@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useLocation } from "react-router";
+// import { Redirect } from "react-router-dom";
 import NavPagesContainer from "./Components/NavPages/NavPagesContainer";
-
 import {
   TransitionGroup,
   CSSTransition
@@ -9,7 +9,6 @@ import {
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import FooterContainer from "./Components/Footer/FooterContainer";
 import WelcomFormContainer from './Components/Games/WelcomForm/WelcomFormContainer'
-import { Redirect } from "react-router-dom";
 import MainPageContainer from "./Pages/MainPage/MainPageContainer";
 import TextBookContainer from "./Pages/TextBook/TextBookContainer";
 import GamesContainer from "./Pages/Games/GamesContainer";
@@ -17,7 +16,7 @@ import StatisticContainer from "./Pages/Statistic/StatisticContainer";
 import DictionaryContainer from "./Pages/Dictionary/DictionaryContainer";
 import LetterSolverContainer from './Components/Games/LetterSolver/LetterSolverContainer';
 
-function App() {
+const App: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0)
   });
@@ -42,12 +41,12 @@ function App() {
               <Route path='/games/AudioCall/:level' component={LetterSolverContainer} />
               <Route path='/games/:game' component={WelcomFormContainer} />
               <Route path='/games' component={GamesContainer} />
-              <Route path='/statistic' component={StatisticContainer} />
-              <Route path='/dictionary/:section/:page' component={DictionaryContainer} />
+              <Route path='/statistic' component={StatisticContainer} /> {/* isAuth */}
+              <Route path='/dictionary/:section/:page' component={DictionaryContainer} /> {/* isAuth */}
               <Route path='/textbook/:level/:page' component={TextBookContainer} />
               <Route path='/home' component={MainPageContainer} />
+              <Route path='*' component={MainPageContainer} />
             </Switch>
-            {/*<Redirect to='/'/>*/}
           </CSSTransition>
         </TransitionGroup>
       </div>
