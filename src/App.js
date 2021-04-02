@@ -34,7 +34,7 @@ function App() {
             <Route path='/games/:game' component={WelcomFormContainer} />
             <Route path='/games' component={GamesContainer} />
             <Route path='/statistic' component={StatisticContainer} />
-            <Route path='/dictionary/:section/:page' component={DictionaryContainer} />
+            <Route path='/dictionary/:section/:level/:page' component={DictionaryContainer} />
             <Route path='/textbook/:level/:page' component={TextBookContainer} />
             <Route path='/home' component={MainPageContainer} />
           </Switch>

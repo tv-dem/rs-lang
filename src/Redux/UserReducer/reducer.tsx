@@ -3,8 +3,8 @@ import {SET_SETTINGS} from "./actionTypes";
 const initState = {
     options: true,
     translate: true,
-    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNjM5M2Q1YTU1NThiMDAxNWZhYjhmMyIsImlhdCI6MTYxNzMyNjYwNSwiZXhwIjoxNjE3MzQxMDA1fQ.yO5j4rVi2Kg_2fp_f7BZ63-6ZR8-3ur9vdSSqaQFpDs',
-    userId: '606393d5a5558b0015fab8f3',
+    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNjczMmFkYWEwODhjMDAxNTYxMjU5NyIsImlhdCI6MTYxNzM3NTk2MywiZXhwIjoxNjE3MzkwMzYzfQ._jl31SAmr8QELLlcTINrMBTVlSB9WmFLjv3_kb2UeYQ',
+    userId: '606732adaa088c0015612597',
     name: 'testuser',
 }
 

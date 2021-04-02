@@ -1,4 +1,4 @@
-import {CHANGE_LEVEL, CHANGE_PAGE, PENDING_FALSE, PENDING_TRUE, UPDATE_WORDS} from "./actionTypes";
+import {CHANGE_LEVEL, CHANGE_PAGE, FETCH_ERROR, PENDING_FALSE, PENDING_TRUE, UPDATE_WORDS} from "./actionTypes";
 
 export const changeTextBookPageAC = (page:number) => ({
     type: CHANGE_PAGE,
@@ -23,4 +23,10 @@ export const removePending = () => ({
 export const updateWords = (words: any) => ({
     type: UPDATE_WORDS,
     words
+})
+
+export const fetchError = (errorMessage:string) => ({
+    type: FETCH_ERROR,
+    pending: false,
+    errorMessage
 })

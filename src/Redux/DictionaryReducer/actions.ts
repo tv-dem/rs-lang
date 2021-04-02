@@ -1,11 +1,16 @@
-import {CHANGE_PAGE, CHANGE_SECTION} from "./actionTypes";
+import {CHANGE_PAGE, CHANGE_SECTION, CHANGE_LEVEL} from "./actionTypes";
 
 export const changeDictionaryPageAC = (page: number) => ({
     type: CHANGE_PAGE,
     page
 })
 
-export const changeSectionAC = (section:Object) => ({
+export const changeSectionAC = (sectionName: string) => ({
     type: CHANGE_SECTION,
-    section
+    sectionName
+})
+
+export const changeDictionarylevelAC = (level: number) => ({
+    type: CHANGE_LEVEL,
+    level
 })

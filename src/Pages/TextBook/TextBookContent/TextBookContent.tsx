@@ -6,9 +6,9 @@ const TextBookContent: FC = ({words, options, createUserWord,updateUserWord, use
 
     const optionOnClick = (userWord:any, id: string, section:string) => {
         if(userWord){
-            updateUserWord(id, userId, section, {}, token,currPage-1,currLevel-1)
+            updateUserWord(id, userId, section, {}, token,currLevel-1,currPage-1)
         } else{
-            createUserWord(id, userId, section, {}, token,currPage-1,currLevel-1);
+            createUserWord(id, userId, section, {}, token,currLevel-1,currPage-1);
         }
     }
 

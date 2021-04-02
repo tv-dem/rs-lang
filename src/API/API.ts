@@ -109,7 +109,6 @@ class API {
                 'Content-Type': 'application/json'
             },
         })
-            .then(res => res.json())
     }
 
     //userSettings

@@ -3,7 +3,9 @@ import DictionaryContent from "./DictionaryContent";
 
 const MapStateToProps = ({dictionary}: any) => {
     const {currSection} = dictionary;
+    console.log(dictionary)
     return {
+        currLevel: dictionary.currLevel,
         currSection: currSection.number,
         words: dictionary.words,
         options: currSection.options,

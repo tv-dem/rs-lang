@@ -1,10 +1,11 @@
-import {CHANGE_LEVEL, CHANGE_PAGE, PENDING_FALSE, PENDING_TRUE, UPDATE_WORDS,} from "./actionTypes";
+import {CHANGE_LEVEL, CHANGE_PAGE, FETCH_ERROR, PENDING_FALSE, PENDING_TRUE, UPDATE_WORDS,} from "./actionTypes";
 
 const initState = {
     words: [],
     currPage: 1,
     currLevel: 1,
     pending: false,
+    isError: '',
     levels: [
         {
             title: 'level 1'
@@ -30,8 +31,9 @@ const initState = {
 const TextBookReducer = (state = initState, action:any) => {
     switch(action.type){
         case PENDING_TRUE:
-            console.log(PENDING_TRUE)
             return {...state, pending: action.pending}
+        case FETCH_ERROR:
+            return {...state, pending: action.pending, isError: action.errorMessage}
         case PENDING_FALSE:
             console.log(PENDING_FALSE)
             return {...state, pending: action.pending}

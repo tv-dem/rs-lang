@@ -10,7 +10,7 @@ import {
     ReadOutlined
 } from "@ant-design/icons";
 
-const NawPages = ({currLevel, currPage, currDictSection, currDictPage}:any) => {
+const NawPages = ({currLevel, currPage, currDictSection, currDictPage,currDictLevel}:any) => {
     const ref = useRef<HTMLInputElement>(null);
     return (
         <nav className='nav-pages' ref={ref}>
@@ -46,7 +46,7 @@ const NawPages = ({currLevel, currPage, currDictSection, currDictPage}:any) => {
                 </li>
                 <li>
 
-                    <NavLink activeClassName='active' to={`/dictionary/${currDictSection.section}/${currDictPage}`}>
+                    <NavLink activeClassName='active' to={`/dictionary/${currDictSection.section}/${currDictLevel}/${currDictPage}`}>
                         <div className='li-item'>
                             <h2>Словарь</h2>
                             <ReadOutlined style={{fontSize: '40px'}}/>

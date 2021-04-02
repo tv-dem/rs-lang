@@ -6,6 +6,7 @@ import NawPages from "./NawPages";
 const mapStateToProps = ({textBook, dictionary}:any) => ({
     currLevel: textBook.currLevel,
     currPage: textBook.currPage,
+    currDictLevel: dictionary.currLevel,
     currDictSection: dictionary.currSection,
     currDictPage: dictionary.currPage,
 })
