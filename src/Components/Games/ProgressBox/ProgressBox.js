@@ -6,9 +6,9 @@ const ProgressBox = ({
   seconds,
   isCheck,
   onCheck,
+  percent,
+  setPercent
 }) => {
-
-  const [percent, setPercent] = useState(100)
 
   useEffect(() => {
     if (!isCheck) {

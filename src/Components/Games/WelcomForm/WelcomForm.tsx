@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { Button, Typography, Form, Select, Input } from "antd";
 import "./WelcomForm.scss";
 
 const { Text, Title } = Typography;
 
-const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
-  const [level, setLevel] = useState(0);
-
+const WelcomForm = ({ pathname, currentGame, setCurrentCard,fetchWords,nullifyWords,words }: any) => {
+  const [level, setLevel] = useState(1);
+  const history = useHistory();
   useEffect(() => setCurrentCard(pathname), [setCurrentCard]);
+  useEffect(()=> nullifyWords())
 
   const backgroundLinkStyle: React.CSSProperties = {
     backgroundColor: currentGame ? currentGame.backgroundColor : "red",
@@ -37,6 +38,11 @@ const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
     setLevel(value);
   };
 
+  const onClickHandler=()=>{
+    fetchWords(level,0)
+    history.push(`${currentGame.menuRoute}/${level}`);
+  }
+
   return (
     <>
       {currentGame && (
@@ -54,8 +60,7 @@ const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
           </Title>
 
           <Form className="welcomeForm__form">
-            <Form.Item
-              name="name"
+            <Form.Item             
               initialValue={currentGame.name}
               hidden
             ></Form.Item>
@@ -63,31 +68,32 @@ const WelcomForm = ({ pathname, currentGame, setCurrentCard }: any) => {
               className="welcomeForm__form-item"
               name="wordsLevel"
               label="Выберите уровень сложности слов:"
-              initialValue="0"
+              initialValue="1"
             >
               <Select
                 className="welcomeForm__form-select"
                 onChange={onChangeSelect}
               >
-                <Select.Option value="0">FIRST</Select.Option>
-                <Select.Option value="1">SECOND</Select.Option>
-                <Select.Option value="2">THIRD</Select.Option>
-                <Select.Option value="3">FOURTH</Select.Option>
-                <Select.Option value="4">FIFTH</Select.Option>
-                <Select.Option value="5">SIXTH</Select.Option>
+                <Select.Option value="1">FIRST</Select.Option>
+                <Select.Option value="2">SECOND</Select.Option>
+                <Select.Option value="3">THIRD</Select.Option>
+                <Select.Option value="4">FOURTH</Select.Option>
+                <Select.Option value="5">FIFTH</Select.Option>
+                <Select.Option value="6">SIXTH</Select.Option>
               </Select>
             </Form.Item>
 
-            <Link to={`${currentGame.menuRoute}/${level+1}`}>
+            {/* <Link to={`${currentGame.menuRoute}/${level}`}> */}
               <Button
                 style={backgroundLinkStyle}
                 className="welcomeForm__form-btnStart"
                 autoFocus
                 htmlType="submit"
+                onClick={onClickHandler}
               >
                 START
               </Button>
-            </Link>
+            {/* </Link> */}
           </Form>
         </div>
       )}

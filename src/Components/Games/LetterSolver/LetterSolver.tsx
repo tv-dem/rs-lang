@@ -1,40 +1,96 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { DOMElement, useEffect, useRef, useState } from "react";
+import { Redirect } from "react-router-dom";
 import { Image, Spin } from "antd";
 import ProgressBox from "../ProgressBox/ProgressBox";
 import Word from "./Word/Word";
 import "./LetterSolver.scss";
+import ModalFinishLevel from "../Modal/ModalFinishLevel";
 
 const LetterSolved: React.FC = ({
   words,
   count,
+  right,
+  wrong,
   setCount,
   currentWord,
   setCurrentWord,
-  getTextBookWordsTC,
+  addRightWord,
+  addWrongWord,
+  nullifyRightWord,
+  nullifyWrongWord,
+  currentGame,
 }: any) => {
-  const wordRef = useRef(null);
+  const wordRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const answerRef = useRef<HTMLDivElement>(null);
+
   const [isCheck, setIsCheck] = useState(false);
+  const [percent, setPercent] = useState(100);
 
   useEffect(() => {
-    getTextBookWordsTC(1, 1);
+    nullifyRightWord();
+    nullifyWrongWord();
+    if (count !== 0) setCount(0);
   }, []);
 
   useEffect(() => {
-    if (!count) setCount(0);
     if (words) setCurrentWord(words[count]);
   }, [words]);
 
   useEffect(() => {
-    console.log(`currentWord`);
-    console.log(currentWord);
-  }, [currentWord]);
+    if (count) {
+      setCurrentWord(words[count]);
+      setPercent(100);
+    }
+  }, [count]);
 
-  const onCheck = () => {
-    console.log("onCheck");
+  useEffect(() => {
+    if (isCheck) {
+      if (imageRef.current && progressRef.current && answerRef.current) {
+        imageRef.current.classList.remove("toBackPlaceImg");
+        imageRef.current.classList.add("toChangePlaceImg");
+        progressRef.current.classList.remove("toBackPlaceProgress");
+        progressRef.current.classList.add("toChangePlaceProgress");
+        answerRef.current.classList.add("visible");
+        answerRef.current.classList.remove("hidden");
+      }
+    } else {
+      if (imageRef.current && progressRef.current && answerRef.current) {
+        imageRef.current.classList.remove("toChangePlaceImg");
+        imageRef.current.classList.add("toBackPlaceImg");
+        progressRef.current.classList.remove("toChangePlaceProgress");
+        progressRef.current.classList.add("toBackPlaceProgress");
+        answerRef.current.classList.add("hidden");
+        answerRef.current.classList.remove("visible");
+      }
+    }
+  }, [isCheck]);
+  if (!words) return <Redirect to="/games/" />;
+  // if (!words) return <Redirect to={`/games/${currentGame.nameEn}`} />
+
+  const onCheck = (letters: Array<string>) => {
+    if (letters.length > 1 && letters.join("") === currentWord.word) {
+      if (wordRef.current) wordRef.current.classList.add("right");
+      addRightWord(currentWord);
+    } else {
+      if (wordRef.current) wordRef.current.classList.add("wrong");
+      addWrongWord(currentWord);
+    }
+    setIsCheck(true);
   };
 
   const onHandleClickBtnNext = () => {
-    console.log("onHandleClickBtnNext");
+    if (wordRef.current) {
+      wordRef.current.classList.remove("right");
+      wordRef.current.classList.remove("wrong");
+    }
+    if (count < words.length - 1) {
+      setCount(count + 1);
+    } else {
+      ModalFinishLevel(right, wrong);
+    }
+    setIsCheck(false);
   };
 
   return (
@@ -42,7 +98,7 @@ const LetterSolved: React.FC = ({
       {currentWord ? (
         <>
           <div className="letterSolver__view-box">
-            <div>
+            <div className="image-box" ref={imageRef}>
               <Image
                 className="context_image"
                 alt="Loading"
@@ -52,7 +108,24 @@ const LetterSolved: React.FC = ({
                 src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
               ></Image>
             </div>
-            <ProgressBox seconds="60" isCheck={isCheck} onCheck={onCheck} />
+            <div className="answer-box hidden" ref={answerRef}>
+              <div className="answer-box__word-word">{currentWord.word}</div>
+              <div className="answer-box__word-transcription">
+                {currentWord.transcription}
+              </div>
+              <div className="answer-box__word-wordTranslate">
+                {currentWord.wordTranslate}
+              </div>
+            </div>
+            <div className="progress-box" ref={progressRef}>
+              <ProgressBox
+                seconds="60"
+                percent={percent}
+                setPercent={setPercent}
+                isCheck={isCheck}
+                onCheck={onCheck}
+              />
+            </div>
           </div>
           <div className="letterSolver__hide-box"></div>
           <Word
