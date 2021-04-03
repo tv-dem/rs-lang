@@ -10,12 +10,13 @@ const mapStateToProps = (state: any) => ({
   right:state.games.right,
   wrong:state.games.wrong,
   currentWord:state.games.currentWord,
+  currentGame: state.games.currentGame,
 });
 
 const mapDispatchToProps = (dispatch:any) => ({
     setCurrentWord: (word:Object) => dispatch(setCurrentWord(word)),
     setCount:(count:number)=>dispatch(setCount(count)),
-    getWords:(group: number, page: number) => dispatch( getWords(group, page)),
+    fetchWords:(group: number, page: number) => dispatch( getWords(group, page)),
     addRightWord:(word:Object)=>dispatch(addRightWord(word)),
     addWrongWord:(word:Object)=>dispatch(addWrongWord(word)),
     nullifyRightWord:()=>dispatch(nullifyRightWord),

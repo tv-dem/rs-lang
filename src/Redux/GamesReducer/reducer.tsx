@@ -7,11 +7,14 @@ import {
   ADD_WRONG_WORD,
   NULLIFY_RIGHT_WORDS,
   NULLIFY_WRONG_WORDS,
+  NULLIFY_WORDS,
 } from "./actionTypes";
 import { typeGames } from "./typeGames";
 import shuffle from "../../utils/shuffle";
 
 const initState: typeGames = {
+  level:0,
+  page:0,
   currentGame: null,
   count: 0,
   currentWord: null,
@@ -21,6 +24,7 @@ const initState: typeGames = {
   cards: [
     {
       name: "Собери слово",
+      nameEn: "LetterSolver",
       descriptions:
         "Мини-игра «Собери слово» - это тренировка для восприятия и повторения английских слов.",
       howToPlay:
@@ -30,13 +34,13 @@ const initState: typeGames = {
       imageBackground:
         "https://i.insider.com/58d02e0e7d1fb21d008b47cf?width=700&format=jpeg&auto=webp",
       menuRoute: "/games/LetterSolver",
-      textbookRoute: "/games/textbook/LetterSolver/level/page",
       titleColor: "#B964D4",
       descriptionColor: "#68237F",
       backgroundColor: "#E9FB00",
     },
     {
       name: "Спринт",
+      nameEn: "Sprint",
       descriptions:
         "Мини-игра «Спринт» - это тренировка для повторения заученных слов из вашего словаря.",
       howToPlay:
@@ -47,13 +51,13 @@ const initState: typeGames = {
         "https://www.macmillandictionaryblog.com/wp-content/uploads/2017/09/sprint-810x541.jpg",
 
       menuRoute: "/games/Sprint",
-      textbookRoute: "/games/textbook/Sprint/level/page",
       titleColor: "#EB6AA4",
       descriptionColor: "#A1285F",
       backgroundColor: "#8BEA00",
     },
     {
       name: "Аудиовызов",
+      nameEn: "AudioCall",
       descriptions:
         "Мини-игра «Аудиовызов» - это тренировка, развивающая навыки речи и перевода.",
       howToPlay:
@@ -64,13 +68,13 @@ const initState: typeGames = {
         "https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/137685473/original/1e493f8e1b3c7f190ddf73e48b3aa2af23017943/translate-audio-or-video-transcription-in-english.jpg",
 
       menuRoute: "/games/AudioCall",
-      textbookRoute: "/games/textbook/AudioCall/level/page",
       titleColor: "#BEF56E",
       descriptionColor: "#7AB02C",
       backgroundColor: "#8B003F",
     },
     {
       name: "Саванна",
+      nameEn: "Savanna",
       descriptions:
         "Мини-игра «Саванна» - это тренировка по переводу пассивного изученного словаря в активную стадию.",
       howToPlay:
@@ -81,7 +85,6 @@ const initState: typeGames = {
         "https://wetu.com/ImageHandler/w1920x1080/14840/elephant-1_preview.jpeg2.jpg",
 
       menuRoute: "/games/Savanna",
-      textbookRoute: "/games/textbook/Savanna/level/page",
       titleColor: "#F3FD72",
       descriptionColor: "#B2BC2F",
       backgroundColor: "#54026E",
@@ -97,6 +100,8 @@ const GamesReducer = (state = initState, action: any) => {
       return { ...state, count: action.count };
     case UPDATE_WORDS:
       return { ...state, words: shuffle(action.words) };
+    case NULLIFY_WORDS:
+      return { ...state, words: null};
     case SET_CURRENT_CARD:
       return {
         ...state,

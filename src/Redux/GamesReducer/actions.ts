@@ -6,7 +6,8 @@ import {
     ADD_RIGHT_WORD,
     ADD_WRONG_WORD,
     NULLIFY_RIGHT_WORDS,
-    NULLIFY_WRONG_WORDS
+    NULLIFY_WRONG_WORDS,
+    NULLIFY_WORDS,
 } from "./actionTypes";
 
 
@@ -23,6 +24,11 @@ export const updateWords = (words: string) => ({
     type: UPDATE_WORDS,
     words
 })
+
+export const nullifyWords = () => ({
+    type: NULLIFY_WORDS,
+})
+
 
 export const setCurrentCard = (pathRoute: string) => ({
     type: SET_CURRENT_CARD,

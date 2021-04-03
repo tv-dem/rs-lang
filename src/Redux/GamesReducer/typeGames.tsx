@@ -5,7 +5,7 @@ export type typeCard = {
   imageLink: string;
   imageBackground: string;
   menuRoute: string;
-  textbookRoute: string;
+  nameEn: string;
   titleColor: string;
   descriptionColor: string;
   backgroundColor: string;
@@ -33,6 +33,8 @@ export type typeWord = {
 };
 
 export type typeGames = {
+  level: number;
+  page: number;
   currentGame: null | number;
   count: number;
   currentWord: null | typeWord;

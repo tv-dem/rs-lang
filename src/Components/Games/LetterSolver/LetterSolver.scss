@@ -8,9 +8,106 @@
     &__view-box {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
-        width: 60%;
+        width: 80%;
         margin-bottom: 40px;
+    }
+}
+
+.answer-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    width: 20%;
+    font-size: 1.5rem;
+}
+
+.answer-box__word-word {
+    color: green;
+}
+
+.answer-box__word-transcription {
+    color: grey;
+}
+
+answer-box__word-wordTranslate {
+    color: indigo;
+}
+
+.image-box,
+.answer-box,
+.progress-box {
+    width: 30%;
+}
+
+.image-box,
+.progress-box {
+    z-index: 99;
+}
+
+.answer-box {
+    z-index: 1;
+}
+
+.toChangePlaceImg {
+    transition-duration: 3s;
+    transition-timing-function: ease;
+    transform: translateX(200%);
+}
+
+.toBackPlaceImg {
+    transition-duration: 3s;
+    transition-timing-function: ease;
+    transform: translateX(0px);
+}
+
+.toChangePlaceProgress {
+    transition-duration: 3s;
+    transition-timing-function: ease;
+    transform: translateX(-200%);
+}
+
+.toBackPlaceProgress {
+    transition-duration: 3s;
+    transition-timing-function: ease;
+    transform: translateX(0px);
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.visible {
+    opacity: 1;
+    visibility: visible;
+    transition: 6s opacity, 6s visibility;
+}
+
+.right {
+    pointer-events: none;
+    box-shadow: 0px 0px 9px 5px rgba(77, 255, 60, 0.75);
+    border: 2px solid rgba(77, 255, 60, 0.75);
+}
+
+.wrong {
+    pointer-events: none;
+    box-shadow: 0px 0px 9px 5px rgba(231, 70, 70, 0.75);
+    border: 2px solid red;
+    animation: 0.01s tremor ease-out;
+}
+
+@keyframes tremor {
+    0%,
+    25% {
+        left: -0.5px;
+        transform: translateX(-4%);
+    }
+    50%,
+    100% {
+        left: 0.5px;
+        transform: translateX(4%);
     }
 }
