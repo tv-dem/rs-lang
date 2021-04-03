@@ -1,5 +1,5 @@
 import React from "react";
-import UserBar from '../UserBar/UserBar';
+import UserBar from '../UserBar/UserBarContainer';
 import './Header.scss';
 
 const Header = ({ title, currLevel }: any) => {

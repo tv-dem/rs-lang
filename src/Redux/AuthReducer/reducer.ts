@@ -13,7 +13,7 @@ const initialState = {
   isLoading: false,
   user: {} as NewUser,
   authError: '',
-  currentUser: {} as CurrentUser,
+  currentUser: JSON.parse(localStorage.getItem('currentUser') as string) || {} as CurrentUser,
   isAuth: !!(JSON.parse(localStorage.getItem('currentUser') as string)?.token),
 };
 
