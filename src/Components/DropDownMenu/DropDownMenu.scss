@@ -1,0 +1,106 @@
+@import '../../styles/variables.scss';
+
+.drop-down-menu {
+  margin-right: 20px;
+  position: fixed;
+  inset: 74px 0px auto auto;
+  transform-origin: right top;
+  width: 250px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.32);
+  border-radius: 2px;
+  background-color: #fff;
+  will-change: transform;
+  z-index: 10;
+
+  &__link {
+    display: flex;
+    width: 100%;
+    background-color: #fff;
+    padding: 12px 48px 12px 56px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    transition-duration: 0.12s;
+    transition-timing-function: ease-in-out;
+    transition-property: background-color;
+    position: relative;
+    color: #000;
+    font-size: 16px;
+    line-height: 24px;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: left;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+      color: #41097a;
+
+      & .user-bar__icon svg {
+        fill: $primary-2;
+      }
+    }
+
+    & .user-bar__icon {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+
+      & svg {
+        fill: rgba(0, 0, 0, 0.48);
+      }
+
+      & svg:hover {
+        fill: $primary-2;
+      }
+    }
+  }
+
+  &__exit-btn {
+    display: block;
+    width: 100%;
+    background-color: #fff;
+    padding: 12px 48px 12px 56px;
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    transition-duration: 0.12s;
+    transition-timing-function: ease-in-out;
+    transition-property: background-color;
+    position: relative;
+    color: #000;
+    font-size: 16px;
+    line-height: 24px;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: left;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+
+      & svg {
+        fill: $primary-2;
+      }
+    }
+
+    & svg {
+      display: inline-block;
+      vertical-align: middle;
+      fill: rgba(0, 0, 0, 0.48);
+      color: currentColor;
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      touch-action: manipulation;
+      transform-origin: center center;
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+
+      &:hover {
+        fill: $primary-2;
+      }
+    }
+  }
+}

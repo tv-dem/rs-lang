@@ -47,14 +47,14 @@ const App: React.FC<AppProps> = ({ isAuth }) => {
               <Route path='/games/:game' component={WelcomFormContainer} />
               <Route path='/games' component={GamesContainer} />
               <Route path='/textbook/:level/:page' component={TextBookContainer} />
-              <Route exact path='/' component={MainPageContainer} />
+              <Route path='/home' component={MainPageContainer} />
               {isAuth && (
                 <>
                   <Route path='/statistic' component={StatisticContainer} />
                   <Route path='/dictionary/:section/:page' component={DictionaryContainer} />
                 </>
               )}
-              <Redirect to='/home' />
+              {/* <Redirect to='/home' /> */}
             </Switch>
           </CSSTransition>
         </TransitionGroup>
