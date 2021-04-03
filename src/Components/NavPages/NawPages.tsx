@@ -56,7 +56,6 @@ const NawPages: React.FC<NawPagesProps> = ({ currLevel, currPage, currDictSectio
         {isAuth && (
           <>
             <li>
-
               <NavLink activeClassName='active' to={`/dictionary/${currDictSection.section}/${currDictPage}`}>
                 <div className='li-item'>
                   <h2>Словарь</h2>
