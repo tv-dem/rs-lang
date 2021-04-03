@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
-import NawPages from "../../Components/NavPages/NawPages";
-import Header from "../../Components/Header/Header";
+import React, { useEffect } from 'react';
 
-const MainPage = ({onLoad}: any) => {
-    useEffect(()=> onLoad(), [onLoad]);
-    return <>
-    </>
+const MainPage = ({ onLoad }: any) => {
+  useEffect(() => onLoad(), [onLoad]);
+
+  return (<>
+    Home Page
+  </>)
 }
 
 export default MainPage;
