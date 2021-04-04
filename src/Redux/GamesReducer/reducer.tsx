@@ -8,13 +8,17 @@ import {
   NULLIFY_RIGHT_WORDS,
   NULLIFY_WRONG_WORDS,
   NULLIFY_WORDS,
+  SET_PENDING,
+  SET_LEVEL,
+  SET_PAGE
 } from "./actionTypes";
 import { typeGames } from "./typeGames";
 import shuffle from "../../utils/shuffle";
 
 const initState: typeGames = {
-  level:0,
-  page:0,
+  pending:false,
+  page:1,
+  level:1,
   currentGame: null,
   count: 0,
   currentWord: null,
@@ -93,8 +97,6 @@ const initState: typeGames = {
 };
 
 const GamesReducer = (state = initState, action: any) => {
-  console.log(`state.wrong`);
-  console.log(state);
   switch (action.type) {
     case SET_COUNT:
       return { ...state, count: action.count };
@@ -136,6 +138,21 @@ const GamesReducer = (state = initState, action: any) => {
       return {
         ...state,
         wrong: [],
+      };
+      case SET_PENDING:
+      return {
+        ...state,
+        pending: action.status,
+      };
+      case SET_LEVEL:
+      return {
+        ...state,
+        level: action.level,
+      };
+      case SET_PAGE:
+      return {
+        ...state,
+        page: action.page,
       };
     default:
       return state;
