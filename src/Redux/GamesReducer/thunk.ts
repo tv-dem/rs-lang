@@ -1,5 +1,5 @@
 import API from "../../API/API";
-import { updateWords, setPending , nullifyRightWord,nullifyWrongWord,setCount } from "./actions";
+import { updateWords, setPending, nullifyRightWord, nullifyWrongWord, setCount } from "./actions";
 
 export const getWords = (group: number, page: number) => (dispatch: any) => {
 
@@ -17,7 +17,7 @@ export const getWords = (group: number, page: number) => (dispatch: any) => {
     } catch (error) {
         console.error(`Unhandled rejection, status.code=${error.message}`);
     }
-    
+
 }
 
 

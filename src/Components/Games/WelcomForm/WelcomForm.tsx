@@ -16,7 +16,16 @@ const WelcomForm = ({
   level,
   page,
 }: any) => {
+
+
   const history = useHistory();
+
+  const [isTextBook,setIsTextBook]=useState(false)
+
+useEffect(()=>{
+
+},[isTextBook])
+
   useEffect(() => setCurrentCard(pathname), [setCurrentCard]);
   useEffect(() => {
     nullifyWords();
@@ -39,6 +48,13 @@ const WelcomForm = ({
     textShadow: '2px 0px 2px rgba(86,86,86, 1)',
   };
 
+  const selectStyle: React.CSSProperties = {
+    color: "green",
+    fontSize: '1rem',
+    textAlign:"center",
+    fontWeight:"bold"
+  };
+
   const descriptionsStyle: React.CSSProperties = {
     color: currentGame ? currentGame.descriptionColor : 'black',
     fontSize: '1.5rem',
@@ -47,12 +63,12 @@ const WelcomForm = ({
 
   const onChangeSelect = (value: number) => {
     setLevel(Number(value));
-    setPage(5);
+    setPage(0);
   };
 
   const onClickHandler = () => {
     fetchWords(level, page);
-    history.push(`${currentGame.menuRoute}/${level}${page}`);
+    history.push(`${currentGame.menuRoute}/${level}`);
   };
 
   return (
@@ -70,27 +86,31 @@ const WelcomForm = ({
               {currentGame.howToPlay}
             </Text>
           </Title>
-
-          <Form className="welcomeForm__form">
-            <Form.Item initialValue={currentGame.name} hidden></Form.Item>
-            <Form.Item
-              className="welcomeForm__form-item"
-              name="wordsLevel"
-              label="Выберите уровень сложности слов:"
-              initialValue={level.toString()}
-            >
-              <Select
-                className="welcomeForm__form-select"
-                onChange={onChangeSelect}
-              >
-                <Select.Option value="1">FIRST</Select.Option>
-                <Select.Option value="2">SECOND</Select.Option>
-                <Select.Option value="3">THIRD</Select.Option>
-                <Select.Option value="4">FOURTH</Select.Option>
-                <Select.Option value="5">FIFTH</Select.Option>
-                <Select.Option value="6">SIXTH</Select.Option>
-              </Select>
-            </Form.Item>
+{!isTextBook && 
+ <Form className="welcomeForm__form">
+ <Form.Item initialValue={currentGame.name} hidden></Form.Item>
+ <Form.Item
+ style={selectStyle}
+   className="welcomeForm__form-item"
+   name="wordsLevel"
+   label="Уровень сложности:"
+   initialValue={level.toString()}
+ >
+   <Select
+     className="welcomeForm__form-select"
+     onChange={onChangeSelect}
+   >
+     <Select.Option value="1">FIRST</Select.Option>
+     <Select.Option value="2">SECOND</Select.Option>
+     <Select.Option value="3">THIRD</Select.Option>
+     <Select.Option value="4">FOURTH</Select.Option>
+     <Select.Option value="5">FIFTH</Select.Option>
+     <Select.Option value="6">SIXTH</Select.Option>
+   </Select>
+ </Form.Item>
+ </Form>
+}
+         
             <Button
               style={backgroundLinkStyle}
               className="welcomeForm__form-btnStart"
@@ -100,7 +120,7 @@ const WelcomForm = ({
             >
               START
             </Button>
-          </Form>
+          
         </div>
       )}
     </>

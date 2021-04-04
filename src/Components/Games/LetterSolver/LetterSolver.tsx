@@ -18,7 +18,9 @@ const LetterSolved: React.FC = ({
   addRightWord,
   addWrongWord,
   pending,
-  fetchWords
+  fetchWords,
+  level,
+  page
 }: any) => {
   const wordRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -106,11 +108,11 @@ const LetterSolved: React.FC = ({
   };
 
   const onOk=()=>{
-    fetchWords(1,1)
+    fetchWords(level,page+1)
   }
 
   const onCancel=()=>{
-    fetchWords(1,1)
+    fetchWords(level,page)
   }
 
   const onHandleClickBtnNext = () => {

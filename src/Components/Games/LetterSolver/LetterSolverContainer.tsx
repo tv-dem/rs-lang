@@ -11,6 +11,9 @@ const mapStateToProps = (state: any) => ({
   wrong:state.games.wrong,
   currentWord:state.games.currentWord,
   pending: state.games.pending,
+  level:state.games.level,
+  page:state.games.page
+
 });
 
 const mapDispatchToProps = (dispatch:any) => ({
