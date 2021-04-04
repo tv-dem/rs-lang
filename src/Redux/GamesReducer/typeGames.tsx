@@ -33,7 +33,7 @@ export type typeWord = {
 };
 
 export type typeGames = {
-  pending:boolean,
+  pending:boolean;
   level: number;
   page: number;
   currentGame: null | number;

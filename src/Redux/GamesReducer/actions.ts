@@ -8,7 +8,9 @@ import {
     NULLIFY_RIGHT_WORDS,
     NULLIFY_WRONG_WORDS,
     NULLIFY_WORDS,
-    SET_PENDING
+    SET_PENDING,
+    SET_LEVEL,
+    SET_PAGE
 } from "./actionTypes";
 
 
@@ -59,5 +61,20 @@ export const setPending = (status: boolean) => ({
     type: SET_PENDING,
     status
 })
+
+export const setLevel = (level: number) =>{
+    console.log(`level ${level}`)
+    return ({
+    type: SET_LEVEL,
+    level
+})}
+
+export const setPage = (page: number) =>{ 
+    console.log(`page ${page}`)
+    return({
+    type: SET_PAGE,
+    page
+})}
+
 
 
