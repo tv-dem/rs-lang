@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import { Button, Typography, Form, Select, Input } from "antd";
+import { useHistory } from "react-router-dom";
+import { Button, Typography, Form, Select } from "antd";
 import "./WelcomForm.scss";
 
 const { Text, Title } = Typography;
 
-const WelcomForm = ({ pathname, currentGame, setCurrentCard,fetchWords,nullifyWords,words }: any) => {
+const WelcomForm = ({ pathname, currentGame, setCurrentCard,fetchWords,nullifyWords}: any) => {
   const [level, setLevel] = useState(1);
   const history = useHistory();
   useEffect(() => setCurrentCard(pathname), [setCurrentCard]);
-  useEffect(()=> nullifyWords())
+  useEffect(()=> {
+    nullifyWords();
+  })
 
   const backgroundLinkStyle: React.CSSProperties = {
     backgroundColor: currentGame ? currentGame.backgroundColor : "red",
@@ -83,7 +85,6 @@ const WelcomForm = ({ pathname, currentGame, setCurrentCard,fetchWords,nullifyWo
               </Select>
             </Form.Item>
 
-            {/* <Link to={`${currentGame.menuRoute}/${level}`}> */}
               <Button
                 style={backgroundLinkStyle}
                 className="welcomeForm__form-btnStart"
@@ -93,7 +94,7 @@ const WelcomForm = ({ pathname, currentGame, setCurrentCard,fetchWords,nullifyWo
               >
                 START
               </Button>
-            {/* </Link> */}
+          
           </Form>
         </div>
       )}

@@ -4,7 +4,7 @@ import {
   setCurrentCard,
   nullifyWords,
 } from "../../../Redux/GamesReducer/actions";
-import { getWords } from "../../../Redux/GamesReducer/thunk";
+import { getWords, } from "../../../Redux/GamesReducer/thunk";
 
 const mapStateToProps = (state: any) => ({
   pathname: state.router.location.pathname,
