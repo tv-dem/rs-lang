@@ -26,7 +26,6 @@ const MapDispatchToProps = (dispatch: any) => ({
         dispatch(changeHeaderTitleAC('Учебник'))
     },
     onSelectLevel: (level: number) => {
-        console.log(level)
         dispatch(changeLevelAC(level))
     },
     onSelectPage: (page: number, currlevel: number) => {

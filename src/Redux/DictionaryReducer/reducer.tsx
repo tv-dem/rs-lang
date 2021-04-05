@@ -1,4 +1,5 @@
-import {CHANGE_LEVEL, CHANGE_PAGE, CHANGE_SECTION,} from "./actionTypes";
+import {CHANGE_LEVEL, CHANGE_PAGE, CHANGE_SECTION, UPDATE_WORDS,} from "./actionTypes";
+import {FETCH_ERROR, PENDING_FALSE, PENDING_TRUE} from "./actionTypes";
 
 const initState = { // заглушка, изначально будет пустой массив, после запроса обновится
     words: [],
@@ -7,28 +8,19 @@ const initState = { // заглушка, изначально будет пус�
             number: 1,
             title: 'Изучаемые',
             section: 'learn',
-            options: [
-                'в сложные',
-                'удалить',
-            ]
+            options: []
         },
         {
             number: 2,
             title: 'Сложные',
             section: 'hard',
-            options: [
-                'в изучаемые',
-                'удалить',
-            ]
+            options: []
         },
         {
             number: 3,
             title: 'Удаленные',
             section: 'delete',
-            options: [
-                'восстановить в изучаемые',
-                'восстановить в сложные',
-            ]
+            options: ['восстановить']
         },
     ],
     levels: [
@@ -53,28 +45,36 @@ const initState = { // заглушка, изначально будет пус�
     ],
     currLevel: 1,
     currPage: 1,
+    pending: false,
+    isError: '',
     currSection: {
         number: 1,
         title: 'Изучаемые',
         section: 'learn',
-        options: [
-            'в сложные',
-            'в удаленные',
-        ]
+        options: []
     },
+    wordsInSection: 0,
 }
 
 const DictionaryReducer = (state = initState, action:any) => {
-    console.log('dsf', action)
+    console.log(action)
     switch(action.type){
+        case PENDING_TRUE:
+            return {...state, pending: action.pending}
+        case FETCH_ERROR:
+            return {...state, pending: action.pending, isError: action.errorMessage}
+        case PENDING_FALSE:
+            console.log(PENDING_FALSE)
+            return {...state, pending: action.pending}
         case CHANGE_PAGE:
             return {...state, currPage: action.page}
         case CHANGE_SECTION:
             const section = state.sections.find(({section}) => section===action.sectionName)
-            console.log(section)
             return {...state, currSection: section}
         case CHANGE_LEVEL:
             return {...state, currLevel: action.level}
+        case UPDATE_WORDS:
+            return {...state, words: action.words, wordsInSection: action.wordsInSection}
         default:
             return state
     }

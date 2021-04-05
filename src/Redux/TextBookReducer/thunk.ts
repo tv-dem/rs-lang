@@ -18,7 +18,6 @@ export const createUserWordTC = (wordId: string, userId: string, difficulty: str
             console.log('createUserWordTC:',group, page)
             dispatch(setPending())
             API.getAggregatedWords(userId, group, page, token)
-                .then(res => res.json())
                 .then(res => {
                     dispatch(updateWords(res[0].paginatedResults))
                     dispatch(removePending())
@@ -32,7 +31,6 @@ export const updateUserWordTC = (wordId: string, userId: string, difficulty: str
             console.log('res:',res)
             dispatch(setPending())
             API.getAggregatedWords(userId, group, page, token)
-                .then(res => res.json())
                 .then(res => {
                     console.log('res', res)
                     dispatch(updateWords(res[0].paginatedResults))
@@ -45,15 +43,6 @@ export const updateUserWordTC = (wordId: string, userId: string, difficulty: str
 export const getAggregatedWordsTC = (userId: string, group: number, page:number, token:string) => (dispatch:any) => {
     dispatch(setPending())
     API.getAggregatedWords(userId, group, page, token)
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            if (res.status === 401){
-                return null;
-            }
-            return null
-        })
         .then(res => {
             if(res) {
                 console.log('res', res)

@@ -71,6 +71,7 @@ class API {
                 optional
             })
         })
+            .then(res => res.json())
     }
 
     getUserWordById(wordId: string, userId: string, token: string) {
@@ -85,7 +86,7 @@ class API {
             .then(res => res.json());
     }
 
-    updateUserWord(wordId: string, userId: string, difficulty: string, optional: Object, token:string) {
+    updateUserWord(wordId: string, userId: string, difficulty: string, optional: Object, token: string) {
         return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/words/${wordId}`, {
             method: 'PUT',
             headers: {
@@ -98,10 +99,11 @@ class API {
                 optional
             })
         })
+            .then(res => res.json())
     }
 
-    getAggregatedWords(userId: string, group: number, page:number, token:string){
-                return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=20`, {
+    getAggregatedWords(userId: string, group: number, page: number, token: string) {
+        return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=20`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -109,10 +111,41 @@ class API {
                 'Content-Type': 'application/json'
             },
         })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                if (res.status === 401) {
+                    return null;
+                }
+                return null
+            })
     }
 
+    getAggregatedWordsByParams(userId: string, params:any, group:number, page:number, token: string){
+        const filter = JSON.stringify(params);
+        return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/aggregatedWords?filter=${filter}&group=${group}&page=${page}&wordsPerPage=20`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                if (res.status === 401) {
+                    return null;
+                }
+                return null
+            })
+    }
+
+
     //userSettings
-    getUserSettings(userId: string, token:string) {
+    getUserSettings(userId: string, token: string) {
         return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/settings`, {
             method: 'GET',
             headers: {
@@ -124,7 +157,7 @@ class API {
             .then(res => res.json());
     }
 
-    updateUserSettings(userId: string, optional: Object, token:string) {
+    updateUserSettings(userId: string, optional: Object, token: string) {
         return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/settings`, {
             method: 'PUT',
             headers: {
