@@ -12,7 +12,7 @@ import AuthorizationPage from './Pages/AuthorizationPage/AuthorizationPage';
 const store = configureStore(); // null вместо initState
 
 ReactDOM.render(
-  (<React.StrictMode>
+  (
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <Switch>
@@ -21,7 +21,6 @@ ReactDOM.render(
         </Switch>
       </ConnectedRouter>
     </Provider>
-  </React.StrictMode>)
-  ,
+  ),
   document.getElementById('root')
 );

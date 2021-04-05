@@ -9,12 +9,13 @@ import {
 } from './actions';
 import API from '../../API/API';
 
-export const createUser = (name: string, password: string, email: string) => async (dispatch: any) => {
+export const createUser = (name: string, password: string, email: string, avatar: string) => async (dispatch: any) => {
   dispatch(authUserStarted());
 
   try {
-    const json = await API.createUser(name, password, email);
+    const json = await API.createUser(name, password, email, avatar);
     dispatch(createUserSuccess(json));
+    console.log(json);
     dispatch(push('/authorization'));
   } catch (err) {
     if (err.message === '422') {

@@ -14,7 +14,7 @@ interface UserBarProps {
 
 const UserBar: React.FC<UserBarProps> = ({ isAuth, currentUser }) => {
   const [isShowMenu, setShowMenu] = useState(false);
-  const { name } = currentUser;
+  const { name, avatar } = currentUser;
 
   const toggleDropDownMenu = () => {
     setShowMenu((prevState) => !prevState);
@@ -28,7 +28,7 @@ const UserBar: React.FC<UserBarProps> = ({ isAuth, currentUser }) => {
             <Avatar
               style={{ backgroundColor: '#d19aed' }}
               icon={<UserOutlined />}
-              src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+              src={avatar}
               alt={`${name} avatar`}
             />
             <div className="user-bar_title">

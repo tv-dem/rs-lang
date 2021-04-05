@@ -13,8 +13,8 @@ import { typeGames } from "./typeGames";
 import shuffle from "../../utils/shuffle";
 
 const initState: typeGames = {
-  level:0,
-  page:0,
+  level: 0,
+  page: 0,
   currentGame: null,
   count: 0,
   currentWord: null,
@@ -93,15 +93,13 @@ const initState: typeGames = {
 };
 
 const GamesReducer = (state = initState, action: any) => {
-  console.log(`state.wrong`);
-  console.log(state);
   switch (action.type) {
     case SET_COUNT:
       return { ...state, count: action.count };
     case UPDATE_WORDS:
       return { ...state, words: shuffle(action.words) };
     case NULLIFY_WORDS:
-      return { ...state, words: null};
+      return { ...state, words: null };
     case SET_CURRENT_CARD:
       return {
         ...state,
