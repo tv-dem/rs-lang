@@ -7,3 +7,8 @@ export const ADD_WRONG_WORD = 'ADD_WRONG_WORD';
 export const NULLIFY_WORDS = 'NULLIFY_WORDS';
 export const NULLIFY_RIGHT_WORDS = 'NULLIFY_RIGHT_WORDS';
 export const NULLIFY_WRONG_WORDS = 'NULLIFY_WRONG_WORDS';
+export const SET_PENDING = 'SET_PENDING';
+export const SET_LEVEL = 'SET_LEVEL';
+export const SET_PAGE = 'SET_PAGE';
+
+

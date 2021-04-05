@@ -8,17 +8,16 @@ import {
     NULLIFY_RIGHT_WORDS,
     NULLIFY_WRONG_WORDS,
     NULLIFY_WORDS,
+    SET_PENDING,
+    SET_LEVEL,
+    SET_PAGE
 } from "./actionTypes";
 
 
-export const setCount = (count: number) =>{ 
-    console.log('setCount actions')
-    console.log(count)
-
-   return  ({
+export const setCount = (count: number) => ({
     type: SET_COUNT,
     count
-})}
+})
 
 export const updateWords = (words: string) => ({
     type: UPDATE_WORDS,
@@ -57,4 +56,25 @@ export const nullifyRightWord = () => ({
 export const nullifyWrongWord = () => ({
     type: NULLIFY_WRONG_WORDS,
 })
+
+export const setPending = (status: boolean) => ({
+    type: SET_PENDING,
+    status
+})
+
+export const setLevel = (level: number) =>{
+    console.log(`level ${level}`)
+    return ({
+    type: SET_LEVEL,
+    level
+})}
+
+export const setPage = (page: number) =>{ 
+    console.log(`page ${page}`)
+    return({
+    type: SET_PAGE,
+    page
+})}
+
+
 

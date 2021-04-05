@@ -5,11 +5,11 @@ import './index.scss'
 import { Provider } from "react-redux";
 import { Route, Switch } from "react-router";
 import { ConnectedRouter } from 'connected-react-router';
-import configureStore, { history } from './Redux/configureStore';
+import store, { history } from './Redux/configureStore';
 import AuthorizationPage from './Pages/AuthorizationPage/AuthorizationPage';
 
 // @ts-ignore
-const store = configureStore(); // null вместо initState
+// const store = configureStore(); // null вместо initState
 
 ReactDOM.render(
   (

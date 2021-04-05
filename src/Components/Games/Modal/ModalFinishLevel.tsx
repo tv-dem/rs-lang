@@ -4,13 +4,20 @@ import './ModalFinishLevel.scss'
 
 const { confirm } = Modal;
 
-const ModalFinishLevel: React.FC<any> = (right, wrong) => {
+type propsModalFinishLevel={
+  right:Array<Object>,
+  wrong:Array<Object>,
+  onOk:Function,
+  onCancel:Function,
+}
+
+const ModalFinishLevel: React.FC<propsModalFinishLevel> = ({right, wrong,onOk,onCancel}) => {
 
 
 
   return (
     <Space>
-      {Modal.confirm({
+      {confirm({
         title: `  ${right.length}/${right.length+wrong.length}`,
         content: (
           <div className="modal">
@@ -49,9 +56,9 @@ const ModalFinishLevel: React.FC<any> = (right, wrong) => {
           </div>
         ),
         okText: `Следующая страница`,
-        cancelText: `На главное меню`,
-        onOk() {},
-        onCancel() {},
+        cancelText: `Попробовать еще`,
+        onOk() {onOk()},
+        onCancel() {onCancel()},
         width: "70%",
       })}
     </Space>
