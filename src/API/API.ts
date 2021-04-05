@@ -11,11 +11,12 @@ class API {
   }
 
   //auth
-  createUser(name: string, password: string, email: string) {
+  createUser(name: string, password: string, email: string, avatar: string) {
     const user = {
       name,
       password,
       email,
+      avatar,
     }
     return fetch('https://api-rs-lang.herokuapp.com/users', {
       method: 'POST',

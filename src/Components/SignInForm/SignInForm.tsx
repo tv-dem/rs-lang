@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Form, Input, Button } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Upload } from 'antd';
+import {
+  UserOutlined,
+  LockOutlined,
+  EyeInvisibleOutlined,
+  EyeTwoTone,
+  UploadOutlined
+} from '@ant-design/icons';
 import Loader from '../Loader';
+import { CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_URL } from '../../utils/constants';
 import './SignInForm.scss';
 
 interface SignInFormProps {
-  createUser: (name: string, password: string, email: string) => void;
+  createUser: (name: string, password: string, email: string, avatar: string) => void;
   createUserFailure: (err: string) => void;
   createUserError: string;
   createUserLoading: boolean;
@@ -14,6 +21,7 @@ interface SignInFormProps {
 
 const SignInForm: React.FC<SignInFormProps> = ({ createUser, createUserFailure, createUserError, createUserLoading }) => {
   type ValidateStatus = Parameters<typeof Form.Item>[0]['validateStatus'];
+  const [avatar, setAvatar] = useState('');
   const [password, setPassword] = useState<{
     password: string;
     validateStatus?: ValidateStatus;
@@ -46,13 +54,39 @@ const SignInForm: React.FC<SignInFormProps> = ({ createUser, createUserFailure, 
     createUserFailure('');
   };
 
-  const onFinish = ({ name, email, password }: any) => {
-    createUserFailure('');
-    createUser(name, password, email);
+  const onFinishFailed = () => {
+    // createUserFailure(errorInfo);
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    // createUserFailure(errorInfo);
+  const normFile = (e: any) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  };
+
+  const handleUploadPhoto = (file: any): string => {
+    const formData = new FormData();
+
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+    fetch(CLOUDINARY_URL, {
+      method: 'POST',
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setAvatar(res.secure_url);
+      })
+      .catch((e) => console.log(e.message));
+
+    return '';
+  };
+
+  const onFinish = ({ name, email, password }: any) => {
+    createUserFailure('');
+    createUser(name, password, email, avatar);
   };
 
   return (
@@ -105,9 +139,11 @@ const SignInForm: React.FC<SignInFormProps> = ({ createUser, createUserFailure, 
           validateStatus={password.validateStatus}
           hasFeedback
         >
-          <Input prefix={<LockOutlined className="site-form-item-icon" />}
+          <Input.Password
+            prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Type your password"
+            iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
             value={password.password}
             onChange={onPasswordChange}
           />
@@ -133,10 +169,28 @@ const SignInForm: React.FC<SignInFormProps> = ({ createUser, createUserFailure, 
             }),
           ]}
         >
-          <Input prefix={<LockOutlined className="site-form-item-icon" />}
+          <Input.Password
+            prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Type your password"
+            iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
           />
+        </Form.Item>
+
+        <Form.Item
+          name="upload"
+          label="Upload the photo"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+          extra="Your Avatar"
+        >
+          <Upload
+            action={handleUploadPhoto}
+            listType="picture"
+            maxCount={1}
+          >
+            <Button icon={<UploadOutlined />}>Upload</Button>
+          </Upload>
         </Form.Item>
 
         <Form.Item>

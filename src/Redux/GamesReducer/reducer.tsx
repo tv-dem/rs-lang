@@ -16,9 +16,9 @@ import { typeGames } from "./typeGames";
 import shuffle from "../../utils/shuffle";
 
 const initState: typeGames = {
-  pending:false,
-  page:1,
-  level:1,
+  pending: false,
+  page: 1,
+  level: 1,
   currentGame: null,
   count: 0,
   currentWord: null,
@@ -103,7 +103,7 @@ const GamesReducer = (state = initState, action: any) => {
     case UPDATE_WORDS:
       return { ...state, words: shuffle(action.words) };
     case NULLIFY_WORDS:
-      return { ...state, words: null};
+      return { ...state, words: null };
     case SET_CURRENT_CARD:
       return {
         ...state,
@@ -139,17 +139,17 @@ const GamesReducer = (state = initState, action: any) => {
         ...state,
         wrong: [],
       };
-      case SET_PENDING:
+    case SET_PENDING:
       return {
         ...state,
         pending: action.status,
       };
-      case SET_LEVEL:
+    case SET_LEVEL:
       return {
         ...state,
         level: action.level,
       };
-      case SET_PAGE:
+    case SET_PAGE:
       return {
         ...state,
         page: action.page,
