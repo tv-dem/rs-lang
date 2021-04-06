@@ -16,6 +16,7 @@ import GamesContainer from "./Pages/Games/GamesContainer";
 import StatisticContainer from "./Pages/Statistic/StatisticContainer";
 import DictionaryContainer from "./Pages/Dictionary/DictionaryContainer";
 import LetterSolverContainer from './Components/Games/LetterSolver/LetterSolverContainer';
+import Sprint from './Components/Games/Sprint/SprintContainer';
 
 interface AppProps {
   isAuth: boolean;
@@ -41,7 +42,7 @@ const App: React.FC<AppProps> = ({ isAuth }) => {
           >
             <Switch>
               <Route path='/games/LetterSolver/:level' component={LetterSolverContainer} />
-              <Route path='/games/Sprint/:level' component={LetterSolverContainer} />
+              <Route path='/games/Sprint/:level' component={Sprint} />
               <Route path='/games/Savanna/:level' component={LetterSolverContainer} />
               <Route path='/games/AudioCall/:level' component={LetterSolverContainer} />
               <Route path='/games/:game' component={WelcomFormContainer} />
