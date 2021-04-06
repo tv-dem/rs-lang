@@ -5,12 +5,12 @@ import {
     SET_CURRENT_WORD,
     ADD_RIGHT_WORD,
     ADD_WRONG_WORD,
-    NULLIFY_RIGHT_WORDS,
-    NULLIFY_WRONG_WORDS,
-    NULLIFY_WORDS,
+    NULLIFY,
     SET_PENDING,
     SET_LEVEL,
-    SET_PAGE
+    SET_PAGE,
+    SET_PERCENT,
+    SET_IS_CHECK
 } from "./actionTypes";
 
 
@@ -24,8 +24,8 @@ export const updateWords = (words: string) => ({
     words
 })
 
-export const nullifyWords = () => ({
-    type: NULLIFY_WORDS,
+export const nullify = () => ({
+    type: NULLIFY,
 })
 
 
@@ -49,32 +49,29 @@ export const addWrongWord = (word: Object) => ({
     word
 })
 
-export const nullifyRightWord = () => ({
-    type: NULLIFY_RIGHT_WORDS,
-})
-
-export const nullifyWrongWord = () => ({
-    type: NULLIFY_WRONG_WORDS,
-})
-
 export const setPending = (status: boolean) => ({
     type: SET_PENDING,
     status
 })
 
-export const setLevel = (level: number) =>{
-    console.log(`level ${level}`)
-    return ({
+export const setLevel = (level: number) =>({
     type: SET_LEVEL,
     level
-})}
+})
 
-export const setPage = (page: number) =>{ 
-    console.log(`page ${page}`)
-    return({
+export const setPage = (page: number) =>({
     type: SET_PAGE,
     page
-})}
+})
 
+export const setPercent = (percent: number) =>({
+    type: SET_PERCENT,
+    percent
+})
+
+export const setIsCheck = (isCheck: boolean) =>({
+    type: SET_IS_CHECK,
+    isCheck
+})
 
 

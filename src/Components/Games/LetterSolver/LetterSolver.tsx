@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, Spin } from 'antd';
-import ProgressBox from '../ProgressBox/ProgressBox';
+import ProgressBoxContainer from '../ProgressBox/ProgressBoxContainer';
 import Word from './Word/Word';
 import './LetterSolver.scss';
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
@@ -20,16 +20,17 @@ const LetterSolved: React.FC = ({
   pending,
   fetchWords,
   level,
-  page
+  page,
+  setPercent,
+  isCheck,
+  setIsCheck
 }: any) => {
   const wordRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
   const letterSolverRef = useRef<HTMLDivElement>(null);
-
-  const [isCheck, setIsCheck] = useState(false);
-  const [percent, setPercent] = useState(100);
+  
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
@@ -37,8 +38,7 @@ const LetterSolved: React.FC = ({
 
   useEffect(() => {
     if (count) {
-      setCurrentWord(words[count]);
-      setPercent(100);
+      setCurrentWord(words[count]);       
     }
   }, [count]);
 
@@ -125,6 +125,7 @@ const LetterSolved: React.FC = ({
     } else {
       ModalFinishLevel({right, wrong,onOk,onCancel});
     }
+    setPercent(100);
     setIsCheck(false);
   };
 
@@ -134,7 +135,7 @@ const LetterSolved: React.FC = ({
         {!pending && currentWord ? (
           <>
             <div className="letterSolver__view-box">
-              <div className="image-box" ref={imageRef}>
+              <div className="letterSolver__view-box_image-box" ref={imageRef}>
                 <Image
                   className="context_image"
                   alt="Loading"
@@ -144,7 +145,7 @@ const LetterSolved: React.FC = ({
                   src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
                 ></Image>
               </div>
-              <div className="answer-box hidden" ref={answerRef}>
+              <div className="letterSolver__view-box_answer-box hidden" ref={answerRef}>
                 <div className="answer-box__word-word">{currentWord.word}</div>
                 <div className="answer-box__word-transcription">
                   {currentWord.transcription}
@@ -153,11 +154,9 @@ const LetterSolved: React.FC = ({
                   {currentWord.wordTranslate}
                 </div>
               </div>
-              <div className="progress-box" ref={progressRef}>
-                <ProgressBox
-                  seconds="60"
-                  percent={percent}
-                  setPercent={setPercent}
+              <div className="letterSolver__view-box_progress-box" ref={progressRef}>
+                <ProgressBoxContainer
+                  seconds={Number(60)}               
                   isCheck={isCheck}
                   onCheck={onCheck}
                 />

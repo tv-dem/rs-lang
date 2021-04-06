@@ -10,26 +10,28 @@ const WelcomForm = ({
   currentGame,
   setCurrentCard,
   fetchWords,
-  nullifyWords,
+  nullify,
   setLevel,
   setPage,
   level,
   page,
+  setPercent,
 }: any) => {
 
 
   const history = useHistory();
 
-  const [isTextBook,setIsTextBook]=useState(false)
+  const [isTextBook, setIsTextBook] = useState(false)
 
-useEffect(()=>{
-
-},[isTextBook])
-
-  useEffect(() => setCurrentCard(pathname), [setCurrentCard]);
   useEffect(() => {
-    nullifyWords();
-  });
+
+  }, [isTextBook])
+
+  useEffect(() => {
+    setCurrentCard(pathname)
+    nullify();
+    setPercent(100);
+  }, []);
 
   const backgroundLinkStyle: React.CSSProperties = {
     backgroundColor: currentGame ? currentGame.backgroundColor : 'red',
@@ -51,8 +53,8 @@ useEffect(()=>{
   const selectStyle: React.CSSProperties = {
     color: "green",
     fontSize: '1rem',
-    textAlign:"center",
-    fontWeight:"bold"
+    textAlign: "center",
+    fontWeight: "bold"
   };
 
   const descriptionsStyle: React.CSSProperties = {
@@ -86,41 +88,41 @@ useEffect(()=>{
               {currentGame.howToPlay}
             </Text>
           </Title>
-{!isTextBook && 
- <Form className="welcomeForm__form">
- <Form.Item initialValue={currentGame.name} hidden></Form.Item>
- <Form.Item
- style={selectStyle}
-   className="welcomeForm__form-item"
-   name="wordsLevel"
-   label="Уровень сложности:"
-   initialValue={level.toString()}
- >
-   <Select
-     className="welcomeForm__form-select"
-     onChange={onChangeSelect}
-   >
-     <Select.Option value="1">FIRST</Select.Option>
-     <Select.Option value="2">SECOND</Select.Option>
-     <Select.Option value="3">THIRD</Select.Option>
-     <Select.Option value="4">FOURTH</Select.Option>
-     <Select.Option value="5">FIFTH</Select.Option>
-     <Select.Option value="6">SIXTH</Select.Option>
-   </Select>
- </Form.Item>
- </Form>
-}
-         
-            <Button
-              style={backgroundLinkStyle}
-              className="welcomeForm__form-btnStart"
-              autoFocus
-              htmlType="submit"
-              onClick={onClickHandler}
-            >
-              START
+          {!isTextBook &&
+            <Form className="welcomeForm__form">
+              <Form.Item initialValue={currentGame.name} hidden></Form.Item>
+              <Form.Item
+                style={selectStyle}
+                className="welcomeForm__form-item"
+                name="wordsLevel"
+                label="Уровень сложности:"
+                initialValue={level.toString()}
+              >
+                <Select
+                  className="welcomeForm__form-select"
+                  onChange={onChangeSelect}
+                >
+                  <Select.Option value="1">FIRST</Select.Option>
+                  <Select.Option value="2">SECOND</Select.Option>
+                  <Select.Option value="3">THIRD</Select.Option>
+                  <Select.Option value="4">FOURTH</Select.Option>
+                  <Select.Option value="5">FIFTH</Select.Option>
+                  <Select.Option value="6">SIXTH</Select.Option>
+                </Select>
+              </Form.Item>
+            </Form>
+          }
+
+          <Button
+            style={backgroundLinkStyle}
+            className="welcomeForm__form-btnStart"
+            autoFocus
+            htmlType="submit"
+            onClick={onClickHandler}
+          >
+            START
             </Button>
-          
+
         </div>
       )}
     </>

@@ -42,5 +42,7 @@ export type typeGames = {
   words: null | Array<typeWord>;
   wrong: Array<typeWord>;
   right: Array<typeWord>;
+  percent:number;
+  isCheck:boolean;
   cards: Array<typeCard>;
 };

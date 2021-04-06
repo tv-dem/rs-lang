@@ -11,10 +11,32 @@
     &__view-box {
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-around; 
         align-items: center;
         width: 80%;
         margin-bottom: 40px;
+            &_answer-box {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                width: 20%;
+                font-size: 1.5rem;
+            }
+            &_image-box,
+            &_answer-box,
+            &_progress-box {
+                width: 30%;
+            }
+
+&_image-box,
+&_progress-box {
+    z-index: 99;
+}
+
+&_answer-box {
+    z-index: 1;
+}
     }
 }
 
@@ -31,14 +53,7 @@
 //     background-repeat: no-repeat;
 //     background-position: center;
 // }
-.answer-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    width: 20%;
-    font-size: 1.5rem;
-}
+
 
 .answer-box__word-word {
     color: green;
@@ -52,20 +67,7 @@ answer-box__word-wordTranslate {
     color: indigo;
 }
 
-.image-box,
-.answer-box,
-.progress-box {
-    width: 30%;
-}
 
-.image-box,
-.progress-box {
-    z-index: 99;
-}
-
-.answer-box {
-    z-index: 1;
-}
 
 .toChangePlaceImg {
     transition-duration: 3s;
