@@ -5,12 +5,12 @@ import {
   SET_CURRENT_WORD,
   ADD_RIGHT_WORD,
   ADD_WRONG_WORD,
-  NULLIFY_RIGHT_WORDS,
-  NULLIFY_WRONG_WORDS,
-  NULLIFY_WORDS,
+  NULLIFY,
   SET_PENDING,
   SET_LEVEL,
-  SET_PAGE
+  SET_PAGE,
+  SET_PERCENT,
+  SET_IS_CHECK
 } from "./actionTypes";
 import { typeGames } from "./typeGames";
 import shuffle from "../../utils/shuffle";
@@ -25,6 +25,8 @@ const initState: typeGames = {
   words: null,
   wrong: [],
   right: [],
+  percent: 100,
+  isCheck: false,
   cards: [
     {
       name: "Собери слово",
@@ -102,8 +104,17 @@ const GamesReducer = (state = initState, action: any) => {
       return { ...state, count: action.count };
     case UPDATE_WORDS:
       return { ...state, words: shuffle(action.words) };
-    case NULLIFY_WORDS:
-      return { ...state, words: null };
+    case NULLIFY:
+      return {
+        ...state,
+        words: null,
+        wrong: [],
+        right: [],
+        percent: 100,
+        isCheck: false,
+        count: 0,
+        currentWord: null
+      };
     case SET_CURRENT_CARD:
       return {
         ...state,
@@ -124,20 +135,10 @@ const GamesReducer = (state = initState, action: any) => {
         ...state,
         right: state.right.concat(action.word),
       };
-    case NULLIFY_RIGHT_WORDS:
-      return {
-        ...state,
-        right: [],
-      };
     case ADD_WRONG_WORD:
       return {
         ...state,
         wrong: state.wrong.concat(action.word),
-      };
-    case NULLIFY_WRONG_WORDS:
-      return {
-        ...state,
-        wrong: [],
       };
     case SET_PENDING:
       return {
@@ -153,6 +154,16 @@ const GamesReducer = (state = initState, action: any) => {
       return {
         ...state,
         page: action.page,
+      };
+    case SET_PERCENT:
+      return {
+        ...state,
+        percent: action.percent,
+      };
+    case SET_IS_CHECK:
+      return {
+        ...state,
+        isCheck: action.isCheck,
       };
     default:
       return state;
