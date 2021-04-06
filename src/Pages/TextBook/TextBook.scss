@@ -1,6 +1,11 @@
 @import './.././../styles/variables';
 
 .text-book {
+  &__no-words{
+    padding: 30px;
+    display: flex;
+    justify-content: space-around;
+  }
   .button-wrapper{
     display: flex;
     justify-content: space-around;

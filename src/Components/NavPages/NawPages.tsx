@@ -11,11 +11,11 @@ import {
 } from "@ant-design/icons";
 
 interface NawPagesProps {
-  currLevel: any;
-  currPage: any;
-  currDictSection: any;
-  currDictPage: any;
-  isAuth: boolean;
+    currLevel: any;
+    currPage: any;
+    currDictSection: any;
+    currDictPage: any;
+    isAuth: boolean;
 }
 
 const NawPages: React.FC<NawPagesProps> = ({ currLevel, currPage, currDictSection, currDictPage, isAuth }) => {
