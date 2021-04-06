@@ -98,33 +98,6 @@ class API {
       .then(res => res.json());
   }
 
-  updateUserWord(wordId: string, userId: string, difficulty: string, optional: Object, token: string) {
-    return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/words/${wordId}`, {
-      method: 'PUT',
-      headers: {
-        'Authorization': 'Bearer ' + token,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        difficulty,
-        optional
-      })
-    })
-  }
-
-  getAggregatedWords(userId: string, group: number, page: number, token: string) {
-    return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=20`, {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer ' + token,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(res => res.json())
-  }
-
   //userSettings
   getUserSettings(userId: string, token: string) {
     return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/settings`, {
@@ -152,6 +125,63 @@ class API {
       })
     })
   }
+    updateUserWord(wordId: string, userId: string, difficulty: string, optional: Object, token: string) {
+        return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/words/${wordId}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                difficulty,
+                optional
+            })
+        })
+            .then(res => res.json())
+    }
+
+    getAggregatedWords(userId: string, group: number, page: number, token: string) {
+        return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=20`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                if (res.status === 401) {
+                    return null;
+                }
+                return null
+            })
+    }
+
+    getAggregatedWordsByParams(userId: string, params:any, group:number, page:number, token: string){
+        const filter = JSON.stringify(params);
+        return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/aggregatedWords?filter=${filter}&group=${group}&page=${page}&wordsPerPage=20`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                if (res.status === 401) {
+                    return null;
+                }
+                return null
+            })
+    }
 }
+
 
 export default new API();
