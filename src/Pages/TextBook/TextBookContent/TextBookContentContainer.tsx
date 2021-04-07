@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import TextBookContent from "./TextBookContent";
 import {createUserWordTC, getAggregatedWordsTC, updateUserWordTC} from "../../../Redux/TextBookReducer/thunk";
 
-const MapStateToProps = ({textBook, user}: any) => ({
+const MapStateToProps = ({textBook, auth}: any) => ({
     currPage: textBook.currPage,
     currLevel: textBook.currLevel,
     words: textBook.words,
@@ -13,8 +13,8 @@ const MapStateToProps = ({textBook, user}: any) => ({
         title: 'удалить',
         section: 'delete'
     }],
-    userId: user.userId,
-    token: user.token,
+    userId: auth.currentUser.userId,
+    token: auth.currentUser.token,
 
 })
 

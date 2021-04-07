@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useState } from 'react';
-import { Pagination } from 'antd';
+import React, {FC, useEffect, useState} from 'react';
+import {Pagination} from 'antd';
 import Panel from "../../Components/Panel/Panel";
 import './TextBook.scss'
 import TextBookContentContainer from "./TextBookContent/TextBookContentContainer";
@@ -8,24 +8,24 @@ import SettingsWordsContainer from "../../Components/SettingsWords/SettingsWords
 import Loading from "../../Components/Loading/Loading";
 import GameButton from "../../Components/gameButton/GameButton";
 
-const TextBook: FC = ({onLoad, pending, onSelectLevel, levels, currPage, onSelectPage, currLevel,userId,token, fetchWords,getAggregatedWords}:any) => {
-    const {level, page}:any = useParams();
+const TextBook: FC = ({onLoad, pending, onSelectLevel, levels, currPage, onSelectPage, currLevel, userId, token, isAuth, fetchWords, getAggregatedWords}: any) => {
+    const {level, page}: any = useParams();
     useEffect(() => {
         onLoad();
-        onSelectPage(page,level);
-        getAggregatedWords(userId,currLevel - 1, currPage - 1,token);
-        // fetchWords(currLevel - 1, currPage - 1)
-    }, [currPage,currLevel])
+        onSelectPage(page, level);
+        isAuth ? getAggregatedWords(userId, currLevel - 1, currPage - 1, token) :
+            fetchWords(currLevel - 1, currPage - 1)
+    }, [currPage, currLevel, isAuth])
     return <div className='wrapper'>
         <div className="text-book">
             <SettingsWordsContainer/>
-            <Panel panelInfo={levels.map(({title}: any, i:number) => ({
+            <Panel panelInfo={levels.map(({title}: any, i: number) => ({
                 title,
                 onSelect: () => {
                     onSelectLevel(i + 1)
                     onSelectPage(1)
                 },
-                link: `/textbook/${i+1}/1`
+                link: `/textbook/${i + 1}/1`
             }))}/>
             {pending ? <Loading/> : <>
                 <TextBookContentContainer/>
