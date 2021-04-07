@@ -16,8 +16,8 @@ import GamesContainer from "./Pages/Games/GamesContainer";
 import StatisticContainer from "./Pages/Statistic/StatisticContainer";
 import DictionaryContainer from "./Pages/Dictionary/DictionaryContainer";
 import LetterSolverContainer from './Components/Games/LetterSolver/LetterSolverContainer';
+import Sprint from './Components/Games/Sprint/SprintContainer';
 import AudioCallContainer from './Components/Games/AudioCall/AudioCallContainer';
-
 
 interface AppProps {
   isAuth: boolean;
@@ -40,10 +40,11 @@ const App: React.FC<AppProps> = ({ isAuth }) => {
             key={location.key}
             classNames="fade"
             timeout={500}
+            
           > */}
         <Switch>
           <Route path='/games/LetterSolver/:level' component={LetterSolverContainer} />
-          <Route path='/games/Sprint/:level' component={LetterSolverContainer} />
+          <Route path='/games/Sprint/:level' component={Sprint} />
           <Route path='/games/Savanna/:level' component={LetterSolverContainer} />
           <Route path='/games/AudioCall/:level' component={AudioCallContainer} />
           <Route path='/games/:game' component={WelcomFormContainer} />

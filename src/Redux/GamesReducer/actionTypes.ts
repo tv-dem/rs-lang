@@ -8,9 +8,7 @@ export const NULLIFY = 'NULLIFY';
 export const SET_PENDING = 'SET_PENDING';
 export const SET_LEVEL = 'SET_LEVEL';
 export const SET_PAGE = 'SET_PAGE';
+export const SET_BEST_LINE = 'SET_BEST_LINE';
+export const SET_CURRENT_LINE = 'SET_CURRENT_LINE';
 export const SET_PERCENT = 'SET_PERCENT';
 export const SET_IS_CHECK = 'SET_IS_CHECK';
-
-
-
-

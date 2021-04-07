@@ -9,8 +9,11 @@ import {
   SET_PENDING,
   SET_LEVEL,
   SET_PAGE,
+  SET_BEST_LINE,
+  SET_CURRENT_LINE,
   SET_PERCENT,
   SET_IS_CHECK
+
 } from "./actionTypes";
 import { typeGames } from "./typeGames";
 import shuffle from "../../utils/shuffle";
@@ -25,8 +28,11 @@ const initState: typeGames = {
   words: null,
   wrong: [],
   right: [],
+  bestLine: 0,
+  currentLine: 0,
   percent: 100,
   isCheck: false,
+ 
   cards: [
     {
       name: "Собери слово",
@@ -59,7 +65,7 @@ const initState: typeGames = {
       menuRoute: "/games/Sprint",
       titleColor: "#EB6AA4",
       descriptionColor: "#A1285F",
-      backgroundColor: "#8BEA00",
+      backgroundColor: "#bceaa5",
     },
     {
       name: "Аудиовызов",
@@ -104,6 +110,7 @@ const GamesReducer = (state = initState, action: any) => {
       return { ...state, count: action.count };
     case UPDATE_WORDS:
       return { ...state, words: shuffle(action.words) };
+
     case NULLIFY:
       return {
         ...state,
@@ -115,6 +122,7 @@ const GamesReducer = (state = initState, action: any) => {
         count: 0,
         currentWord: null
       };
+
     case SET_CURRENT_CARD:
       return {
         ...state,
@@ -165,6 +173,12 @@ const GamesReducer = (state = initState, action: any) => {
         ...state,
         isCheck: action.isCheck,
       };
+      case SET_BEST_LINE:
+        return { ...state, bestLine: action.bestLine};
+        
+        case SET_CURRENT_LINE:
+          return { ...state, currentLine: action.currentLine};
+
     default:
       return state;
   }

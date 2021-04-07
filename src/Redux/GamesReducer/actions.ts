@@ -8,11 +8,22 @@ import {
     NULLIFY,
     SET_PENDING,
     SET_LEVEL,
+    SET_BEST_LINE,
+    SET_CURRENT_LINE,
     SET_PAGE,
     SET_PERCENT,
     SET_IS_CHECK
 } from "./actionTypes";
 
+export const setBestLine = (bestLine: number) => ({
+    type: SET_BEST_LINE,
+    bestLine
+})
+
+export const setCurrentLine = (currentLine: number) => ({
+    type: SET_CURRENT_LINE,
+    currentLine
+})
 
 export const setCount = (count: number) => ({
     type: SET_COUNT,

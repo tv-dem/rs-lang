@@ -45,4 +45,6 @@ export type typeGames = {
   percent:number;
   isCheck:boolean;
   cards: Array<typeCard>;
+  bestLine:number;
+  currentLine:number;
 };
