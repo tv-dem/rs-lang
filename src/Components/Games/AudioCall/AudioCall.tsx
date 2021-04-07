@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Image, Spin, Button } from 'antd';
+import {  SoundTwoTone} from '@ant-design/icons';
 import './AudioCall.scss';
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
-import shuffle from '../../../utils/shuffle'
-
+import shuffle from '../../../utils/shuffle';
 
 const AudioCall: React.FC = ({
   words,
@@ -22,9 +22,8 @@ const AudioCall: React.FC = ({
   level,
   page,
   isCheck,
-  setIsCheck
+  setIsCheck,
 }: any) => {
-
   const imageRef = useRef<HTMLDivElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
   const audioCallRef = useRef<HTMLDivElement>(null);
@@ -40,49 +39,47 @@ const AudioCall: React.FC = ({
   }, [count]);
 
   useEffect(() => {
-    if (isCheck) {
-      if (imageRef.current && answerRef.current) {
-        imageRef.current.classList.remove('toBackPlaceImg');
-        imageRef.current.classList.add('toChangePlaceImg');
-        answerRef.current.classList.add('visible');
-        answerRef.current.classList.remove('hidden');
-      }
-    } else {
-      if (imageRef.current && answerRef.current) {
-        imageRef.current.classList.remove('toChangePlaceImg');
-        imageRef.current.classList.add('toBackPlaceImg');
-        answerRef.current.classList.add('hidden');
-        answerRef.current.classList.remove('visible');
-      }
-    }
+    playAudio();
+  }, [currentWord]);
+
+  const playAudio = useCallback(() => {
+    if (currentWord)
+      new Audio(
+        `https://api-rs-lang.herokuapp.com/${currentWord.audio}`,
+      ).play();
+  }, [currentWord]);
+
+  useEffect(() => {
+    // if (isCheck) {
+    //   if (imageRef.current && answerRef.current) {
+    //     imageRef.current.classList.remove('toBackPlaceImg');
+    //     imageRef.current.classList.add('toChangePlaceImg');
+    //     answerRef.current.classList.add('visible');
+    //     answerRef.current.classList.remove('hidden');
+    //   }
+    // } else {
+    //   if (imageRef.current && answerRef.current) {
+    //     imageRef.current.classList.remove('toChangePlaceImg');
+    //     imageRef.current.classList.add('toBackPlaceImg');
+    //     answerRef.current.classList.add('hidden');
+    //     answerRef.current.classList.remove('visible');
+    //   }
+    // }
   }, [isCheck]);
 
   const toWin = () => {
     new Audio(rightAudio).play();
-    setTimeout(
-      () =>
-        new Audio(
-          `https://api-rs-lang.herokuapp.com/${currentWord.audio}`,
-        ).play(),
-      1000,
-    );
     addRightWord(currentWord);
   };
 
   const toLost = () => {
     new Audio(wrongAudio).play();
-    setTimeout(
-      () =>
-        new Audio(
-          `https://api-rs-lang.herokuapp.com/${currentWord.audio}`,
-        ).play(),
-      1000,
-    );
     addWrongWord(currentWord);
   };
 
-  const onCheck = (word:any) => {
-    if ( word.word === currentWord.word) {
+  const onCheck = (word: any,event:React.MouseEvent<HTMLElement>) => {
+    if (word.word === currentWord.word) {
+      // event.currentTarget.classList.add('hidden')
       toWin();
     } else {
       toLost();
@@ -91,12 +88,12 @@ const AudioCall: React.FC = ({
   };
 
   const onOk = () => {
-    fetchWords(level, page + 1)
-  }
+    fetchWords(level, page + 1);
+  };
 
   const onCancel = () => {
-    fetchWords(level, page)
-  }
+    fetchWords(level, page);
+  };
 
   const onHandleClickBtnNext = () => {
     if (count < words.length - 1) {
@@ -107,53 +104,75 @@ const AudioCall: React.FC = ({
     setIsCheck(false);
   };
 
+  const onHandleClickBtnNotKnow = () => {
+    // onCheck('');
+    setIsCheck(true);
+  };
+
   return (
     <div className="audioCall__wrapper ">
       <div ref={audioCallRef} className="audioCall">
         {!pending && currentWord ? (
-          <div>
+          <>
             <div className="audioCall__view-box">
-              <div className="audioCall__view-box_image-box" >
-                {isCheck ?
-                  <Image
-                    className="context_image"
-                    alt="Loading"
-                    fallback={`Error loading file ${currentWord.image}`}
-                    width="300px"
-                    height="200px"
-                    src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
-                  ></Image>
-                  :
-                  <div>{currentWord.word}</div>
-                }
+              {isCheck ? (
+                <>
+                <img
+                  className="audioCall__view-box_image"
+                  src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
+                  alt="Loading"
+                ></img>
+                <div className="audioCall__view-box_answer answer" ref={answerRef}>
+                <SoundTwoTone twoToneColor="#d19aed" onClick={playAudio}/>
+                <div className="answer__word-word">{currentWord.word}</div>
               </div>
-            </div>
-            <div className="audioCall__view-box_answer-box hidden" ref={answerRef}>
-              <div className="answer-box__word-word">{currentWord.word}</div>
-              <div className="answer-box__word-transcription">
-                {currentWord.transcription}
-              </div>
-              <div className="answer-box__word-wordTranslate">
-                {currentWord.wordTranslate}
-              </div>
+              </>
+              ) : (
+                <div
+                  className="audioCall__view-box_btn-sound"
+                  onClick={playAudio}
+                ></div>
+              )}
+
+           
             </div>
 
-            {isCheck ? (
-
-
-              <Button className="context_btn_next" onClick={onHandleClickBtnNext}>
-                NEXT
-              </Button>
-            ) : (
-              <div className="audioCall__change-box">
-               { shuffle( shuffle(words.filter((word:any)=>currentWord.word!==word.word)).filter((word:any,i:number)=>i<4).concat(currentWord).map((word:any)=>
-               <Button key={word.id} className="context_btn_check" onClick={()=>onCheck(word)}>
-                 { word.word}
-               </Button>))}
-
-              </div>
-            )}
-          </div>
+            <div className="audioCall__choose-box">
+              {shuffle(
+                shuffle(
+                  words.filter((word: any) => currentWord.word !== word.word),
+                )
+                  .filter((word: any, i: number) => i < 4)
+                  .concat(currentWord)
+                  .map((word: any) => (
+                    <div
+                      key={word.id}
+                      className="audioCall__choose-box_btn-check"
+                      onClick={(event: React.MouseEvent<HTMLElement>) => onCheck(word,event)}
+                    >
+                      {word.wordTranslate}
+                    </div>
+                  )),
+              )}
+            </div>
+            <div className="audioCall__next-box">
+              {isCheck ? (
+                <div
+                  className="audioCall__next-box_btn-next"
+                  onClick={onHandleClickBtnNext}
+                >
+                  Далее
+                </div>
+              ) : (
+                <div
+                  className="audioCall__next-box_btn-next"
+                  onClick={onHandleClickBtnNotKnow}
+                >
+                  Не знаю
+                </div>
+              )}
+            </div>
+          </>
         ) : (
           <Spin tip="Loading..." size="large" />
         )}
