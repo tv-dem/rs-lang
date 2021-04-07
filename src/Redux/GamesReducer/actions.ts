@@ -10,9 +10,20 @@ import {
     NULLIFY_WORDS,
     SET_PENDING,
     SET_LEVEL,
-    SET_PAGE
+    SET_PAGE, 
+    SET_BEST_LINE,
+    SET_CURRENT_LINE
 } from "./actionTypes";
 
+export const setBestLine = (bestLine: number) => ({
+    type: SET_BEST_LINE,
+    bestLine
+})
+
+export const setCurrentLine = (currentLine: number) => ({
+    type: SET_CURRENT_LINE,
+    currentLine
+})
 
 export const setCount = (count: number) => ({
     type: SET_COUNT,

@@ -43,4 +43,6 @@ export type typeGames = {
   wrong: Array<typeWord>;
   right: Array<typeWord>;
   cards: Array<typeCard>;
+  bestLine:number;
+  currentLine:number;
 };

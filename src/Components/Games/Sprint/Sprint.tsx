@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import './sprintGame.scss';
 import { Image, Spin, Button } from "antd";
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
+import fullScreen from "../../../utils/fullScreen";
 import shuffle from "../../../utils/shuffle";
 import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
-
 
 const TrueOrFalse: React.FC = ({
   words,
@@ -19,18 +19,18 @@ const TrueOrFalse: React.FC = ({
   page,
   setCount,
   setCurrentWord,
+  setCurrentLine,
+  setBestLine,
+  currentLine,
+  bestLine,
   pending,
   fetchWords
 }: any) => {
-  const sprintBoxRef = useRef<HTMLDivElement>(null);
-
   const [isTrue, setIsTrue] = useState(false);
   const [wordTranslate, setWordTranslate] = useState('');
-  const [isTrueAnswer, setIsTrueAnswer] = useState(false);
   const [showStatistics, setShowStatistics] = useState(false);
-  const [longLine, setLongLine] = useState(0);
-  const [dataLongLine, setDataLongLine] = useState([0]);
 
+  const sprintBoxRef = useRef<HTMLDivElement>(null);
   let arrNumTranslate = new Array();
 
   const viewStatistics = () => {
@@ -89,10 +89,18 @@ const TrueOrFalse: React.FC = ({
     }
   }, [currentWord]);
 
+  useEffect(()=> {
+if(currentLine>bestLine) {
+  setBestLine(currentLine);
+}
+  }, [currentLine])
+
   const ifTrue = () => {
+  setCurrentLine(currentLine+1);
+
+
     new Audio(rightAudio).play();
     addRightWord(currentWord);
-    setIsTrueAnswer(true);
     if (sprintBoxRef.current) {
       sprintBoxRef.current.classList.remove('hiddenSprint');
       sprintBoxRef.current.classList.add('visibleCorrect');
@@ -100,11 +108,9 @@ const TrueOrFalse: React.FC = ({
   }
 
   const ifFalse = () => {
+    setCurrentLine(0);
     new Audio(wrongAudio).play();
     addWrongWord(currentWord);
-    setIsTrueAnswer(false);
-    setDataLongLine(dataLongLine.concat([longLine]));
-    setLongLine(0);
     if (sprintBoxRef.current) {
       sprintBoxRef.current.classList.remove('hiddenSprint');
       sprintBoxRef.current.classList.add('visibleIncorrect');
@@ -131,11 +137,18 @@ const TrueOrFalse: React.FC = ({
 
   return (
     <div className="sprintWrapper">
+
       <div className="sprintBox" ref={sprintBoxRef}>
         {!pending && currentWord ? (
           <>
+            <div className="sprintBoxTitle">
+            <div className="fullScreenBtn"></div>
             <div className="sprint">Sprint Game</div>
+    <Button className="fullScreenBtn" type="primary" aria-hidden="true" onClick={() => fullScreen()}>full</Button>
+    </div>
             <div className="sprintScore">count: {count}</div>
+            <div className="sprintScore">current line: {currentLine}</div>
+            <div className="sprintScore">best line: {bestLine}</div>
 
             <div>
               <Image

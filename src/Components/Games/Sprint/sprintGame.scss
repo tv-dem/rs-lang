@@ -1,13 +1,19 @@
 .sprintWrapper {
 display: flex;
-flex-direction: column;
+flex-direction: row;
 justify-content: center;
 align-items: center;
 font-size: 2rem;
 height: 100%;
 background: #e6f9dd;
+}
 
-
+.sprintBoxTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 .sprintBtn {
@@ -40,11 +46,10 @@ background: #e6f9dd;
 }
 
 .sprintBox {
-    width: 50%;
-    height: 50%;
-    border: 0.5px solid rgba(0, 0, 0, 0.75);
-  //  box-shadow: 0px 0px 9px 5px rgba(141, 135, 135, 0.75);
-    display: flex;
+width: 50%;
+height: 50%;
+border: 0.5px solid rgba(0, 0, 0, 0.75);
+display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
@@ -61,14 +66,20 @@ align-items: center;
 }
 
 
-// .transition-group {
-// z-index: 9999; 
-// width: 100%; 
-// height: 100%; 
-// position: absolute; 
-// top: 0; 
-// left: 0; 
-// }
+.fullScreen {
+z-index: 9999; 
+width: 100%; 
+height: 100%; 
+position: absolute; 
+top: 0; 
+left: 0; 
+}
+
+.fullScreenBtn {
+width: 10%; 
+right: 2px;
+top: 0; 
+}
 
 @keyframes tremor {
     0%,
