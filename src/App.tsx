@@ -17,6 +17,7 @@ import StatisticContainer from "./Pages/Statistic/StatisticContainer";
 import DictionaryContainer from "./Pages/Dictionary/DictionaryContainer";
 import LetterSolverContainer from './Components/Games/LetterSolver/LetterSolverContainer';
 import Sprint from './Components/Games/Sprint/SprintContainer';
+import AudioCallContainer from './Components/Games/AudioCall/AudioCallContainer';
 
 interface AppProps {
   isAuth: boolean;
@@ -34,31 +35,32 @@ const App: React.FC<AppProps> = ({ isAuth }) => {
       <HeaderContainer />
       <NavPagesContainer />
       <div className='content'>
-        <TransitionGroup className="transition-group">
+        {/* <TransitionGroup className="transition-group">
           <CSSTransition
             key={location.key}
             classNames="fade"
             timeout={500}
-          >
-            <Switch>
-              <Route path='/games/LetterSolver/:level' component={LetterSolverContainer} />
-              <Route path='/games/Sprint/:level' component={Sprint} />
-              <Route path='/games/Savanna/:level' component={LetterSolverContainer} />
-              <Route path='/games/AudioCall/:level' component={LetterSolverContainer} />
-              <Route path='/games/:game' component={WelcomFormContainer} />
-              <Route path='/games' component={GamesContainer} />
-              <Route path='/textbook/:level/:page' component={TextBookContainer} />
-              <Route path='/home' component={MainPageContainer} />
-              {isAuth && (
-                <>
-                  <Route path='/statistic' component={StatisticContainer} />
-                  <Route path='/dictionary/:section/:page' component={DictionaryContainer} />
-                </>
-              )}
-              {/* <Redirect to='/home' /> */}
-            </Switch>
-          </CSSTransition>
-        </TransitionGroup>
+            
+          > */}
+        <Switch>
+          <Route path='/games/LetterSolver/:level' component={LetterSolverContainer} />
+          <Route path='/games/Sprint/:level' component={Sprint} />
+          <Route path='/games/Savanna/:level' component={LetterSolverContainer} />
+          <Route path='/games/AudioCall/:level' component={AudioCallContainer} />
+          <Route path='/games/:game' component={WelcomFormContainer} />
+          <Route path='/games' component={GamesContainer} />
+          <Route path='/textbook/:level/:page' component={TextBookContainer} />
+          <Route path='/home' component={MainPageContainer} />
+          {isAuth && (
+            <>
+              <Route path='/statistic' component={StatisticContainer} />
+              <Route path='/dictionary/:section/:page' component={DictionaryContainer} />
+            </>
+          )}
+          {/* <Redirect to='/home' /> */}
+        </Switch>
+        {/* </CSSTransition>
+        </TransitionGroup> */}
       </div>
       <FooterContainer />
     </>

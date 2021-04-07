@@ -5,22 +5,23 @@ import {
   SET_CURRENT_WORD,
   ADD_RIGHT_WORD,
   ADD_WRONG_WORD,
-  NULLIFY_RIGHT_WORDS,
-  NULLIFY_WRONG_WORDS,
-  NULLIFY_WORDS,
+  NULLIFY,
   SET_PENDING,
   SET_LEVEL,
   SET_PAGE,
   SET_BEST_LINE,
-  SET_CURRENT_LINE
+  SET_CURRENT_LINE,
+  SET_PERCENT,
+  SET_IS_CHECK
+
 } from "./actionTypes";
 import { typeGames } from "./typeGames";
 import shuffle from "../../utils/shuffle";
 
 const initState: typeGames = {
-  pending:false,
-  page:1,
-  level:1,
+  pending: false,
+  page: 1,
+  level: 1,
   currentGame: null,
   count: 0,
   currentWord: null,
@@ -29,6 +30,9 @@ const initState: typeGames = {
   right: [],
   bestLine: 0,
   currentLine: 0,
+  percent: 100,
+  isCheck: false,
+ 
   cards: [
     {
       name: "Собери слово",
@@ -106,8 +110,19 @@ const GamesReducer = (state = initState, action: any) => {
       return { ...state, count: action.count };
     case UPDATE_WORDS:
       return { ...state, words: shuffle(action.words) };
-    case NULLIFY_WORDS:
-      return { ...state, words: null, currentWord:null};
+
+    case NULLIFY:
+      return {
+        ...state,
+        words: null,
+        wrong: [],
+        right: [],
+        percent: 100,
+        isCheck: false,
+        count: 0,
+        currentWord: null
+      };
+
     case SET_CURRENT_CARD:
       return {
         ...state,
@@ -128,35 +143,35 @@ const GamesReducer = (state = initState, action: any) => {
         ...state,
         right: state.right.concat(action.word),
       };
-    case NULLIFY_RIGHT_WORDS:
-      return {
-        ...state,
-        right: [],
-      };
     case ADD_WRONG_WORD:
       return {
         ...state,
         wrong: state.wrong.concat(action.word),
       };
-    case NULLIFY_WRONG_WORDS:
-      return {
-        ...state,
-        wrong: [],
-      };
-      case SET_PENDING:
+    case SET_PENDING:
       return {
         ...state,
         pending: action.status,
       };
-      case SET_LEVEL:
+    case SET_LEVEL:
       return {
         ...state,
         level: action.level,
       };
-      case SET_PAGE:
+    case SET_PAGE:
       return {
         ...state,
         page: action.page,
+      };
+    case SET_PERCENT:
+      return {
+        ...state,
+        percent: action.percent,
+      };
+    case SET_IS_CHECK:
+      return {
+        ...state,
+        isCheck: action.isCheck,
       };
       case SET_BEST_LINE:
         return { ...state, bestLine: action.bestLine};

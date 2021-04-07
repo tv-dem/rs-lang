@@ -2,11 +2,13 @@ import { connect } from "react-redux";
 import WelcomForm from "./WelcomForm";
 import {
   setCurrentCard,
-  nullifyWords,
+  nullify,
   setLevel,
-  setPage
+  setPage,
+  setPercent,
+  setIsCheck
 } from "../../../Redux/GamesReducer/actions";
-import { getWords, } from "../../../Redux/GamesReducer/thunk";
+import { getWords } from "../../../Redux/GamesReducer/thunk";
 
 const mapStateToProps = (state: any) => ({
   pathname: state.router.location.pathname,
@@ -19,9 +21,12 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = (dispatch: any) => ({
   setCurrentCard: (pathRoute: string) => dispatch(setCurrentCard(pathRoute)),
   fetchWords: (group: number, page: number) => dispatch(getWords(group, page)),
-  nullifyWords: () => dispatch(nullifyWords()),
+  nullify: () => dispatch(nullify()),
   setLevel: (level:number) => dispatch(setLevel(level)),
   setPage: (page:number) => dispatch(setPage(page)),
+  setPercent:(percent:number)=>dispatch(setPercent(percent)),
+  setIsCheck:(isCheck:boolean)=>dispatch(setIsCheck(isCheck))
+
 });
 
 const WelcomFormContainer = connect(

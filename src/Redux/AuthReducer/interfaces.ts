@@ -10,6 +10,7 @@ export interface CurrentUser {
   refreshToken: string;
   userId: string;
   name: string;
+  avatar: string;
 }
 export interface AuthUserStarted {
   type: string;
