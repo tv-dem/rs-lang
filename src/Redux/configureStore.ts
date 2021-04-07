@@ -7,8 +7,8 @@ import thunkMiddleware from 'redux-thunk';
 export const history = createBrowserHistory();
 
 const persistedState = ()=>{
-  const reduxState =localStorage.getItem('reduxState') 
- 
+  const reduxState =localStorage.getItem('reduxState')
+
    if (typeof reduxState === 'string') {
      return {games: JSON.parse(reduxState)};
    }
@@ -17,7 +17,7 @@ const persistedState = ()=>{
 
 // const configureStore = (preloadedState: any) => {
   const store = createStore(
-    createRootReducer(history), // root reducer with router state 
+    createRootReducer(history), // root reducer with router state
     persistedState(),
     compose(
       applyMiddleware(
@@ -34,3 +34,4 @@ store.subscribe(() => {
 })
 
 export default store;
+

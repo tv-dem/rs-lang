@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import DictionaryContent from "./DictionaryContent";
 import {updateUserWordTC} from "../../../Redux/DictionaryReducer/thunk";
 
-const MapStateToProps = ({dictionary, user}: any) => {
+const MapStateToProps = ({dictionary, auth}: any) => {
     const {currSection} = dictionary;
     return {
         currLevel: dictionary.currLevel,
@@ -10,8 +10,8 @@ const MapStateToProps = ({dictionary, user}: any) => {
         words: dictionary.words,
         options: currSection.options,
         currPage: dictionary.currPage,
-        userId: user.userId,
-        token: user.token
+        userId: auth.currentUser.userId,
+        token: auth.currentUser.token,
     }
 }
 
