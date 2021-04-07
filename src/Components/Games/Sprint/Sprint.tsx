@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import './sprintGame.scss';
 import { Image, Spin, Button } from "antd";
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
-import fullScreen from "../../../utils/fullScreen";
 import shuffle from "../../../utils/shuffle";
 import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
+import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
 
 const TrueOrFalse: React.FC = ({
   words,
@@ -117,7 +117,7 @@ if(currentLine>bestLine) {
     }
   }
 
-  const checkNo = () => {
+  const clickNo = () => {
     if (isTrue) {
       ifFalse();
     } else {
@@ -126,7 +126,7 @@ if(currentLine>bestLine) {
     checkFinish();
   }
 
-  const checkYes = () => {
+  const clickYes = () => {
     if (isTrue) {
       ifTrue();
     } else {
@@ -134,6 +134,17 @@ if(currentLine>bestLine) {
     }
     checkFinish();
   }
+
+  // document.addEventListener('keyup', function(event) {
+  //   if (event.code === 'ArrowLeft') {
+  //     clickNo();
+  //     console.log('ArrowLeft');
+  //      }
+  //      if (event.code === 'ArrowRight') {
+  //       clickYes();
+  //     console.log('ArrowRight');
+  //        }
+  // });
 
   return (
     <div className="sprintWrapper">
@@ -144,7 +155,7 @@ if(currentLine>bestLine) {
             <div className="sprintBoxTitle">
             <div className="fullScreenBtn"></div>
             <div className="sprint">Sprint Game</div>
-    <Button className="fullScreenBtn" type="primary" aria-hidden="true" onClick={() => fullScreen()}>full</Button>
+            <BtnFullScreen/>
     </div>
             <div className="sprintScore">count: {count}</div>
             <div className="sprintScore">current line: {currentLine}</div>
@@ -169,8 +180,8 @@ if(currentLine>bestLine) {
               <Button className="sprintBtn" type="primary" onClick={()=>onCancel()}>Повторить</Button>
             </>
 : <>
-              <Button className="sprintBtn" type="primary" aria-hidden="true" onClick={() => checkNo()}>Не верно</Button>
-              <Button className="sprintBtn" type="primary" aria-hidden="true" onClick={() => checkYes()}>Верно</Button>
+              <Button className="sprintBtn" type="primary" aria-hidden="true" onClick={() => clickNo()}>Не верно</Button>
+              <Button className="sprintBtn" type="primary" aria-hidden="true" onClick={() => clickYes()}>Верно</Button>
 </>
 
             }
