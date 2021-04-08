@@ -1,6 +1,38 @@
 @import "../../../styles/variables.scss";
 .audioCall__wrapper {
     background: linear-gradient(to top, #b6bee6, #88e45f);
+    overflow: hidden;
+}
+
+.audioCall_to-left{
+    // transition-duration: 3s;
+    transition-timing-function: ease;
+    transform: translateX(-100%);
+
+    opacity: 0;
+    visibility: hidden;
+     transition: 3s opacity, 3s visibility, .5s transform; 
+}
+
+.audioCall_to-right{
+     transition-timing-function: ease;
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+     transition:.01s transform;
+}
+
+.audioCall_to-place{
+    transition-timing-function: ease;
+    transform: translateX(0%);
+    opacity: 1;
+    visibility: visible;
+    transition: 3s opacity, 3s visibility, .5s transform;
+}
+
+.audioCall_is-selected{
+    box-shadow: 0px 0px 9px 2px #f17704 inset;
+
 }
 
 .audioCall {
@@ -67,9 +99,7 @@
         align-items: center;
         width: 65%;
         &_btn-check {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+           
             cursor: pointer;
             font-size: 1rem;
             font-weight: 600;
@@ -85,6 +115,13 @@
             margin: 3px;
             overflow: hidden;
             white-space: nowrap;
+            &_background{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+            }
             &:hover {
                 background: linear-gradient(to top, #a7ff81, #a5b1ee);
                 transform: scale(1.1);

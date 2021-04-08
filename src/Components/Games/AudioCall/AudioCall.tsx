@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Image, Spin, Button } from 'antd';
-import {  SoundTwoTone} from '@ant-design/icons';
+import React, { useEffect, useRef, useCallback } from 'react';
+import { Spin } from 'antd';
+import { SoundTwoTone } from '@ant-design/icons';
 import './AudioCall.scss';
+import Words from "./Words/Words"
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
-import shuffle from '../../../utils/shuffle';
 
 const AudioCall: React.FC = ({
   words,
@@ -24,9 +24,9 @@ const AudioCall: React.FC = ({
   isCheck,
   setIsCheck,
 }: any) => {
-  const imageRef = useRef<HTMLDivElement>(null);
-  const answerRef = useRef<HTMLDivElement>(null);
   const audioCallRef = useRef<HTMLDivElement>(null);
+  const btnRef = useRef<HTMLDivElement>(null);
+  const selectedRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
@@ -50,21 +50,15 @@ const AudioCall: React.FC = ({
   }, [currentWord]);
 
   useEffect(() => {
-    // if (isCheck) {
-    //   if (imageRef.current && answerRef.current) {
-    //     imageRef.current.classList.remove('toBackPlaceImg');
-    //     imageRef.current.classList.add('toChangePlaceImg');
-    //     answerRef.current.classList.add('visible');
-    //     answerRef.current.classList.remove('hidden');
-    //   }
-    // } else {
-    //   if (imageRef.current && answerRef.current) {
-    //     imageRef.current.classList.remove('toChangePlaceImg');
-    //     imageRef.current.classList.add('toBackPlaceImg');
-    //     answerRef.current.classList.add('hidden');
-    //     answerRef.current.classList.remove('visible');
-    //   }
-    // }
+    if (isCheck) {
+      if (btnRef.current && selectedRef.current) {
+      
+      }
+    } else {
+      if (btnRef.current && selectedRef.current) {
+       
+      }
+    }
   }, [isCheck]);
 
   const toWin = () => {
@@ -73,13 +67,27 @@ const AudioCall: React.FC = ({
   };
 
   const toLost = () => {
+ //   if(btnRef.current) {
+//       console.log(btnRef.current.childNodes)
+//       btnRef.current.childNodes.forEach((el:any)=>{
+// el.className.add("audioCall_no-active")
+      // })
+      // for (const key in btnRef.current.childNodes ) {
+      //  btnRef.current.childNodes[key].classList.add("audioCall_no-active")
+      //   // btnRef.current.children[key].classList.add("audioCall_no-active")
+      //   // if(btnRef.current.children[key].innerHTML===currentWord.wordTranslate) btnRef.current.children[key].classList.add("audioCall_is-selected")
+      // }
+  //  btnRef.current.children.forEach((btn:HTMLDivElement)=>{
+     
+      
+  //   })
+//  }
     new Audio(wrongAudio).play();
     addWrongWord(currentWord);
   };
 
-  const onCheck = (word: any,event:React.MouseEvent<HTMLElement>) => {
-    if (word.word === currentWord.word) {
-      // event.currentTarget.classList.add('hidden')
+  const onCheck = (word: any) => {
+    if (word.word === currentWord.word) {      
       toWin();
     } else {
       toLost();
@@ -95,17 +103,44 @@ const AudioCall: React.FC = ({
     fetchWords(level, page);
   };
 
+const effectCarusel=()=>{
+  if (audioCallRef.current) {
+    audioCallRef.current.classList.remove('audioCall_to-place');
+    audioCallRef.current.classList.add('audioCall_to-left');
+    setTimeout(() => {
+      if (audioCallRef.current) {
+        audioCallRef.current.classList.remove('audioCall_to-left');
+        audioCallRef.current.classList.add('audioCall_to-right');
+      }
+    }, 100)
+    setTimeout(() => {
+      if (audioCallRef.current) {
+        audioCallRef.current.classList.remove('audioCall_to-right');
+        audioCallRef.current.classList.add('audioCall_to-place');
+      }
+    }, 500)
+  }
+}
+
+
   const onHandleClickBtnNext = () => {
-    if (count < words.length - 1) {
-      setCount(count + 1);
-    } else {
-      ModalFinishLevel({ right, wrong, onOk, onCancel });
-    }
-    setIsCheck(false);
+    
+    effectCarusel()    
+
+    setTimeout(() => {
+      if (count < words.length - 1) {
+        setCount(count + 1);
+      } else {
+        ModalFinishLevel({ right, wrong, onOk, onCancel });
+      }
+      setIsCheck(false);
+    }, 500)
+
+
   };
 
   const onHandleClickBtnNotKnow = () => {
-    // onCheck('');
+    onCheck('');
     setIsCheck(true);
   };
 
@@ -117,44 +152,26 @@ const AudioCall: React.FC = ({
             <div className="audioCall__view-box">
               {isCheck ? (
                 <>
-                <img
-                  className="audioCall__view-box_image"
-                  src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
-                  alt="Loading"
-                ></img>
-                <div className="audioCall__view-box_answer answer" ref={answerRef}>
-                <SoundTwoTone twoToneColor="#d19aed" onClick={playAudio}/>
-                <div className="answer__word-word">{currentWord.word}</div>
-              </div>
-              </>
+                  <img
+                    className="audioCall__view-box_image"
+                    src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
+                    alt="Loading"
+                  ></img>
+                  <div className="audioCall__view-box_answer answer">
+                    <SoundTwoTone twoToneColor="#d19aed" onClick={playAudio} />
+                    <div className="answer__word-word">{currentWord.word}</div>
+                  </div>
+                </>
               ) : (
                 <div
                   className="audioCall__view-box_btn-sound"
                   onClick={playAudio}
                 ></div>
               )}
-
-           
             </div>
 
-            <div className="audioCall__choose-box">
-              {shuffle(
-                shuffle(
-                  words.filter((word: any) => currentWord.word !== word.word),
-                )
-                  .filter((word: any, i: number) => i < 4)
-                  .concat(currentWord)
-                  .map((word: any) => (
-                    <div
-                      key={word.id}
-                      className="audioCall__choose-box_btn-check"
-                      onClick={(event: React.MouseEvent<HTMLElement>) => onCheck(word,event)}
-                    >
-                      {word.wordTranslate}
-                    </div>
-                  )),
-              )}
-            </div>
+              <Words words={words} currentWord={currentWord}  onCheck={onCheck} btnRef={btnRef} />              
+            
             <div className="audioCall__next-box">
               {isCheck ? (
                 <div
