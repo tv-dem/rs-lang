@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Image, Spin, Button } from 'antd';
+import React, { useEffect, useRef, useCallback } from 'react';
+import { Spin } from 'antd';
+import { SoundTwoTone } from '@ant-design/icons';
 import './AudioCall.scss';
+import Words from './Words/Words';
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
-import shuffle from '../../../utils/shuffle'
-
 
 const AudioCall: React.FC = ({
   words,
@@ -22,12 +22,10 @@ const AudioCall: React.FC = ({
   level,
   page,
   isCheck,
-  setIsCheck
+  setIsCheck,
 }: any) => {
-
-  const imageRef = useRef<HTMLDivElement>(null);
-  const answerRef = useRef<HTMLDivElement>(null);
   const audioCallRef = useRef<HTMLDivElement>(null);
+  const btnRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
@@ -40,49 +38,56 @@ const AudioCall: React.FC = ({
   }, [count]);
 
   useEffect(() => {
-    if (isCheck) {
-      if (imageRef.current && answerRef.current) {
-        imageRef.current.classList.remove('toBackPlaceImg');
-        imageRef.current.classList.add('toChangePlaceImg');
-        answerRef.current.classList.add('visible');
-        answerRef.current.classList.remove('hidden');
-      }
-    } else {
-      if (imageRef.current && answerRef.current) {
-        imageRef.current.classList.remove('toChangePlaceImg');
-        imageRef.current.classList.add('toBackPlaceImg');
-        answerRef.current.classList.add('hidden');
-        answerRef.current.classList.remove('visible');
+    playAudio();
+  }, [currentWord]);
+
+  const playAudio = useCallback(() => {
+    if (currentWord)
+      new Audio(
+        `https://api-rs-lang.herokuapp.com/${currentWord.audio}`,
+      ).play();
+  }, [currentWord]);
+
+  useEffect(() => {
+    if (!isCheck) {
+      if (btnRef.current) {
+        btnRef.current.childNodes.forEach((el: any) => {
+          el.classList.remove('audioCall_no-active');
+          el.classList.remove('audioCall_is-selected-win');
+          el.classList.remove('audioCall_is-selected-lose');
+        });
       }
     }
   }, [isCheck]);
 
   const toWin = () => {
+    if (btnRef.current) {
+      btnRef.current.childNodes.forEach((el: any) => {
+        el.classList.add('audioCall_no-active');
+        if (el.firstChild.innerHTML === currentWord.wordTranslate)
+          el.classList.add('audioCall_is-selected-win');
+      });
+    }
+
     new Audio(rightAudio).play();
-    setTimeout(
-      () =>
-        new Audio(
-          `https://api-rs-lang.herokuapp.com/${currentWord.audio}`,
-        ).play(),
-      1000,
-    );
     addRightWord(currentWord);
   };
 
   const toLost = () => {
+    if (btnRef.current) {
+      btnRef.current.childNodes.forEach((el: any) => {
+        el.classList.add('audioCall_no-active');
+        if (el.firstChild.innerHTML === currentWord.wordTranslate)
+          el.classList.add('audioCall_is-selected-lose');
+      });
+    }
+
     new Audio(wrongAudio).play();
-    setTimeout(
-      () =>
-        new Audio(
-          `https://api-rs-lang.herokuapp.com/${currentWord.audio}`,
-        ).play(),
-      1000,
-    );
     addWrongWord(currentWord);
   };
 
-  const onCheck = (word:any) => {
-    if ( word.word === currentWord.word) {
+  const onCheck = (word: any) => {
+    if (word.word === currentWord.word) {
       toWin();
     } else {
       toLost();
@@ -91,69 +96,101 @@ const AudioCall: React.FC = ({
   };
 
   const onOk = () => {
-    fetchWords(level, page + 1)
-  }
+    fetchWords(level, page + 1);
+  };
 
   const onCancel = () => {
-    fetchWords(level, page)
-  }
+    fetchWords(level, page);
+  };
+
+  const effectCarusel = () => {
+    if (audioCallRef.current) {
+      audioCallRef.current.classList.remove('audioCall_to-place');
+      audioCallRef.current.classList.add('audioCall_to-left');
+      setTimeout(() => {
+        if (audioCallRef.current) {
+          audioCallRef.current.classList.remove('audioCall_to-left');
+          audioCallRef.current.classList.add('audioCall_to-right');
+        }
+      }, 100);
+      setTimeout(() => {
+        if (audioCallRef.current) {
+          audioCallRef.current.classList.remove('audioCall_to-right');
+          audioCallRef.current.classList.add('audioCall_to-place');
+        }
+      }, 500);
+    }
+  };
 
   const onHandleClickBtnNext = () => {
-    if (count < words.length - 1) {
-      setCount(count + 1);
-    } else {
-      ModalFinishLevel({ right, wrong, onOk, onCancel });
-    }
-    setIsCheck(false);
+    effectCarusel();
+
+    setTimeout(() => {
+      if (count < words.length - 1) {
+        setCount(count + 1);
+      } else {
+        ModalFinishLevel({ right, wrong, onOk, onCancel });
+      }
+      setIsCheck(false);
+    }, 500);
+  };
+
+  const onHandleClickBtnNotKnow = () => {
+    onCheck('');
+    setIsCheck(true);
   };
 
   return (
     <div className="audioCall__wrapper ">
       <div ref={audioCallRef} className="audioCall">
         {!pending && currentWord ? (
-          <div>
+          <>
             <div className="audioCall__view-box">
-              <div className="audioCall__view-box_image-box" >
-                {isCheck ?
-                  <Image
-                    className="context_image"
-                    alt="Loading"
-                    fallback={`Error loading file ${currentWord.image}`}
-                    width="300px"
-                    height="200px"
+              {isCheck ? (
+                <>
+                  <img
+                    className="audioCall__view-box_image"
                     src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
-                  ></Image>
-                  :
-                  <div>{currentWord.word}</div>
-                }
-              </div>
+                    alt="Loading"
+                  ></img>
+                  <div className="audioCall__view-box_answer answer">
+                    <SoundTwoTone twoToneColor="#d19aed" onClick={playAudio} />
+                    <div className="answer__word-word">{currentWord.word}</div>
+                  </div>
+                </>
+              ) : (
+                <div
+                  className="audioCall__view-box_btn-sound"
+                  onClick={playAudio}
+                ></div>
+              )}
             </div>
-            <div className="audioCall__view-box_answer-box hidden" ref={answerRef}>
-              <div className="answer-box__word-word">{currentWord.word}</div>
-              <div className="answer-box__word-transcription">
-                {currentWord.transcription}
-              </div>
-              <div className="answer-box__word-wordTranslate">
-                {currentWord.wordTranslate}
-              </div>
+
+            <Words
+              words={words}
+              currentWord={currentWord}
+              onCheck={onCheck}
+              btnRef={btnRef}
+            />
+
+            <div className="audioCall__next-box">
+              {isCheck ? (
+                <div
+                  className="audioCall__next-box_btn-next"
+                  onClick={onHandleClickBtnNext}
+                >
+                  Далее
+                </div>
+              ) : (
+                <div
+                  className="audioCall__next-box_btn-next"
+                  onClick={onHandleClickBtnNotKnow}
+                >
+                  Не знаю
+                </div>
+              )}
             </div>
-
-            {isCheck ? (
-
-
-              <Button className="context_btn_next" onClick={onHandleClickBtnNext}>
-                NEXT
-              </Button>
-            ) : (
-              <div className="audioCall__change-box">
-               { shuffle( shuffle(words.filter((word:any)=>currentWord.word!==word.word)).filter((word:any,i:number)=>i<4).concat(currentWord).map((word:any)=>
-               <Button key={word.id} className="context_btn_check" onClick={()=>onCheck(word)}>
-                 { word.word}
-               </Button>))}
-
-              </div>
-            )}
-          </div>
+          </>
         ) : (
           <Spin tip="Loading..." size="large" />
         )}
