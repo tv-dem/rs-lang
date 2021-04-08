@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import { Spin } from 'antd';
 import { SoundTwoTone } from '@ant-design/icons';
 import './AudioCall.scss';
-import Words from "./Words/Words"
+import Words from './Words/Words';
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
@@ -26,7 +26,6 @@ const AudioCall: React.FC = ({
 }: any) => {
   const audioCallRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLDivElement>(null);
-  const selectedRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
@@ -50,44 +49,45 @@ const AudioCall: React.FC = ({
   }, [currentWord]);
 
   useEffect(() => {
-    if (isCheck) {
-      if (btnRef.current && selectedRef.current) {
-      
-      }
-    } else {
-      if (btnRef.current && selectedRef.current) {
-       
+    if (!isCheck) {
+      if (btnRef.current) {
+        btnRef.current.childNodes.forEach((el: any) => {
+          el.classList.remove('audioCall_no-active');
+          el.classList.remove('audioCall_is-selected-win');
+          el.classList.remove('audioCall_is-selected-lose');
+        });
       }
     }
   }, [isCheck]);
 
   const toWin = () => {
+    if (btnRef.current) {
+      btnRef.current.childNodes.forEach((el: any) => {
+        el.classList.add('audioCall_no-active');
+        if (el.firstChild.innerHTML === currentWord.wordTranslate)
+          el.classList.add('audioCall_is-selected-win');
+      });
+    }
+
     new Audio(rightAudio).play();
     addRightWord(currentWord);
   };
 
   const toLost = () => {
- //   if(btnRef.current) {
-//       console.log(btnRef.current.childNodes)
-//       btnRef.current.childNodes.forEach((el:any)=>{
-// el.className.add("audioCall_no-active")
-      // })
-      // for (const key in btnRef.current.childNodes ) {
-      //  btnRef.current.childNodes[key].classList.add("audioCall_no-active")
-      //   // btnRef.current.children[key].classList.add("audioCall_no-active")
-      //   // if(btnRef.current.children[key].innerHTML===currentWord.wordTranslate) btnRef.current.children[key].classList.add("audioCall_is-selected")
-      // }
-  //  btnRef.current.children.forEach((btn:HTMLDivElement)=>{
-     
-      
-  //   })
-//  }
+    if (btnRef.current) {
+      btnRef.current.childNodes.forEach((el: any) => {
+        el.classList.add('audioCall_no-active');
+        if (el.firstChild.innerHTML === currentWord.wordTranslate)
+          el.classList.add('audioCall_is-selected-lose');
+      });
+    }
+
     new Audio(wrongAudio).play();
     addWrongWord(currentWord);
   };
 
   const onCheck = (word: any) => {
-    if (word.word === currentWord.word) {      
+    if (word.word === currentWord.word) {
       toWin();
     } else {
       toLost();
@@ -103,29 +103,27 @@ const AudioCall: React.FC = ({
     fetchWords(level, page);
   };
 
-const effectCarusel=()=>{
-  if (audioCallRef.current) {
-    audioCallRef.current.classList.remove('audioCall_to-place');
-    audioCallRef.current.classList.add('audioCall_to-left');
-    setTimeout(() => {
-      if (audioCallRef.current) {
-        audioCallRef.current.classList.remove('audioCall_to-left');
-        audioCallRef.current.classList.add('audioCall_to-right');
-      }
-    }, 100)
-    setTimeout(() => {
-      if (audioCallRef.current) {
-        audioCallRef.current.classList.remove('audioCall_to-right');
-        audioCallRef.current.classList.add('audioCall_to-place');
-      }
-    }, 500)
-  }
-}
-
+  const effectCarusel = () => {
+    if (audioCallRef.current) {
+      audioCallRef.current.classList.remove('audioCall_to-place');
+      audioCallRef.current.classList.add('audioCall_to-left');
+      setTimeout(() => {
+        if (audioCallRef.current) {
+          audioCallRef.current.classList.remove('audioCall_to-left');
+          audioCallRef.current.classList.add('audioCall_to-right');
+        }
+      }, 100);
+      setTimeout(() => {
+        if (audioCallRef.current) {
+          audioCallRef.current.classList.remove('audioCall_to-right');
+          audioCallRef.current.classList.add('audioCall_to-place');
+        }
+      }, 500);
+    }
+  };
 
   const onHandleClickBtnNext = () => {
-    
-    effectCarusel()    
+    effectCarusel();
 
     setTimeout(() => {
       if (count < words.length - 1) {
@@ -134,9 +132,7 @@ const effectCarusel=()=>{
         ModalFinishLevel({ right, wrong, onOk, onCancel });
       }
       setIsCheck(false);
-    }, 500)
-
-
+    }, 500);
   };
 
   const onHandleClickBtnNotKnow = () => {
@@ -170,8 +166,13 @@ const effectCarusel=()=>{
               )}
             </div>
 
-              <Words words={words} currentWord={currentWord}  onCheck={onCheck} btnRef={btnRef} />              
-            
+            <Words
+              words={words}
+              currentWord={currentWord}
+              onCheck={onCheck}
+              btnRef={btnRef}
+            />
+
             <div className="audioCall__next-box">
               {isCheck ? (
                 <div
