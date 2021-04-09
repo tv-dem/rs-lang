@@ -44,15 +44,25 @@ background: #e6f9dd;
 .visibleIncorrect {
     box-shadow: 0px 0px 9px 5px rgba(231, 70, 70, 0.75);
 }
+.imgSprint {
+    box-shadow: 0px 0px 9px 5px rgba(34, 33, 33, 0.75);
+}
+.sprintWrapper {
+background-image: url(../../../assets/img/fonSprint.jpg);
+background-size: cover;
+}
 
 .sprintBox {
-width: 50%;
-height: 50%;
-border: 0.5px solid rgba(0, 0, 0, 0.75);
+margin: 1rem 0;
+width: 55%;
+height: 65%;
+border: 2px solid rgba(0, 0, 0, 0.2);
+border-radius: 0.7rem;
 display: flex;
 flex-direction: column;
-justify-content: center;
 align-items: center;
+justify-content: space-between;
+background-color: rgba(59, 59, 59, 0.2);
 }
 
 .hiddenSprint {
@@ -67,18 +77,135 @@ align-items: center;
 
 
 .fullScreen {
-z-index: 9999; 
+z-index: 999; 
 width: 100%; 
 height: 100%; 
 position: absolute; 
 top: 0; 
 left: 0; 
 }
+.fullBtn {
+width: 30px; 
+}
+.ProgressSprintBox {
+margin-left:10px;
+width: 150px;
+height: 150px; 
+border-radius: 50%;
+background-color: #eb2f9647;
+
+}
 
 .fullScreenBtn {
-width: 10%; 
-right: 2px;
+width: 30px; 
+height: 30px;
+margin-right: 2px;
 top: 0; 
+background-image: url('../../../assets/img/fullscreen.png');
+background-size: cover;
+background-repeat: no-repeat;
+}
+
+.fullScreenBtn:hover {
+background-color: rgba(231, 225, 225, 0.4);
+}
+
+.btn {
+    cursor: pointer;
+    transition: 0.3s;
+    }
+
+.sprintBoxButton {
+    width: 100%; 
+    display: flex;
+    justify-content: center;
+    font-size: 1.3rem;
+    text-align: center;
+}
+.sprintBtnNo {
+width: 150px; 
+height: 35px;
+background-color: brown;
+color: cornsilk;
+margin: 1rem 1rem;
+box-shadow: 0px 0px 3px 2px rgba(73, 73, 73, 0.75);
+}
+
+.sprintBtnNo:hover {
+background-color: rgb(218, 51, 51);
+    }
+
+.sprintBtnYes {
+width: 150px; 
+height: 35px;
+background-color: rgb(42, 165, 104);
+color: cornsilk;
+margin: 1rem 1rem;
+box-shadow: 0px 0px 3px 2px rgba(73, 73, 73, 0.75);
+}
+
+.sprintBtnYes:hover {
+    background-color: rgb(31, 206, 118);
+        }
+
+        .sprintWord {
+            letter-spacing: 0.15rem;
+            font-weight: 550;
+
+        }
+
+        .sprintWordTranslate {
+            letter-spacing: 0.1rem;
+            font-weight: 550;
+        }
+.boxLine {
+    display: flex;
+   // width: 100%;
+    flex-wrap: wrap;
+    margin: 1rem 2rem;
+    height: 62px;
+}
+.line {
+   // border: 1px solid black;
+    width: 30px;
+    height: 30px;
+    background-image: url(../../../assets/img/lineBird.png);
+    background-size: cover;
+background-repeat: no-repeat;
+margin-left: 1rem;
+}
+
+.boxBtnFullScreen {
+    display: flex;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+}
+.boxTitleSprint {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom-style: ridge;
+    border-bottom-width: 3px;
+    border-bottom-color: #ef40b0;
+    height: 50px;
+    background-color: #eb2f9647;
+    border-radius: 6px;
+}
+.boxLineBest {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    margin: 0.5rem 1rem;
+    color: rgb(2, 37, 6);
+   
+
+}
+.boxLineBestImg {
+    width: 25px;
+    height: 25px;
+    background-image: url(../../../assets/img/lineBird.png);
+    background-size: cover;
+background-repeat: no-repeat; 
 }
 
 @keyframes tremor {
