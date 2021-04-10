@@ -3,16 +3,17 @@ import {
   SET_LONG_TERM_STAT,
   UPDATE_STAT_STARTED,
   UPDATE_STAT_FAILURE,
+  SET_INITIAL_STAT,
 } from './actionTypes';
 import {
-  LongTermStat,
-  GetLongTermStat,
-  SetLongTermStat,
+  Stat,
+  GetTermStat,
+  SetTermStat,
   UpdateStatStarted,
   UpdateStatFailure,
 } from './interfaces';
 
-export const setLongTermStat = (stat: LongTermStat[]): SetLongTermStat => ({
+export const setTermStat = (stat: Stat): SetTermStat => ({
   type: SET_LONG_TERM_STAT,
   payload: stat,
 } as const);
@@ -27,7 +28,12 @@ export const updateStatFailure = (error: string): UpdateStatFailure => ({
   payload: error,
 } as const);
 
-export const getLongTermStat = (stat: LongTermStat[]): GetLongTermStat => ({
+export const getTermStat = (stat: Stat): GetTermStat => ({
   type: GET_LONG_TERM_STAT,
   payload: stat,
+} as const);
+
+export const setInitialStat = (): UpdateStatStarted => ({
+  type: SET_INITIAL_STAT,
+  payload: '',
 } as const);

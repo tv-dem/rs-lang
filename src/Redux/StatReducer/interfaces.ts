@@ -4,14 +4,32 @@ export interface LongTermStat {
   learnedWords: number;
 };
 
-export interface GetLongTermStat {
-  type: string;
-  payload: LongTermStat[];
+export interface ShortTermStat {
+  bestSeries: number,
+  cardsCount: number,
+  cardsLeft: number,
+  correctAnswers: number,
+  currentCardNum: number,
+  currentSeries: number,
+  errorAnswers: number,
+  newWordsCount: number,
+  studiedСardNum: number,
+  timeNow: string,
 }
 
-export interface SetLongTermStat {
+export interface Stat {
+  longTermStat: LongTermStat[],
+  shortTermStat: ShortTermStat,
+}
+
+export interface GetTermStat {
   type: string;
-  payload: LongTermStat[];
+  payload: Stat;
+}
+
+export interface SetTermStat {
+  type: string;
+  payload: Stat;
 }
 
 export interface UpdateStatStarted {

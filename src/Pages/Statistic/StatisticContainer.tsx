@@ -8,7 +8,7 @@ const MapDispatchToProps = {
 };
 
 const mapStateToProps = (state: any) => ({
-    longTermStat: state.stat.longTermStat,
+    stat: state.stat.stat,
     isLoadStat: state.stat.isLoadStat,
     errorStat: state.stat.errorStat,
     currentUser: state.auth.currentUser,

@@ -9,13 +9,27 @@ import * as actions from './actions';
 
 const initialState = {
   isLoadStat: false,
-  longTermStat: [
-    {
-      date: new Date().toLocaleDateString(),
-      learnedCards: 0,
-      learnedWords: 0,
+  stat: {
+    longTermStat: [
+      {
+        date: new Date().toLocaleDateString(),
+        learnedCards: 0,
+        learnedWords: 0,
+      }
+    ] as LongTermStat[],
+    shortTermStat: {
+      bestSeries: 0,
+      cardsCount: 0,
+      cardsLeft: 0,
+      correctAnswers: 0,
+      currentCardNum: 0,
+      currentSeries: 0,
+      errorAnswers: 0,
+      newWordsCount: 0,
+      studiedСardNum: 0,
+      timeNow: `${new Date().getHours()}-00`,
     }
-  ] as LongTermStat[],
+  },
   errorStat: '',
 };
 
@@ -44,7 +58,7 @@ const statReducer = (state = initialState, action: ActionTypes) => {
     case SET_LONG_TERM_STAT: {
       return {
         ...state,
-        longTermStat: action.payload,
+        stat: action.payload,
         isLoadStat: false,
         errorStat: '',
       };
@@ -53,7 +67,7 @@ const statReducer = (state = initialState, action: ActionTypes) => {
     case GET_LONG_TERM_STAT: {
       return {
         ...state,
-        longTermStat: action.payload,
+        stat: action.payload,
         isLoadStat: false,
         errorStat: '',
       };

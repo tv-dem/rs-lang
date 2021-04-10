@@ -7,38 +7,36 @@ import { ReactComponent as StatTodaySvg } from '../../assets/svg/graph_today.svg
 import { ReactComponent as CommonStatSvg } from '../../assets/svg/common_statistics.svg';
 import { ReactComponent as VisualStatSvg } from '../../assets/svg/visual_statistics.svg';
 import { ReactComponent as GamePadSvg } from '../../assets/svg/game-pad.svg';
-import { LongTermStat } from '../../Redux/StatReducer/interfaces';
+import { Stat } from '../../Redux/StatReducer/interfaces';
 import { CurrentUser } from '../../Redux/AuthReducer/interfaces';
 import './Statistic.scss';
-
-const shortTermStat = {
-  bestSeries: 5,
-  cardsCount: 5,
-  cardsLeft: 16,
-  correctAnswers: 5,
-  currentCardNum: 5,
-  currentSeries: 5,
-  // currentWord: { _id: "5e9f5ee35eb9e72bc21af4a4", group: 0, page: 0, word: "August", image: "files/01_0004.jpg", … }
-  errorAnswers: 0,
-  newWordsCount: 5,
-  studiedСardNum: 5,
-  timeNow: new Date().getHours(),
-};
 
 interface StatisticProps {
   onLoad: () => void;
   getStat: (userId: string, token: string) => void;
-  longTermStat: LongTermStat;
+  stat: Stat;
   isLoadStat: boolean;
   errorStat: string;
   currentUser: CurrentUser;
 }
 
-const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, longTermStat, isLoadStat, errorStat, currentUser }: any) => {
+const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat, errorStat, currentUser }) => {
   const { TabPane } = Tabs;
-
+  const { longTermStat, shortTermStat } = stat;
   const { learnedCards, learnedWords } = longTermStat[longTermStat.length - 1];
   const { userId, token } = currentUser;
+  const {
+    bestSeries,
+    cardsCount,
+    cardsLeft,
+    correctAnswers,
+    currentCardNum,
+    currentSeries,
+    errorAnswers,
+    newWordsCount,
+    studiedСardNum,
+    timeNow
+  } = shortTermStat;
 
   const dataSource = [
     {
@@ -78,19 +76,6 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, longTermStat, is
     },
   ];
 
-  const todayData = [
-    'Новые слова:',
-    'Карточек изучено:',
-    'Карточек осталось:',
-    'Процент правильных ответов:',
-    'Лучшая серия ответов:'
-  ];
-
-  const commonData = [
-    'Всего выучено слов:',
-    'Всего карточек пройдено:'
-  ];
-
   function callback(key: string) {
     console.log(key);
   };
@@ -113,45 +98,58 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, longTermStat, is
               <div className="stat">
                 <h1 className="stat__title">
                   <StatSvg />
-              Статистика:
-            </h1>
-
+                  Статистика:
+                </h1>
                 <List
                   size="small"
                   header={
                     <h4 className="stat__subtitle">
                       <StatTodaySvg />
-                Статистика за сегодня:
-              </h4>
+                      Статистика за сегодня:
+                    </h4>
                   }
                   bordered
-                  dataSource={todayData}
-                  renderItem={item => (
-                    <List.Item className='d-flex flex-btw' key={item}>
-                      {item}
-                      <Progress percent={30} steps={10} />
-                      <span className="list-info">0</span>
-                    </List.Item>
-                  )}
-                />
+                >
+                  <List.Item className='d-flex flex-btw'>
+                    Новые слова:
+                    <span className="list-info">{newWordsCount}</span>
+                  </List.Item>
+                  <List.Item className='d-flex flex-btw'>
+                    Карточек изучено:
+                    <Progress percent={Math.floor(studiedСardNum / 20 * 100)} steps={10} />
+                    <span className="list-info">{studiedСardNum}</span>
+                  </List.Item>
+                  <List.Item className='d-flex flex-btw'>
+                    Карточек осталось:
+                    <Progress percent={Math.floor(cardsLeft / 20 * 100)} steps={10} />
+                    <span className="list-info">{cardsLeft}</span>
+                  </List.Item>
+                  <List.Item className='d-flex flex-btw'>
+                    Процент правильных ответов:
+                    <span className="list-info">{correctAnswers}</span>
+                  </List.Item>
+                  <List.Item className='d-flex flex-btw'>
+                    Лучшая серия ответов:
+                    <span className="list-info">{bestSeries}</span>
+                  </List.Item>
+                </List>
 
                 <List
                   size="small"
                   header={
                     <h4 className="stat__subtitle">
                       <CommonStatSvg />
-                Общая статистика:
-              </h4>
+                      Общая статистика:
+                    </h4>
                   }
                   bordered
-                  dataSource={commonData}
                 >
                   <List.Item className='d-flex flex-btw'>
-                    {commonData[0]}
+                    Всего выучено слов:
                     <span className="list-info">{learnedWords}</span>
                   </List.Item>
                   <List.Item className='d-flex flex-btw'>
-                    {commonData[1]}
+                    Всего карточек пройдено:
                     <span className="list-info">{learnedCards}</span>
                   </List.Item>
                 </List>
@@ -159,8 +157,8 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, longTermStat, is
                 <div className="stat__wrapper">
                   <h4 className="stat__subtitle">
                     <VisualStatSvg />
-                Визуальная статистика:
-              </h4>
+                    Визуальная статистика:
+                  </h4>
                   <Tabs defaultActiveKey="1" onChange={callback}>
                     <TabPane tab="Выучено слов за день:" key="1">
                       <Graph />
@@ -178,8 +176,8 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, longTermStat, is
               <div className="stat__wrapper">
                 <h4 className="stat__subtitle">
                   <GamePadSvg />
-              Статистика мини-игр:
-            </h4>
+                  Статистика мини-игр:
+                </h4>
                 <Tabs type="card">
                   <TabPane tab="Собери слово" key="4">
                     <Table dataSource={dataSource} columns={columns} />;
