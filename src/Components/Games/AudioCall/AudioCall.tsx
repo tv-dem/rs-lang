@@ -105,11 +105,7 @@ const AudioCall: React.FC = ({
   };
 
 
-  const onHandleClickBtnNext = () => {
-    if (count < words.length - 1) {
-      setCount(count + 1);
-    } else {
-      ModalFinishLevel({ right, wrong, onOk, onCancel, bestLine});
+  
   const effectCarusel = () => {
     if (audioCallRef.current) {
       audioCallRef.current.classList.remove('audioCall_to-place');
@@ -136,7 +132,7 @@ const AudioCall: React.FC = ({
       if (count < words.length - 1) {
         setCount(count + 1);
       } else {
-        ModalFinishLevel({ right, wrong, onOk, onCancel });
+        ModalFinishLevel({ right, wrong, onOk, onCancel, bestLine });
       }
       setIsCheck(false);
     }, 500);
