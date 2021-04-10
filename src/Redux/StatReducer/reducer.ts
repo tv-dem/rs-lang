@@ -6,6 +6,7 @@ import {
   UPDATE_STAT_FAILURE,
 } from './actionTypes';
 import * as actions from './actions';
+import { nanoid } from 'nanoid';
 
 const initialState = {
   isLoadStat: false,
@@ -27,8 +28,48 @@ const initialState = {
       errorAnswers: 0,
       newWordsCount: 0,
       studiedСardNum: { '9-00': 0 },
-      timeNow: `${new Date().getHours()}-00`,
-    }
+      timeNow: `${new Date().getHours()}`,
+    },
+    gameStatWord: [
+      {
+        key: nanoid(),
+        date: new Date().toLocaleDateString(),
+        time: `${new Date().getHours()}-${new Date().getMinutes()}`,
+        level: 0,
+        round: 0,
+        result: 0,
+      },
+    ],
+    gameStatSavanna: [
+      {
+        key: nanoid(),
+        date: new Date().toLocaleDateString(),
+        time: `${new Date().getHours()}-00`,
+        level: 0,
+        round: 0,
+        result: 0,
+      },
+    ],
+    gameStatAudio: [
+      {
+        key: nanoid(),
+        date: new Date().toLocaleDateString(),
+        time: `${new Date().getHours()}-00`,
+        level: 0,
+        round: 0,
+        result: 0,
+      },
+    ],
+    gameStatSprint: [
+      {
+        key: nanoid(),
+        date: new Date().toLocaleDateString(),
+        time: `${new Date().getHours()}-00`,
+        level: 0,
+        round: 0,
+        result: 0,
+      },
+    ],
   },
   errorStat: '',
 };

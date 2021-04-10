@@ -33,8 +33,15 @@ export const getStat = (userId: string, token: string) => async (dispatch: any) 
 
   try {
     const json = await API.getUserStatistics(userId, token);
-    const { longTermStat } = json.optional;
-    dispatch(setTermStat({ ...json.optional, longTermStat: JSON.parse(String(longTermStat)) }));
+    const { longTermStat, gameStatWord, gameStatSprint, gameStatSavanna, gameStatAudio } = json.optional;
+    dispatch(setTermStat({
+      ...json.optional,
+      longTermStat: JSON.parse(String(longTermStat)),
+      gameStatWord: JSON.parse(String(gameStatWord)),
+      gameStatSprint: JSON.parse(String(gameStatSprint)),
+      gameStatSavanna: JSON.parse(String(gameStatSavanna)),
+      gameStatAudio: JSON.parse(String(gameStatAudio)),
+    }));
     console.log(json);
   } catch (err) {
     if (err.message === '401') {

@@ -17,9 +17,22 @@ export interface ShortTermStat {
   timeNow: string,
 }
 
+export interface GameStat {
+  key: string,
+  date: string,
+  time: string,
+  level: number,
+  round: number,
+  result: number,
+}
+
 export interface Stat {
   longTermStat: LongTermStat[],
   shortTermStat: ShortTermStat,
+  gameStatWord: GameStat[],
+  gameStatSavanna: GameStat[],
+  gameStatAudio: GameStat[],
+  gameStatSprint: GameStat[],
 }
 
 export interface GetTermStat {

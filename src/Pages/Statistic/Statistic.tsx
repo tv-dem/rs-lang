@@ -8,20 +8,32 @@ import { ReactComponent as StatTodaySvg } from '../../assets/svg/graph_today.svg
 import { ReactComponent as CommonStatSvg } from '../../assets/svg/common_statistics.svg';
 import { ReactComponent as VisualStatSvg } from '../../assets/svg/visual_statistics.svg';
 import { ReactComponent as GamePadSvg } from '../../assets/svg/game-pad.svg';
-import { Stat } from '../../Redux/StatReducer/interfaces';
+import { Stat, LongTermStat } from '../../Redux/StatReducer/interfaces';
 import { CurrentUser } from '../../Redux/AuthReducer/interfaces';
+import { columns } from '../../utils/constants';
 import './Statistic.scss';
 
-const dataSource = [
-  {
-    key: nanoid(),
-    date: '17-05-2021',
-    time: '12-00',
-    level: 3,
-    round: '1',
-    result: '100',
-  },
-];
+const mapTotalDataForChart = (stat: LongTermStat[]) => {
+  return stat.reduce((acc, item) => {
+    const dataItem = {
+      x: item.date,
+      y: item.learnedWords,
+    };
+    acc.push(dataItem);
+    return acc;
+  }, [] as Array<{ x: string, y: number }>);
+};
+
+const mapDailyDataForChart = (stat: { [key: string]: number }) => {
+  return Object.entries(stat).reduce((acc: any, item: Array<number | string>) => {
+    const dataItem = {
+      x: item[0],
+      y: acc.reduce((ac: any, it: { [key: string]: string | number }) => ac + it.y, 0) + item[1]
+    };
+    acc.push(dataItem);
+    return acc;
+  }, [] as Array<{ [key: string]: string | number }>);
+};
 
 interface StatisticProps {
   onLoad: () => void;
@@ -34,71 +46,24 @@ interface StatisticProps {
 
 const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat, errorStat, currentUser }) => {
   const { TabPane } = Tabs;
-  const { longTermStat, shortTermStat } = stat;
+  const { longTermStat, shortTermStat, gameStatWord, gameStatSprint, gameStatSavanna, gameStatAudio } = stat;
   const { learnedCards, learnedWords } = longTermStat[longTermStat.length - 1];
   const { userId, token } = currentUser;
   const {
     bestSeries,
-    cardsCount,
     cardsLeft,
     correctAnswers,
-    currentCardNum,
-    currentSeries,
-    errorAnswers,
     newWordsCount,
     studiedСardNum,
-    timeNow
   } = shortTermStat;
 
   const studiedСard = Object.entries(studiedСardNum).reduce((acc: number, card: Array<number | string>) => acc + +card[1], 0);
 
   // map daily data for chart
-  const dataChartToday = Object.entries(studiedСardNum).reduce((acc: any, item: Array<number | string>) => {
-    const dataItem = {
-      x: item[0],
-      y: acc.reduce((ac: any, it: { [key: string]: string | number }) => ac + it.y, 0) + item[1]
-    };
-    acc.push(dataItem);
-    return acc;
-  }, [] as Array<{ [key: string]: string | number }>);
+  const dataChartToday = mapDailyDataForChart(studiedСardNum);
 
   // map total data for chart
-  const dataChartTotal = longTermStat.reduce((acc, item) => {
-    const dataItem = {
-      x: item.date,
-      y: item.learnedWords,
-    };
-    acc.push(dataItem);
-    return acc;
-  }, [] as Array<{ x: string, y: number }>);
-
-  const columns = [
-    {
-      title: 'Дата:',
-      dataIndex: 'date',
-      key: nanoid(),
-    },
-    {
-      title: 'Время:',
-      dataIndex: 'time',
-      key: nanoid(),
-    },
-    {
-      title: 'Уровень:',
-      dataIndex: 'level',
-      key: nanoid(),
-    },
-    {
-      title: 'Раунд:',
-      dataIndex: 'round',
-      key: nanoid(),
-    },
-    {
-      title: 'Результат:',
-      dataIndex: 'result',
-      key: nanoid(),
-    },
-  ];
+  const dataChartTotal = mapTotalDataForChart(longTermStat);
 
   function callback(key: string) {
     console.log(key);
@@ -182,7 +147,7 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
                     Визуальная статистика:
                   </h4>
                   <Tabs defaultActiveKey="1" onChange={callback}>
-                    <TabPane tab="Выучено слов за день:" key="1">
+                    <TabPane tab="Выучено слов за день:" key={nanoid()}>
                       <Graph
                         statType='Количество выученных слов за день:'
                         graphType='line'
@@ -191,7 +156,7 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
                         isStepped={true}
                       />
                     </TabPane>
-                    <TabPane tab="Выучено всего слов:" key="2">
+                    <TabPane tab="Выучено всего слов:" key={nanoid()}>
                       <Graph
                         statType='Количество выученных всего слов:'
                         graphType='line'
@@ -199,8 +164,13 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
                         color='83, 201, 115'
                       />
                     </TabPane>
-                    <TabPane tab="Популярность мини-игр:" key="3">
-                      Content of Tab Pane 3
+                    <TabPane tab="Популярность мини-игр:" key={nanoid()}>
+                      <Graph
+                        statType='Сыграно раз:'
+                        graphType='scatter'
+                        data={dataChartTotal}
+                        color='243,196,94'
+                      />
                     </TabPane>
                   </Tabs>
                 </div>
@@ -212,17 +182,29 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
                   Статистика мини-игр:
                 </h4>
                 <Tabs type="card">
-                  <TabPane tab="Собери слово" key="4">
-                    <Table dataSource={dataSource} columns={columns} />;
+                  <TabPane tab="Собери слово" key={nanoid()}>
+                    {gameStatWord
+                      ? <Table dataSource={gameStatWord} columns={columns} />
+                      : 'Вы еще не играли в эту игру!'
+                    }
                   </TabPane>
-                  <TabPane tab="Саванна" key="5">
-                    <Table dataSource={dataSource} columns={columns} />;
+                  <TabPane tab="Саванна" key={nanoid()}>
+                    {gameStatSavanna
+                      ? <Table dataSource={gameStatSavanna} columns={columns} />
+                      : 'Вы еще не играли в эту игру!'
+                    }
                   </TabPane>
-                  <TabPane tab="Аудио вызов" key="6">
-                    <Table dataSource={dataSource} columns={columns} />;
+                  <TabPane tab="Аудио вызов" key={nanoid()}>
+                    {gameStatAudio
+                      ? <Table dataSource={gameStatAudio} columns={columns} />
+                      : 'Вы еще не играли в эту игру!'
+                    }
                   </TabPane>
-                  <TabPane tab="Спринт" key="7">
-                    <Table dataSource={dataSource} columns={columns} />;
+                  <TabPane tab="Спринт" key={nanoid()}>
+                    {gameStatSprint
+                      ? <Table dataSource={gameStatSprint} columns={columns} />
+                      : 'Вы еще не играли в эту игру!'
+                    }
                   </TabPane>
                 </Tabs>
               </div>
