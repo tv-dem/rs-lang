@@ -35,6 +35,7 @@ const Graph = ({ statType, graphType, data, color, isStepped = false, labels = n
           },
           y: {
             display: true,
+            beginAtZero: true,
             title: {
               display: true,
               text: (graphType === 'line') ? 'Выучено слов:' : 'Сыграно раз:'
