@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import Chart from 'chart.js/auto';
 
-const Graph = ({ statType, graphType, data, color }) => {
+const Graph = ({ statType, graphType, data, color, isStepped = false }) => {
   const chartRef = useRef(null);
 
   // const data = {
@@ -102,7 +102,7 @@ const Graph = ({ statType, graphType, data, color }) => {
           intersect: false,
           axis: 'x'
         },
-        stepped: true,
+        stepped: isStepped,
         scales: {
           x: {
             display: true,

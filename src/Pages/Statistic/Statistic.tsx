@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { List, Progress, Tabs, Table } from 'antd';
 import Graph from '../../utils/graph';
 import Loader from '../../Components/Loader';
+import { nanoid } from 'nanoid';
 import { ReactComponent as StatSvg } from '../../assets/svg/statistics.svg';
 import { ReactComponent as StatTodaySvg } from '../../assets/svg/graph_today.svg';
 import { ReactComponent as CommonStatSvg } from '../../assets/svg/common_statistics.svg';
@@ -10,6 +11,17 @@ import { ReactComponent as GamePadSvg } from '../../assets/svg/game-pad.svg';
 import { Stat } from '../../Redux/StatReducer/interfaces';
 import { CurrentUser } from '../../Redux/AuthReducer/interfaces';
 import './Statistic.scss';
+
+const dataSource = [
+  {
+    key: nanoid(),
+    date: '17-05-2021',
+    time: '12-00',
+    level: 3,
+    round: '1',
+    result: '100',
+  },
+];
 
 interface StatisticProps {
   onLoad: () => void;
@@ -37,10 +49,10 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
     studiedСardNum,
     timeNow
   } = shortTermStat;
-  console.log(studiedСardNum);
 
   const studiedСard = Object.entries(studiedСardNum).reduce((acc: number, card: Array<number | string>) => acc + +card[1], 0);
 
+  // map daily data for chart
   const dataChartToday = Object.entries(studiedСardNum).reduce((acc: any, item: Array<number | string>) => {
     const dataItem = {
       x: item[0],
@@ -50,43 +62,41 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
     return acc;
   }, [] as Array<{ [key: string]: string | number }>);
 
-  console.log(dataChartToday);
-
-  const dataSource = [
-    {
-      date: '17-05-2021',
-      time: '12-00',
-      level: 3,
-      round: '1',
-      result: '100',
-    },
-  ];
+  // map total data for chart
+  const dataChartTotal = longTermStat.reduce((acc, item) => {
+    const dataItem = {
+      x: item.date,
+      y: item.learnedWords,
+    };
+    acc.push(dataItem);
+    return acc;
+  }, [] as Array<{ x: string, y: number }>);
 
   const columns = [
     {
       title: 'Дата:',
       dataIndex: 'date',
-      key: 'date',
+      key: nanoid(),
     },
     {
       title: 'Время:',
       dataIndex: 'time',
-      key: 'time',
+      key: nanoid(),
     },
     {
       title: 'Уровень:',
       dataIndex: 'level',
-      key: 'level',
+      key: nanoid(),
     },
     {
       title: 'Раунд:',
       dataIndex: 'round',
-      key: 'round',
+      key: nanoid(),
     },
     {
       title: 'Результат:',
       dataIndex: 'result',
-      key: 'result',
+      key: nanoid(),
     },
   ];
 
@@ -97,9 +107,7 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
   useEffect(() => onLoad(), [onLoad]);
 
   useEffect(() => {
-    // if (token) {
     getStat(userId, token);
-    // }
   }, []);
 
   return (
@@ -180,10 +188,16 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
                         graphType='line'
                         data={dataChartToday}
                         color='255, 99, 132'
+                        isStepped={true}
                       />
                     </TabPane>
                     <TabPane tab="Выучено всего слов:" key="2">
-                      {/* <Graph /> */}
+                      <Graph
+                        statType='Количество выученных всего слов:'
+                        graphType='line'
+                        data={dataChartTotal}
+                        color='83, 201, 115'
+                      />
                     </TabPane>
                     <TabPane tab="Популярность мини-игр:" key="3">
                       Content of Tab Pane 3
