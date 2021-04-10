@@ -37,6 +37,20 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
     studiedСardNum,
     timeNow
   } = shortTermStat;
+  console.log(studiedСardNum);
+
+  const studiedСard = Object.entries(studiedСardNum).reduce((acc: number, card: Array<number | string>) => acc + +card[1], 0);
+
+  const dataChartToday = Object.entries(studiedСardNum).reduce((acc: any, item: Array<number | string>) => {
+    const dataItem = {
+      x: item[0],
+      y: acc.reduce((ac: any, it: { [key: string]: string | number }) => ac + it.y, 0) + item[1]
+    };
+    acc.push(dataItem);
+    return acc;
+  }, [] as Array<{ [key: string]: string | number }>);
+
+  console.log(dataChartToday);
 
   const dataSource = [
     {
@@ -116,8 +130,8 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
                   </List.Item>
                   <List.Item className='d-flex flex-btw'>
                     Карточек изучено:
-                    <Progress percent={Math.floor(studiedСardNum / 20 * 100)} steps={10} />
-                    <span className="list-info">{studiedСardNum}</span>
+                    <Progress percent={Math.floor(studiedСard / 20 * 100)} steps={10} />
+                    <span className="list-info">{studiedСard}</span>
                   </List.Item>
                   <List.Item className='d-flex flex-btw'>
                     Карточек осталось:
@@ -161,10 +175,15 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
                   </h4>
                   <Tabs defaultActiveKey="1" onChange={callback}>
                     <TabPane tab="Выучено слов за день:" key="1">
-                      <Graph />
+                      <Graph
+                        statType='Количество выученных слов за день:'
+                        graphType='line'
+                        data={dataChartToday}
+                        color='255, 99, 132'
+                      />
                     </TabPane>
                     <TabPane tab="Выучено всего слов:" key="2">
-                      <Graph />
+                      {/* <Graph /> */}
                     </TabPane>
                     <TabPane tab="Популярность мини-игр:" key="3">
                       Content of Tab Pane 3

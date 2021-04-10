@@ -26,7 +26,7 @@ const initialState = {
       currentSeries: 0,
       errorAnswers: 0,
       newWordsCount: 0,
-      studiedСardNum: 0,
+      studiedСardNum: { '9-00': 0 },
       timeNow: `${new Date().getHours()}-00`,
     }
   },

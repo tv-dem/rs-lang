@@ -1,37 +1,18 @@
 import React, { useRef, useEffect } from 'react';
 import Chart from 'chart.js/auto';
 
-const labl = 'Выучено слов за день';
-const color = '255, 99, 132';
-
-const dat = [1, 2, 3];
-
-const currentHour = new Date().getHours();
-
-console.log(currentHour);
-
-// {
-// 00: 10, 01: 20
-// }
-
-const labels = [currentHour, ...(Array(24 - currentHour).fill(0)).map((_, ind) => currentHour + ind + 1)].map((item) => `${item}-00`);
-
-const newWordsCount = new Map([labels, Array(24 - currentHour).fill(0)]);
-
-console.log(newWordsCount);
-
-const Graph = () => {
+const Graph = ({ statType, graphType, data, color }) => {
   const chartRef = useRef(null);
 
-  const data = {
-    labels: labels,
-    datasets: [{
-      label: labl,
-      backgroundColor: `rgba(${color}, 0.5)`,
-      borderColor: `rgb(${color})`,
-      data: dat,
-    }]
-  };
+  // const data = {
+  //   labels: labels,
+  //   datasets: [{
+  //     label: labl,
+  //     backgroundColor: `rgba(${color}, 0.5)`,
+  //     borderColor: `rgb(${color})`,
+  //     data: dat,
+  //   }]
+  // };
 
   const chartOptions = {
     legend: {
@@ -96,41 +77,46 @@ const Graph = () => {
     },
   };
 
-  const config = {
-    type: 'line',
-    data,
-    options: {}
-  };
+  // const config = {
+  //   type: 'line',
+  //   data,
+  //   options: {}
+  // };
 
   useEffect(() => {
     const myChartRef = chartRef.current.getContext("2d");
 
     const myChart = new Chart(myChartRef, {
-      type: 'scatter',
+      type: graphType,
       data: {
         datasets: [{
-          label: 'Scatter Dataset',
-          data: [{
-            x: -10,
-            y: 0
-          }, {
-            x: 0,
-            y: 10
-          }, {
-            x: 10,
-            y: 5
-          }, {
-            x: 0.5,
-            y: 5.5
-          }],
-          backgroundColor: 'rgb(255, 99, 132)'
+          label: statType,
+          data: data,
+          backgroundColor: `rgba(${color}, 0.5)`,
+          borderColor: `rgb(${color})`,
         }]
       },
       options: {
+        responsive: true,
+        interaction: {
+          intersect: false,
+          axis: 'x'
+        },
+        stepped: true,
         scales: {
           x: {
-            type: 'linear',
-            position: 'bottom'
+            display: true,
+            title: {
+              display: true,
+              text: 'Время вашего занятия:'
+            }
+          },
+          y: {
+            display: true,
+            title: {
+              display: true,
+              text: 'Выучено слов:'
+            }
           }
         }
       }
@@ -150,53 +136,3 @@ const Graph = () => {
 };
 
 export default Graph;
-
-// export default class LineGraph extends React.Component {
-//   constructor() {
-//     super();
-//     this.chartRef = React.createRef();
-//     this.myLineChart = undefined;
-//   }
-
-//   componentDidMount() {
-//     this.buildChart();
-//   }
-
-//   componentDidUpdate() {
-//     this.buildChart();
-//   }
-
-//   buildChart() {
-//     const myChartRef = this.chartRef.current.getContext("2d");
-//     // const { data, average, labels } = this.props;
-
-//     if (typeof this.myLineChart !== "undefined") {
-//       this.myLineChart.destroy();
-//     }
-
-//     this.myLineChart = new Chart(myChartRef, {
-//       type: 'line',
-//       data: {
-//         labels: labels,
-//         datasets: [{
-//           label: 'My First dataset',
-//           backgroundColor: 'rgb(255, 99, 132)',
-//           borderColor: 'rgb(255, 99, 132)',
-//           data: [0, 10, 5, 2, 20, 30, 45],
-//         }]
-//       },
-//       options: {},
-//     });
-//   }
-
-//   render() {
-//     return (
-//       <div className="graph__container">
-//         <canvas
-//           id="myChart"
-//           ref={this.chartRef}
-//         />
-//       </div>
-//     );
-//   }
-// }

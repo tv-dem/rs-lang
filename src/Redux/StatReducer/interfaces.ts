@@ -13,7 +13,7 @@ export interface ShortTermStat {
   currentSeries: number,
   errorAnswers: number,
   newWordsCount: number,
-  studiedСardNum: number,
+  studiedСardNum: { [key: string]: number },
   timeNow: string,
 }
 
