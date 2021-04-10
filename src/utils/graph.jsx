@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import Chart from 'chart.js/auto';
 
-const Graph = ({ statType, graphType, data, color, isStepped = false }) => {
+const Graph = ({ statType, graphType, data, color, isStepped = false, labels = null }) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -10,6 +10,7 @@ const Graph = ({ statType, graphType, data, color, isStepped = false }) => {
     const myChart = new Chart(myChartRef, {
       type: graphType,
       data: {
+        labels: labels,
         datasets: [{
           label: statType,
           data: data,

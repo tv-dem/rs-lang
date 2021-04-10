@@ -65,6 +65,10 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
   // map total data for chart
   const dataChartTotal = mapTotalDataForChart(longTermStat);
 
+  // map game data for chart
+  const data = [gameStatWord.length, gameStatSavanna.length, gameStatAudio.length, gameStatSprint.length];
+  const labels = ["Собери слово", "Саванна", "Аудио вызов", "Спринт"];
+
   function callback(key: string) {
     console.log(key);
   };
@@ -167,9 +171,11 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
                     <TabPane tab="Популярность мини-игр:" key={nanoid()}>
                       <Graph
                         statType='Сыграно раз:'
-                        graphType='scatter'
-                        data={dataChartTotal}
+                        graphType='bar'
+                        data={data}
                         color='243,196,94'
+                        isStepped={false}
+                        labels={labels}
                       />
                     </TabPane>
                   </Tabs>
