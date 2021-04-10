@@ -201,6 +201,7 @@ class API {
   }
 
   setUserStatistics(userId: string, token: string, body: any) {
+    const mapBody = JSON.stringify({ optional: JSON.stringify(body) }).replace(/"/g, '\"');
     return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/statistics`, {
       method: 'PUT',
       headers: {
@@ -208,7 +209,7 @@ class API {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(body),
+      body: mapBody,
     })
       .then(res => {
         if (res.status !== 200) {
