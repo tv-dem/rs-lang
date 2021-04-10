@@ -15,6 +15,7 @@ const mapStateToProps = (state: any) => ({
   page:state.games.page,
   percent:state.games.timer,
   isCheck:state.games.isCheck,
+  bestLine:state.games.bestLine,
 });
 
 const mapDispatchToProps = (dispatch:any) => ({

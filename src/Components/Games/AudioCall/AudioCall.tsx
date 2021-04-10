@@ -22,7 +22,8 @@ const AudioCall: React.FC = ({
   level,
   page,
   isCheck,
-  setIsCheck
+  setIsCheck,
+  bestLine
 }: any) => {
 
   const imageRef = useRef<HTMLDivElement>(null);
@@ -102,7 +103,7 @@ const AudioCall: React.FC = ({
     if (count < words.length - 1) {
       setCount(count + 1);
     } else {
-      ModalFinishLevel({ right, wrong, onOk, onCancel });
+      ModalFinishLevel({ right, wrong, onOk, onCancel, bestLine});
     }
     setIsCheck(false);
   };
