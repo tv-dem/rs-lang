@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import './sprintGame.scss';
 import { Image, Spin, Button } from "antd";
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
+import ProgressBoxContainer from '../ProgressBox/ProgressBoxContainer';
 import shuffle from "../../../utils/shuffle";
 import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
@@ -24,21 +25,27 @@ const TrueOrFalse: React.FC = ({
   currentLine,
   bestLine,
   pending,
-  fetchWords
+  fetchWords,
+  setPercent
 }: any) => {
   const [isTrue, setIsTrue] = useState(false);
   const [wordTranslate, setWordTranslate] = useState('');
   const [showStatistics, setShowStatistics] = useState(false);
+  const [arrCurrentLine, setArrCurrentLine] = useState([0]);
 
   const sprintBoxRef = useRef<HTMLDivElement>(null);
   let arrNumTranslate = new Array();
 
   const viewStatistics = () => {
-  ModalFinishLevel({ right, wrong, onOk, onCancel });
+  ModalFinishLevel({ right, wrong, onOk, onCancel, bestLine });
 }
 
   useEffect(() => {
-    if (words) setCurrentWord(words[count]);
+    if (words) {
+    setCurrentWord(words[count]);
+    console.log(words.length);
+    setPercent(100);
+    }
   }, [words]);
 
   const checkFinish = () => {
@@ -46,6 +53,7 @@ const TrueOrFalse: React.FC = ({
       setCount(count + 1);
     } else {
       setShowStatistics(true);
+      setPercent(0);
     }
   }
 
@@ -66,6 +74,11 @@ const TrueOrFalse: React.FC = ({
       sprintBoxRef.current.classList.remove('visibleIncorrect');
     }
   }, [count]);
+
+  const endGame = () => {
+    new Audio(wrongAudio).play();
+    viewStatistics();
+  }
 
   const onOk = () => {
     fetchWords(level, page + 1);
@@ -93,6 +106,11 @@ const TrueOrFalse: React.FC = ({
 if(currentLine>bestLine) {
   setBestLine(currentLine);
 }
+let arr = new Array(currentLine);
+arr.fill("");
+// console.log(arr);
+setArrCurrentLine(arr);
+
   }, [currentLine])
 
   const ifTrue = () => {
@@ -128,6 +146,7 @@ if(currentLine>bestLine) {
 
   const clickYes = () => {
     if (isTrue) {
+
       ifTrue();
     } else {
       ifFalse();
@@ -135,35 +154,53 @@ if(currentLine>bestLine) {
     checkFinish();
   }
 
-  // document.addEventListener('keyup', function(event) {
-  //   if (event.code === 'ArrowLeft') {
-  //     clickNo();
-  //     console.log('ArrowLeft');
-  //      }
-  //      if (event.code === 'ArrowRight') {
-  //       clickYes();
-  //     console.log('ArrowRight');
-  //        }
-  // });
+   useEffect(() => {
+    const handleLeft = (event:any) => {
+       if (event.code === "ArrowLeft") {
+        console.log('ArrowLeft');
+        clickNo();
+      }
+    };
+    window.addEventListener('keydown', handleLeft);
+
+    return () => {
+      window.removeEventListener('keydown', handleLeft);
+    };
+  }, []);
+
+
+ 
 
   return (
+    <div className="transition-group">
     <div className="sprintWrapper">
-
+    
       <div className="sprintBox" ref={sprintBoxRef}>
+      
+
         {!pending && currentWord ? (
           <>
-            <div className="sprintBoxTitle">
-            <div className="fullScreenBtn"></div>
-            <div className="sprint">Sprint Game</div>
+<div className="boxTitleSprint">
+<div className="boxLineBest">
+<div className="bestLine">Best line: </div>
+<div className="boxLineBestImg"></div>
+<div className="bestLine">x {bestLine}</div>
+</div>
+<div className="boxBtnFullScreen">
             <BtnFullScreen/>
     </div>
-            <div className="sprintScore">count: {count}</div>
-            <div className="sprintScore">current line: {currentLine}</div>
-            <div className="sprintScore">best line: {bestLine}</div>
+</div>
+            
+<div className="boxLine">
+{arrCurrentLine.map((e:number,i:number) =>
+<div className="line" key={i}>{e}</div>
+)
+}
+</div>
 
             <div>
               <Image
-                className="context_image"
+                className="context_image imgSprint"
                 alt="Loading"
                 fallback={`Error loading file ${currentWord.image}`}
                 width="300px"
@@ -171,27 +208,28 @@ if(currentLine>bestLine) {
                 src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
               ></Image>
             </div>
-            <div className="sprint">{currentWord.word}</div>
-            <div className="sprint">{wordTranslate}</div>
+            <div className="sprintWord">{currentWord.word}</div>
+            <div className="sprintWordTranslate">{wordTranslate}</div>
 <div className="sprintBoxButton">
-            {showStatistics
-            ? <>
-              <Button className="sprintBtn" type="primary"aria-hidden="true" onClick={() =>viewStatistics()}>Статистика игры</Button>
-              <Button className="sprintBtn" type="primary" onClick={()=>onCancel()}>Повторить</Button>
-            </>
-: <>
-              <Button className="sprintBtn" type="primary" aria-hidden="true" onClick={() => clickNo()}>Не верно</Button>
-              <Button className="sprintBtn" type="primary" aria-hidden="true" onClick={() => clickYes()}>Верно</Button>
-</>
-
-            }
+              <div className="sprintBtnNo btn" onClick={() => clickNo()}>Не верно</div>
+              <div className="sprintBtnYes btn"  onClick={() => clickYes()}>Верно</div>
             </div>
-            
           </>
         ) : (
           <Spin tip="Loading..." size="large" />
         )}
       </div>
+      {words ?
+      <div className="ProgressSprintBox">
+      <ProgressBoxContainer
+                  seconds={Number(words.length*3)}
+                  isCheck={false}
+                  onCheck={endGame}
+                />
+                </div>
+: <></>
+      }
+    </div>
     </div>
   );
 }

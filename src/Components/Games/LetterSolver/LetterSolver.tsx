@@ -23,7 +23,8 @@ const LetterSolved: React.FC = ({
   page,
   setPercent,
   isCheck,
-  setIsCheck
+  setIsCheck,
+  bestLine
 }: any) => {
   const wordRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -123,7 +124,7 @@ const LetterSolved: React.FC = ({
     if (count < words.length - 1) {
       setCount(count + 1);
     } else {
-      ModalFinishLevel({right, wrong,onOk,onCancel});
+      ModalFinishLevel({right, wrong,onOk,onCancel, bestLine});
     }
     setPercent(100);
     setIsCheck(false);

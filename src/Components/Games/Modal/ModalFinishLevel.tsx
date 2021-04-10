@@ -9,10 +9,19 @@ type propsModalFinishLevel={
   wrong:Array<Object>,
   onOk:Function,
   onCancel:Function,
+  bestLine:number,
 }
 
-const ModalFinishLevel: React.FC<propsModalFinishLevel> = ({right, wrong,onOk,onCancel}) => {
-
+const ModalFinishLevel: React.FC<propsModalFinishLevel> = ({right, wrong,onOk,onCancel, bestLine}) => {
+  let rightPercent;
+  let wrongPercent;
+  if (!right.length && !wrong.length) {
+    wrongPercent = 0;
+    rightPercent = 0;
+  } else {
+    rightPercent = Math.round(100*right.length/(right.length+wrong.length));
+    wrongPercent=100-rightPercent;
+  }
 
 
   return (
@@ -21,6 +30,7 @@ const ModalFinishLevel: React.FC<propsModalFinishLevel> = ({right, wrong,onOk,on
         title: `  ${right.length}/${right.length+wrong.length}`,
         content: (
           <div className="modal">
+
             <div className="modal__answer answer-right">
               <div className="answer-right__title">Right :</div>
               <div className="answer-right__words">
@@ -53,6 +63,28 @@ const ModalFinishLevel: React.FC<propsModalFinishLevel> = ({right, wrong,onOk,on
                 )}
               </div>
             </div>
+<div className="diagramWrapper">
+<div className="bestBoxLineModal">
+<div className="bestLineModal">
+  {bestLine}
+</div>
+<div className="bestBoxLineModal_title">
+Best Line
+</div>
+</div>
+<div className="diagramBox">
+<div className="diagramRight" style = {{height:`${rightPercent}%`}}>
+<div className="diagramText">
+{rightPercent}%
+</div>
+</div>
+<div className="diagramWrong" style = {{height:`${wrongPercent}%`}}>
+<div className="diagramText">
+{wrongPercent}%
+</div>
+  </div>
+    </div>
+    </div>
           </div>
         ),
         okText: `Следующая страница`,
@@ -61,6 +93,7 @@ const ModalFinishLevel: React.FC<propsModalFinishLevel> = ({right, wrong,onOk,on
         onCancel() {onCancel()},
         width: "70%",
       })}
+
     </Space>
   );
 };
