@@ -5,14 +5,15 @@ import { changeLevelAC, changeTextBookPageAC, } from "../../Redux/TextBookReduce
 import { push } from "connected-react-router";
 import { createUserWordTC, getAggregatedWordsTC, getTextBookWordsTC } from "../../Redux/TextBookReducer/thunk";
 
-const MapStateToProps = ({textBook, user}: any) => ({
+const MapStateToProps = ({textBook, auth}: any) => ({
     words: textBook.words,
     levels: textBook.levels,
     currPage: textBook.currPage,
     currLevel: textBook.currLevel,
-    userId: user.userId,
-    token: user.token,
+    userId: auth.currentUser.userId,
+    token: auth.currentUser.token,
     pending: textBook.pending,
+    isAuth: auth.isAuth,
 })
 
 const MapDispatchToProps = (dispatch: any) => ({

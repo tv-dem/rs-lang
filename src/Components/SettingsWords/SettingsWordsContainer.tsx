@@ -2,9 +2,10 @@ import {connect} from "react-redux";
 import SettingsWords from "./SettingsWords";
 import {setSettings} from "../../Redux/UserReducer/actions";
 
-const mapStateToProps = ({user}:any) => ({
+const mapStateToProps = ({user, auth}:any) => ({
     options: user.options,
     translate: user.translate,
+    isAuth: auth.isAuth,
 })
 
 const mapDispatchToProps = (dispatch:any) => ({

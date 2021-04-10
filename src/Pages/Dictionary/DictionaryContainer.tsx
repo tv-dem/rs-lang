@@ -5,16 +5,16 @@ import {changeDictionaryPageAC, changeSectionAC,changeDictionarylevelAC} from ".
 import {push} from "connected-react-router";
 import {getWords} from "../../Redux/DictionaryReducer/thunk";
 
-const mapStateToProps = ({dictionary,user}:any) => ({
+const mapStateToProps = ({dictionary,auth}:any) => ({
     levels: dictionary.levels,
     currLevel: dictionary.currLevel,
     sections: dictionary.sections,
     currSection: dictionary.currSection,
     currPage: dictionary.currPage,
-    userId: user.userId,
     pending: dictionary.pending,
-    token: user.token,
-    wordsInSection: dictionary.wordsInSection
+    wordsInSection: dictionary.wordsInSection,
+    userId: auth.currentUser.userId,
+    token: auth.currentUser.token,
 })
 
 const MapDispatchToProps = (dispatch:any) => ({

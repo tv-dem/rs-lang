@@ -4,7 +4,7 @@ import {SettingFilled} from "@ant-design/icons";
 import { Modal } from "antd";
 import {Switch} from "antd";
 
-const SettingsWords = ({setSettings, options, translate}:any) => {
+const SettingsWords = ({setSettings, options, translate, isAuth}:any) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [localTranslate, setLocalTranslate] = useState(translate)
     const [localOptions, setLocalOptions] = useState(options)
@@ -37,7 +37,7 @@ const SettingsWords = ({setSettings, options, translate}:any) => {
                 </div>
                 <div className='modal-settings'>
                     <span>отображать опции у слов</span>
-                    <Switch checked={localOptions} onChange={onChangeOptions} />
+                    <Switch checked={localOptions && isAuth} disabled={!isAuth} onChange={onChangeOptions} />
                 </div>
             </Modal>
         </>
