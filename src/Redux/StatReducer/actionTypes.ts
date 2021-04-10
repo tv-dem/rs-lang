@@ -1,0 +1,4 @@
+export const GET_LONG_TERM_STAT = 'stat/GET_LONG_TERM_STAT';
+export const SET_LONG_TERM_STAT = 'stat/SET_LONG_TERM_STAT';
+export const UPDATE_STAT_STARTED = 'stat/UPDATE_STAT_STARTED';
+export const UPDATE_STAT_FAILURE = 'stat/UPDATE_STAT_FAILURE';
