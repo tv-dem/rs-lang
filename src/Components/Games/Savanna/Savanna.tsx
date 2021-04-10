@@ -9,187 +9,195 @@ import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
 
 const Savanna: React.FC = ({
-    words,
-    count,
-    right,
-    wrong,
-    setCount,
-    currentWord,
-    setCurrentWord,
-    addRightWord,
-    addWrongWord,
-    pending,
-    fetchWords,
-    level,
-    page,
-    isCheck,
-    setIsCheck,
-    setPercent
+  words,
+  count,
+  right,
+  wrong,
+  setCount,
+  currentWord,
+  setCurrentWord,
+  addRightWord,
+  addWrongWord,
+  pending,
+  fetchWords,
+  level,
+  page,
+  isCheck,
+  setIsCheck,
+  setPercent,
 }: any) => {
-    const audioCallRef = useRef<HTMLDivElement>(null);
-    const btnRef = useRef<HTMLDivElement>(null);
-    const guessWordRef = useRef<HTMLDivElement>(null);
+  const audioCallRef = useRef<HTMLDivElement>(null);
+  const btnRef = useRef<HTMLDivElement>(null);
+  const guessWordRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        if (words) setCurrentWord(words[count]);
-    }, [words]);
+  useEffect(() => {
+    if (words) setCurrentWord(words[count]);
+  }, [words]);
 
-    useEffect(() => {
-        if (count) {
-            setCurrentWord(words[count]);
-        }
-    }, [count]);
+  useEffect(() => {
+    if (count) {
+      setCurrentWord(words[count]);
+    }
+    setPercent(100.1);
+  }, [count]);
 
-    //   useEffect(() => {
-    //     playAudio();
-    //   }, [currentWord]);
+//   useEffect(() => {
+//     // if (guessWordRef.current) {
+//     //   guessWordRef.current.classList.add('to-down');
+//     //   guessWordRef.current.classList.add('to-up');
+//     // }
+//   }, [currentWord]);
 
-    //   const playAudio = useCallback(() => {
-    //     if (currentWord)
-    //       new Audio(
-    //         `https://api-rs-lang.herokuapp.com/${currentWord.audio}`,
-    //       ).play();
-    //   }, [currentWord]);
+  useEffect((): any => {
+    let timer: null | NodeJS.Timeout = null;
+    if (isCheck) {
+      if (guessWordRef.current) {
+        timer = setTimeout(() => {
+          if (guessWordRef.current) {
+            guessWordRef.current.classList.remove('to-zoom-up');
+            guessWordRef.current.classList.remove('to-win-down');
+          }
+        }, 1000);
+        guessWordRef.current.classList.remove('to-down');
+        guessWordRef.current.classList.add('to-up');
+      }
+    } else {
 
-    useEffect(() => {
+        if (btnRef.current) {
+            btnRef.current.childNodes.forEach((el: any) => {
+              el.classList.remove('savanna_no-active');
+              el.classList.remove('savanna_is-selected-win');
+              el.classList.remove('savanna_is-selected-lose');
+            });
+          }
 
-        if (isCheck) {
-            if (guessWordRef.current) {
-                guessWordRef.current.classList.remove('to-zoom-up');
-                guessWordRef.current.classList.remove('to-down');
-                guessWordRef.current.classList.add('to-up');
-            }
-        } else {
-            if (guessWordRef.current) {
-                guessWordRef.current.classList.remove('to-up');
-                guessWordRef.current.classList.add('to-down');
-            }
+      if (guessWordRef.current) {
+        guessWordRef.current.classList.remove('to-win-down');
+        guessWordRef.current.classList.remove('to-zoom-up');
+        guessWordRef.current.classList.remove('to-up');
+        guessWordRef.current.classList.add('to-down');
+      }
+    }
+    return () => (timer ? clearTimeout(timer) : null);
+  }, [isCheck]);
 
-            // const time = setTimeout(() => {
-            //     if (guessWordRef.current) {
-            //         guessWordRef.current.classList.add('to-zoom-up');
-            //     }
-            //     setTimeout(() => {
-            //         onCheck('')
-            //     },1000)
-                
-            // }, 5000)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (guessWordRef.current) {
+        guessWordRef.current.classList.remove('to-zoom-up');
+        guessWordRef.current.classList.remove('to-up');
+        guessWordRef.current.classList.add('to-down');
+      }
+    }, 500);
 
+    return () => clearTimeout(timer);
+  }, [pending]);
 
-            // return () => clearTimeout(time)
+  const toWin = () => {
 
-        }
-    }, [isCheck]);
+    if (btnRef.current) {
+        btnRef.current.childNodes.forEach((el: any) => {
+          el.classList.add('savanna_no-active');
+          if (el.firstChild.innerHTML === currentWord.wordTranslate)
+            el.classList.add('savanna_is-selected-win');
+        });
+      }
 
+    if (guessWordRef.current) {
+      guessWordRef.current.classList.remove('to-zoom-up');
+      guessWordRef.current.classList.remove('to-down');
+      guessWordRef.current.classList.remove('to-up');
+      guessWordRef.current.classList.add('to-win-down');
+    }
 
-    useEffect(() => {
-        if (pending) {
-            setTimeout(() => {
-                if (guessWordRef.current) {
-                guessWordRef.current.classList.remove('to-zoom-up');
-                    guessWordRef.current.classList.remove('to-up');
-                    guessWordRef.current.classList.add('to-down');
-                }
-            }, 1000)
+    new Audio(rightAudio).play();
+    addRightWord(currentWord);
+  };
 
-        }
-    }, [pending])
+  const toLost = () => {
 
+    if (btnRef.current) {
+        btnRef.current.childNodes.forEach((el: any) => {
+          el.classList.add('savanna_no-active');
+          if (el.firstChild.innerHTML === currentWord.wordTranslate)
+            el.classList.add('savanna_is-selected-lose');
+        });
+      }
 
+    if (guessWordRef.current) {
+      guessWordRef.current.classList.add('to-zoom-up');
+      guessWordRef.current.classList.remove('to-down');
+      guessWordRef.current.classList.add('to-up');
+    }
 
-    const toWin = () => {
-        // if (btnRef.current) {
-        //   btnRef.current.childNodes.forEach((el: any) => {
-        //     el.classList.add('audioCall_no-active');
-        //     if (el.firstChild.innerHTML === currentWord.wordTranslate)
-        //       el.classList.add('audioCall_is-selected-win');
-        //   });
-        // }
+    new Audio(wrongAudio).play();
+    addWrongWord(currentWord);
+  };
 
-        new Audio(rightAudio).play();
-        addRightWord(currentWord);
-    };
+  function onCheck(word: any) {
+    if (word.word === currentWord.word) {
+      toWin();
+    } else {
+      toLost();
+    }
+    setIsCheck(true);
+    setTimeout(() => {
+      onHandleClickBtnNext();
+    }, 2000);
+  }
 
-    const toLost = () => {
-        // if (btnRef.current) {
-        //   btnRef.current.childNodes.forEach((el: any) => {
-        //     el.classList.add('audioCall_no-active');
-        //     if (el.firstChild.innerHTML === currentWord.wordTranslate)
-        //       el.classList.add('audioCall_is-selected-lose');
-        //   });
-        // }
+  const onOk = () => {
+    fetchWords(level, page + 1);
+  };
 
-        new Audio(wrongAudio).play();
-        addWrongWord(currentWord);
-    };
+  const onCancel = () => {
+    fetchWords(level, page);
+  };
 
-     function onCheck (word: any)  {
-        if (word.length > 1 && word.word === currentWord.word) {
-            toWin();
-        } else {
-            toLost();
-        }
-        setIsCheck(true);
-        setTimeout(() => {
-            onHandleClickBtnNext()
+  const onHandleClickBtnNext = () => {
+    if (count < words.length - 1) {
+      setCount(count + 1);
+    } else {
+      ModalFinishLevel({ right, wrong, onOk, onCancel });
+    }
 
-        }, 1000)
-    };
+    setIsCheck(false);
+  };
 
-    const onOk = () => {
-        fetchWords(level, page + 1);
-    };
-
-    const onCancel = () => {
-        fetchWords(level, page);
-    };
-
-
-    const onHandleClickBtnNext = () => {
-        if (count < words.length - 1) {
-            setCount(count + 1);
-        } else {
-            ModalFinishLevel({ right, wrong, onOk, onCancel });
-        }
-        setPercent(100);
-        setIsCheck(false);
-    };
-
-    return (
-        <div className="savanna__wrapper">
-            <div className="savanna">
-                {!pending && currentWord ? (
-                    <>
-
-                        <div className="savanna__view-box">
-                            <div className="savanna__view-box_view word-to-guess">
-                                <div className="word-to-guess_transition" ref={guessWordRef} >
-                                    {currentWord.word}
-                                </div>
-                            </div>
-                            <Words
-                                words={words}
-                                currentWord={currentWord}
-                                onCheck={onCheck}
-                                btnRef={btnRef}
-                                numOfWords={Number(3)}
-                            />
-                            <div className="savanna__view-box_view-crystal">
-                            <FireTwoTone />
+  return (
+    <div className="savanna__wrapper">
+      <div className="savanna">
+        {!pending && currentWord ? (
+          <>
+            <div className="savanna__view-box">
+              <div className="savanna__view-box_view word-to-guess">
+                <div className="word-to-guess_transition" ref={guessWordRef}>
+                  {currentWord.word}
+                </div>
+              </div>
+              <Words
+                words={words}
+                currentWord={currentWord}
+                onCheck={onCheck}
+                btnRef={btnRef}
+                numOfWords={Number(3)}
+              />
+              <div className="savanna__view-box_view-crystal">
+                <FireTwoTone />
+              </div>
             </div>
-                        </div>
-                        <ProgressBoxContainer
-                  seconds={Number(5)}               
-                  isCheck={isCheck}
-                  onCheck={onCheck}
-                />
-                    </>
-                ) : (
-                    <Spin tip="Loading..." size="large" />
-                )}
-            </div>
-        </div>
-    );
+            <ProgressBoxContainer
+              seconds={Number(5)}
+              isCheck={isCheck}
+              onCheck={onCheck}
+            />
+          </>
+        ) : (
+          <Spin tip="Loading..." size="large" />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Savanna;
