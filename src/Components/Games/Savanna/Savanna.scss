@@ -16,7 +16,11 @@
         justify-content: space-between;
         align-items: center;
         width: 80%;
-        height: 90%;
+        height: 85%;
+        &_view-crystal-size {
+            font-size: 0.1rem;
+            width: 30px;
+        }
     }
 }
 
@@ -85,13 +89,13 @@
 }
 
 .to-win-down {
-    background-color: green;
-    width: 2px;
+    background-color: rgb(250, 250, 250);
+    width: 5px;
     height: 10px;
-    opacity: 1;
+    opacity: 0;
     visibility: visible;
-    transform: translateY(10000%);
-    transition: linear 2s transform, 0.1s opacity;
+    transform: translateY(450px);
+    transition: linear .5s transform, .9s opacity;
 }
 
 .savanna .context-progress_bar {

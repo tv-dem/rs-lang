@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { Spin } from 'antd';
 import { FireTwoTone } from '@ant-design/icons';
 import './Savanna.scss';
@@ -7,6 +7,7 @@ import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import ProgressBoxContainer from '../ProgressBox/ProgressBoxContainer';
 import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
+import imgCrystal from '../../../assets/img/crystal.png'
 
 const Savanna: React.FC = ({
   words,
@@ -26,12 +27,15 @@ const Savanna: React.FC = ({
   setIsCheck,
   setPercent,
 }: any) => {
-  const audioCallRef = useRef<HTMLDivElement>(null);
+  const crystalRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLDivElement>(null);
   const guessWordRef = useRef<HTMLDivElement>(null);
 
+const [sizeCrystal,setSizeCrystal] = useState(1)
+
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
+    setSizeCrystal(1)
   }, [words]);
 
   useEffect(() => {
@@ -41,12 +45,11 @@ const Savanna: React.FC = ({
     setPercent(100.1);
   }, [count]);
 
-//   useEffect(() => {
-//     // if (guessWordRef.current) {
-//     //   guessWordRef.current.classList.add('to-down');
-//     //   guessWordRef.current.classList.add('to-up');
-//     // }
-//   }, [currentWord]);
+  useEffect(()=>{
+    if(crystalRef.current) {
+        crystalRef.current.style.transform =`scale(${sizeCrystal})`
+    }
+  },[sizeCrystal])
 
   useEffect((): any => {
     let timer: null | NodeJS.Timeout = null;
@@ -107,8 +110,11 @@ const Savanna: React.FC = ({
       guessWordRef.current.classList.remove('to-zoom-up');
       guessWordRef.current.classList.remove('to-down');
       guessWordRef.current.classList.remove('to-up');
+      guessWordRef.current.innerHTML='';
       guessWordRef.current.classList.add('to-win-down');
     }
+
+    setSizeCrystal(()=>sizeCrystal+0.1)
 
     new Audio(rightAudio).play();
     addRightWord(currentWord);
@@ -183,8 +189,11 @@ const Savanna: React.FC = ({
                 numOfWords={Number(3)}
               />
               <div className="savanna__view-box_view-crystal">
-                <FireTwoTone />
+              <div ref={crystalRef} className="savanna__view-box_view-crystal-size">
+                <img width="30px"  src={imgCrystal} alt="crystal"/>
               </div>
+              </div>
+
             </div>
             <ProgressBoxContainer
               seconds={Number(5)}
