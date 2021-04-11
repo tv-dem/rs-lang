@@ -1,7 +1,11 @@
 @import "../../../styles/variables.scss";
 .savanna__wrapper {
-    background: linear-gradient(to top, #54026E, #F3FD72);
     overflow: hidden;
+    background-image: url(https://staticcdn-new.lingualeo.com/neo-static/bg-all.a3994c8c91d1d5d5d10424ea1c919f70.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: 100%;
+    transition: linear 0.5s background-position-y;
 }
 
 .savanna__wrapper .savanna {
@@ -42,7 +46,7 @@
             border-radius: 5px;
             min-width: 150px;
             height: 40px;
-            color: rgb(65, 38, 38);
+            color: #d6e481;
             transform: scale(1);
             transition: 0.2s transform;
             padding: 3px;
