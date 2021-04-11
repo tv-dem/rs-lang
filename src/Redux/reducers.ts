@@ -6,6 +6,7 @@ import DictionaryReducer from "./DictionaryReducer/reducer";
 import UserReducer from "./UserReducer/reducer";
 import GamesReducer from './GamesReducer/reducer';
 import AuthReducer from './AuthReducer/reducer';
+import StatReducer from './StatReducer/reducer';
 
 const createRootReducer = (history: any) => combineReducers({
     router: connectRouter(history),
@@ -15,5 +16,6 @@ const createRootReducer = (history: any) => combineReducers({
     user: UserReducer,
     games: GamesReducer,
     auth: AuthReducer,
+    stat: StatReducer,
 })
 export default createRootReducer

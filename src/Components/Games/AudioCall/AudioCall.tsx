@@ -23,6 +23,7 @@ const AudioCall: React.FC = ({
   page,
   isCheck,
   setIsCheck,
+  bestLine
 }: any) => {
   const audioCallRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLDivElement>(null);
@@ -103,6 +104,8 @@ const AudioCall: React.FC = ({
     fetchWords(level, page);
   };
 
+
+  
   const effectCarusel = () => {
     if (audioCallRef.current) {
       audioCallRef.current.classList.remove('audioCall_to-place');
@@ -129,7 +132,7 @@ const AudioCall: React.FC = ({
       if (count < words.length - 1) {
         setCount(count + 1);
       } else {
-        ModalFinishLevel({ right, wrong, onOk, onCancel });
+        ModalFinishLevel({ right, wrong, onOk, onCancel, bestLine });
       }
       setIsCheck(false);
     }, 500);
