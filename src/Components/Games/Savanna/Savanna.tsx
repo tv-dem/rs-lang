@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { Spin } from 'antd';
-import { FireTwoTone } from '@ant-design/icons';
 import './Savanna.scss';
 import Words from '../Words/Words';
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import ProgressBoxContainer from '../ProgressBox/ProgressBoxContainer';
 import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
-import imgCrystal from '../../../assets/img/crystal.png'
+import imgCrystal from '../../../assets/img/crystal.png';
 
 const Savanna: React.FC = ({
   words,
@@ -26,16 +25,22 @@ const Savanna: React.FC = ({
   isCheck,
   setIsCheck,
   setPercent,
+  bestLine,
 }: any) => {
   const crystalRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLDivElement>(null);
   const guessWordRef = useRef<HTMLDivElement>(null);
+  
 
-const [sizeCrystal,setSizeCrystal] = useState(1)
+  const [sizeCrystal, setSizeCrystal] = useState(1);
+  const [positionImg, setPositionImg] = useState(100);
+
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
-    setSizeCrystal(1)
+    setSizeCrystal(1);
+    setPositionImg(100);
   }, [words]);
 
   useEffect(() => {
@@ -45,11 +50,17 @@ const [sizeCrystal,setSizeCrystal] = useState(1)
     setPercent(100.1);
   }, [count]);
 
-  useEffect(()=>{
-    if(crystalRef.current) {
-        crystalRef.current.style.transform =`scale(${sizeCrystal})`
+  useEffect(() => {
+    if (crystalRef.current) {
+      crystalRef.current.style.transform = `scale(${sizeCrystal})`;
     }
-  },[sizeCrystal])
+  }, [sizeCrystal]);
+
+  useEffect(() => {
+    if (wrapperRef.current) {
+      wrapperRef.current.style.backgroundPositionY = `${positionImg}%`;
+    }
+  }, [positionImg]);
 
   useEffect((): any => {
     let timer: null | NodeJS.Timeout = null;
@@ -65,14 +76,13 @@ const [sizeCrystal,setSizeCrystal] = useState(1)
         guessWordRef.current.classList.add('to-up');
       }
     } else {
-
-        if (btnRef.current) {
-            btnRef.current.childNodes.forEach((el: any) => {
-              el.classList.remove('savanna_no-active');
-              el.classList.remove('savanna_is-selected-win');
-              el.classList.remove('savanna_is-selected-lose');
-            });
-          }
+      if (btnRef.current) {
+        btnRef.current.childNodes.forEach((el: any) => {
+          el.classList.remove('savanna_no-active');
+          el.classList.remove('savanna_is-selected-win');
+          el.classList.remove('savanna_is-selected-lose');
+        });
+      }
 
       if (guessWordRef.current) {
         guessWordRef.current.classList.remove('to-win-down');
@@ -97,38 +107,39 @@ const [sizeCrystal,setSizeCrystal] = useState(1)
   }, [pending]);
 
   const toWin = () => {
-
     if (btnRef.current) {
-        btnRef.current.childNodes.forEach((el: any) => {
-          el.classList.add('savanna_no-active');
-          if (el.firstChild.innerHTML === currentWord.wordTranslate)
-            el.classList.add('savanna_is-selected-win');
-        });
-      }
+      btnRef.current.childNodes.forEach((el: any) => {
+        el.classList.add('savanna_no-active');
+        if (el.firstChild.innerHTML === currentWord.wordTranslate)
+          el.classList.add('savanna_is-selected-win');
+      });
+    }
 
     if (guessWordRef.current) {
       guessWordRef.current.classList.remove('to-zoom-up');
       guessWordRef.current.classList.remove('to-down');
       guessWordRef.current.classList.remove('to-up');
-      guessWordRef.current.innerHTML='';
+      guessWordRef.current.innerHTML = '';
       guessWordRef.current.classList.add('to-win-down');
     }
-
-    setSizeCrystal(()=>sizeCrystal+0.1)
+    
+    setTimeout(() => {
+      setSizeCrystal(() => sizeCrystal + 0.1);
+      setPositionImg(()=>positionImg-5)
+    }, 500);
 
     new Audio(rightAudio).play();
     addRightWord(currentWord);
   };
 
   const toLost = () => {
-
     if (btnRef.current) {
-        btnRef.current.childNodes.forEach((el: any) => {
-          el.classList.add('savanna_no-active');
-          if (el.firstChild.innerHTML === currentWord.wordTranslate)
-            el.classList.add('savanna_is-selected-lose');
-        });
-      }
+      btnRef.current.childNodes.forEach((el: any) => {
+        el.classList.add('savanna_no-active');
+        if (el.firstChild.innerHTML === currentWord.wordTranslate)
+          el.classList.add('savanna_is-selected-lose');
+      });
+    }
 
     if (guessWordRef.current) {
       guessWordRef.current.classList.add('to-zoom-up');
@@ -164,14 +175,14 @@ const [sizeCrystal,setSizeCrystal] = useState(1)
     if (count < words.length - 1) {
       setCount(count + 1);
     } else {
-      ModalFinishLevel({ right, wrong, onOk, onCancel });
+      ModalFinishLevel({ right, wrong, onOk, onCancel, bestLine });
     }
 
     setIsCheck(false);
   };
 
   return (
-    <div className="savanna__wrapper">
+    <div ref={wrapperRef} className="savanna__wrapper">
       <div className="savanna">
         {!pending && currentWord ? (
           <>
@@ -189,11 +200,13 @@ const [sizeCrystal,setSizeCrystal] = useState(1)
                 numOfWords={Number(3)}
               />
               <div className="savanna__view-box_view-crystal">
-              <div ref={crystalRef} className="savanna__view-box_view-crystal-size">
-                <img width="30px"  src={imgCrystal} alt="crystal"/>
+                <div
+                  ref={crystalRef}
+                  className="savanna__view-box_view-crystal-size"
+                >
+                  <img width="30px" src={imgCrystal} alt="crystal" />
+                </div>
               </div>
-              </div>
-
             </div>
             <ProgressBoxContainer
               seconds={Number(5)}
