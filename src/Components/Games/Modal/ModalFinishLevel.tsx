@@ -1,6 +1,8 @@
 import React from "react";
 import { Modal, Space } from "antd";
-import './ModalFinishLevel.scss'
+import './ModalFinishLevel.scss';
+import {CustomerServiceOutlined} from "@ant-design/icons";
+
 
 const { confirm } = Modal;
 
@@ -13,16 +15,15 @@ type propsModalFinishLevel={
 }
 
 const ModalFinishLevel: React.FC<propsModalFinishLevel> = ({right, wrong,onOk,onCancel, bestLine}) => {
-  let rightPercent;
-  let wrongPercent;
+  let rightPercent: any;
+  let wrongPercent: any;
   if (!right.length && !wrong.length) {
     wrongPercent = 0;
     rightPercent = 0;
   } else {
     rightPercent = Math.round(100*right.length/(right.length+wrong.length));
-    wrongPercent=100-rightPercent;
+    wrongPercent = 100-rightPercent;
   }
-
 
   return (
     <Space>
@@ -43,6 +44,14 @@ const ModalFinishLevel: React.FC<propsModalFinishLevel> = ({right, wrong,onOk,on
                     <span className="word-wordTranslate">                     
                       {word.wordTranslate}
                     </span>
+<div className="word-audio">
+<CustomerServiceOutlined onClick={()=>{
+                new Audio(
+                  `https://api-rs-lang.herokuapp.com/${word.audio}`,
+                ).play();
+            }}/>
+</div>
+
                   </p>
                 )}
               </div>
@@ -59,6 +68,13 @@ const ModalFinishLevel: React.FC<propsModalFinishLevel> = ({right, wrong,onOk,on
                     <span className="word-wordTranslate">
                       {word.wordTranslate}
                     </span>
+                    <div className="word-audio">
+                    <CustomerServiceOutlined onClick={()=>{
+                new Audio(
+                  `https://api-rs-lang.herokuapp.com/${word.audio}`,
+                ).play();
+            }}/>
+                    </div>
                   </p>
                 )}
               </div>
