@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import './sprintGame.scss';
-import { Image, Spin, Button } from "antd";
+import { Image, Spin } from "antd";
+import {ArrowLeftOutlined, ArrowRightOutlined} from "@ant-design/icons";
+
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import ProgressBoxContainer from '../ProgressBox/ProgressBoxContainer';
 import shuffle from "../../../utils/shuffle";
@@ -34,26 +36,35 @@ const TrueOrFalse: React.FC = ({
   const [arrCurrentLine, setArrCurrentLine] = useState([0]);
 
   const sprintBoxRef = useRef<HTMLDivElement>(null);
+  const btnNoRef = useRef<HTMLDivElement>(null);
+  const btnYesRef = useRef<HTMLDivElement>(null);
   let arrNumTranslate = new Array();
 
   const viewStatistics = () => {
-  ModalFinishLevel({ right, wrong, onOk, onCancel, bestLine });
-}
+    ModalFinishLevel({ right, wrong, onOk, onCancel, bestLine });
+    setShowStatistics(false);
+  }
 
   useEffect(() => {
     if (words) {
-    setCurrentWord(words[count]);
-    console.log(words.length);
-    setPercent(100);
+      setCurrentWord(words[count]);
+      setPercent(100);
     }
   }, [words]);
 
   const checkFinish = () => {
-    if (count < words.length - 1) {
-      setCount(count + 1);
-    } else {
-      setShowStatistics(true);
-      setPercent(0);
+  //  console.log(count, words.length);
+    if (words) {
+      if (count < words.length - 1) {
+        setCount(count + 1);
+      } else {
+        if(btnNoRef.current && btnYesRef.current){
+          btnNoRef.current.style.display = "none";
+          btnYesRef.current.style.display = "none";
+        }
+        setShowStatistics(true);
+        setPercent(0);
+      }
     }
   }
 
@@ -77,8 +88,17 @@ const TrueOrFalse: React.FC = ({
 
   const endGame = () => {
     new Audio(wrongAudio).play();
-    viewStatistics();
+    for (let i = count; i < words.length; i++) {
+      addWrongWord(words[i]);
+    }
+    setShowStatistics(true);
   }
+
+  useEffect(() => {
+    if (showStatistics) {
+      viewStatistics();
+    }
+  }, [showStatistics]);
 
   const onOk = () => {
     fetchWords(level, page + 1);
@@ -102,21 +122,18 @@ const TrueOrFalse: React.FC = ({
     }
   }, [currentWord]);
 
-  useEffect(()=> {
-if(currentLine>bestLine) {
-  setBestLine(currentLine);
-}
-let arr = new Array(currentLine);
-arr.fill("");
-// console.log(arr);
-setArrCurrentLine(arr);
+  useEffect(() => {
+    if (currentLine > bestLine) {
+      setBestLine(currentLine);
+    }
+    let arr = new Array(currentLine);
+    arr.fill("");
+    setArrCurrentLine(arr);
 
   }, [currentLine])
 
   const ifTrue = () => {
-  setCurrentLine(currentLine+1);
-
-
+    setCurrentLine(currentLine + 1);
     new Audio(rightAudio).play();
     addRightWord(currentWord);
     if (sprintBoxRef.current) {
@@ -146,7 +163,6 @@ setArrCurrentLine(arr);
 
   const clickYes = () => {
     if (isTrue) {
-
       ifTrue();
     } else {
       ifFalse();
@@ -154,82 +170,103 @@ setArrCurrentLine(arr);
     checkFinish();
   }
 
-   useEffect(() => {
-    const handleLeft = (event:any) => {
-       if (event.code === "ArrowLeft") {
-        console.log('ArrowLeft');
-        clickNo();
+  useEffect(() => {
+    const handleLeft = (event: any) => {
+      if (count < words.length - 1) {
+      if (event.code === "ArrowLeft") {
+        if (btnNoRef.current) {
+          btnNoRef.current.click();
+        }
+      }
+    }
+    };
+    const handleRight = (event: any) => {
+      if (count < words.length - 1) {
+        if (event.code === "ArrowRight") {
+          if (btnYesRef.current) {
+           btnYesRef.current.click();
+         }
+       }
       }
     };
-    window.addEventListener('keydown', handleLeft);
-
+    document.addEventListener('keydown', handleLeft);
+    document.addEventListener('keydown', handleRight);
     return () => {
-      window.removeEventListener('keydown', handleLeft);
+      document.removeEventListener('keydown', handleLeft);
+      document.removeEventListener('keydown', handleRight);
     };
   }, []);
 
 
- 
+
 
   return (
     <div className="transition-group">
-    <div className="sprintWrapper">
-    
-      <div className="sprintBox" ref={sprintBoxRef}>
-      
+      <div className="sprintWrapper">
 
-        {!pending && currentWord ? (
-          <>
-<div className="boxTitleSprint">
-<div className="boxLineBest">
-<div className="bestLine">Best line: </div>
-<div className="boxLineBestImg"></div>
-<div className="bestLine">x {bestLine}</div>
-</div>
-<div className="boxBtnFullScreen">
-            <BtnFullScreen/>
-    </div>
-</div>
-            
-<div className="boxLine">
-{arrCurrentLine.map((e:number,i:number) =>
-<div className="line" key={i}>{e}</div>
-)
-}
-</div>
+        <div className="sprintBox" ref={sprintBoxRef}>
 
-            <div>
-              <Image
-                className="context_image imgSprint"
-                alt="Loading"
-                fallback={`Error loading file ${currentWord.image}`}
-                width="300px"
-                height="200px"
-                src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
-              ></Image>
-            </div>
-            <div className="sprintWord">{currentWord.word}</div>
-            <div className="sprintWordTranslate">{wordTranslate}</div>
-<div className="sprintBoxButton">
-              <div className="sprintBtnNo btn" onClick={() => clickNo()}>Не верно</div>
-              <div className="sprintBtnYes btn"  onClick={() => clickYes()}>Верно</div>
-            </div>
-          </>
-        ) : (
-          <Spin tip="Loading..." size="large" />
-        )}
-      </div>
-      {words ?
-      <div className="ProgressSprintBox">
-      <ProgressBoxContainer
-                  seconds={Number(words.length*3)}
-                  isCheck={false}
-                  onCheck={endGame}
-                />
+
+          {!pending && currentWord ? (
+            <>
+              <div className="boxTitleSprint">
+                <div className="boxLineBest">
+                  <div className="bestLine">Best line: </div>
+                  <div className="boxLineBestImg"></div>
+                  <div className="bestLine">x {bestLine}</div>
                 </div>
-: <></>
-      }
-    </div>
+                <div className="boxBtnFullScreen">
+                  <BtnFullScreen />
+                </div>
+              </div>
+
+              <div className="boxLine">
+                {arrCurrentLine.map((e: number, i: number) =>
+                  <div className="line" key={i}>{e}</div>
+                )
+                }
+              </div>
+
+              <div>
+                <Image
+                  className="context_image imgSprint"
+                  alt="Loading"
+                  fallback={`Error loading file ${currentWord.image}`}
+                  width="300px"
+                  height="200px"
+                  src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
+                ></Image>
+              </div>
+              <div className="sprintWord">{currentWord.word}</div>
+              <div className="sprintWordTranslate">{wordTranslate}</div>
+              <div className="sprintBoxButton">
+                <div className="arrowLeft">
+                <ArrowLeftOutlined style ={{color:"grey"}} />
+                </div>
+                <div className="sprintBtnNo btn" ref={btnNoRef} onClick={() => clickNo()}>Не верно</div>
+                <div className="sprintBtnYes btn" ref={btnYesRef} onClick={() => clickYes()}>Верно</div>
+                <div className="arrowRight">
+                <ArrowRightOutlined style ={{color:"grey"}} />
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="loadingBox">
+              <Spin tip="Loading..." size="large" />
+            </div>
+          )}
+        </div>
+        {words ?
+          <div className="ProgressSprintBox">
+            <ProgressBoxContainer
+              seconds={Number(words.length * 30)}
+              isCheck={false}
+              onCheck={endGame}
+            />
+          </div>
+          : <></>
+        }
+      </div>
     </div>
   );
 }
