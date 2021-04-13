@@ -14,7 +14,7 @@ const mapStateToProps = (state: any) => ({
   level:state.games.level,
   page:state.games.page,
   bestLine:state.games.bestLine,
-  currentLine:state.games.currentLine
+  currentLine:state.games.currentLine,
 });
 
 const mapDispatchToProps = (dispatch:any) => ({
@@ -23,9 +23,10 @@ const mapDispatchToProps = (dispatch:any) => ({
     fetchWords:(group: number, page: number) => dispatch( getWords(group, page)),
     addRightWord:(word:Object)=>dispatch(addRightWord(word)),
     addWrongWord:(word:Object)=>dispatch(addWrongWord(word)),
-    setCurrentLine:(currentLine:number)=>dispatch(setCurrentLine(currentLine)),
     setPercent:(percent:number)=>dispatch(setPercent(percent)),
     setBestLine:(bestLine:number)=>dispatch(setBestLine(bestLine)),
+    setCurrentLine:(currentLine:number)=>dispatch(setCurrentLine(currentLine)),
+
 })
 
 const SprintContainer = connect(mapStateToProps,mapDispatchToProps)(Sprint);

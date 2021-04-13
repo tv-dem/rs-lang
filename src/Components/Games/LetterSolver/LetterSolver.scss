@@ -1,5 +1,9 @@
 .letterSolver__wrapper {
     background: linear-gradient(to top, #d19aed, #f1da36);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
 }
 
 .letterSolver {

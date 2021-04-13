@@ -120,7 +120,9 @@ const GamesReducer = (state = initState, action: any) => {
         percent: 100,
         isCheck: false,
         count: 0,
-        currentWord: null
+        currentWord: null,
+        currentLine: 0,
+        bestLine:0,
       };
 
     case SET_CURRENT_CARD:
