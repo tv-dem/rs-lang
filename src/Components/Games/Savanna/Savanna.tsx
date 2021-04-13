@@ -30,6 +30,7 @@ const Savanna: React.FC = ({
   bestLine,
   hearts,
   setValHearts,
+  setPage,
 }: any) => {
   const crystalRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -182,13 +183,14 @@ const Savanna: React.FC = ({
   }
 
   const onOk = () => {
-    setIsCheck(false);
+    setPage(page + 1);
     fetchWords(level, page + 1);
+    setIsCheck(false);
   };
 
   const onCancel = () => {
-    setIsCheck(false);
     fetchWords(level, page);
+    setIsCheck(false);
   };
 
   const onHandleClickBtnNext = () => {
