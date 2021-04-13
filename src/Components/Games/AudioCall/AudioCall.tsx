@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import { Spin } from 'antd';
 import { SoundTwoTone } from '@ant-design/icons';
 import './AudioCall.scss';
-import Words from './Words/Words';
+import Words from '../Words/Words';
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
@@ -189,6 +189,7 @@ const AudioCall: React.FC = ({
               currentWord={currentWord}
               onCheck={onCheck}
               btnRef={btnRef}
+              numOfWords={Number(4)}
             />
 
             <div className="audioCall__next-box">
