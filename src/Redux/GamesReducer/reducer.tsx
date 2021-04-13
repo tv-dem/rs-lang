@@ -156,14 +156,12 @@ const GamesReducer = (state = initState, action: any) => {
     case SET_LEVEL:
       return {
         ...state,
-        level: action.level>5 ? 0: action.level,
-        page: (action.level>5 ) && 0
+        level: action.level>5 ? 0: action.level,       
       };
     case SET_PAGE:
       return {
         ...state,
         page: action.page>5 ? 0: action.page,
-        level: (action.page>5 && state.level<5) && state.level+1
       };
     case SET_PERCENT:
       return {

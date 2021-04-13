@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Savanna from "./Savanna";
-import { setCurrentWord, setCount, addRightWord, addWrongWord, setIsCheck,setPercent,setValHearts } from "../../../Redux/GamesReducer/actions";
+import { setCurrentWord, setCount, addRightWord, addWrongWord, setIsCheck,setPercent,setValHearts,setPage } from "../../../Redux/GamesReducer/actions";
 import { getWords } from '../../../Redux/GamesReducer/thunk'
 
 const mapStateToProps = (state: any) => ({
@@ -27,6 +27,8 @@ const mapDispatchToProps = (dispatch: any) => ({
   setIsCheck: (isCheck: boolean) => dispatch(setIsCheck(isCheck)),
   setPercent:(percent:number)=>dispatch(setPercent(percent)),
   setValHearts:(hearts:number)=>dispatch(setValHearts(hearts)),
+  setPage:(page:number)=>dispatch(setPage(page)),
+
 })
 
 const SavannaContainer = connect(mapStateToProps, mapDispatchToProps)(Savanna);
