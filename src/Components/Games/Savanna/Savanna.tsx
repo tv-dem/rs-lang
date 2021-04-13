@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { Spin } from 'antd';
+import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import './Savanna.scss';
 import Words from '../Words/Words';
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
@@ -7,6 +8,7 @@ import ProgressBoxContainer from '../ProgressBox/ProgressBoxContainer';
 import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
 import imgCrystal from '../../../assets/img/crystal.png';
+import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
 
 const Savanna: React.FC = ({
   words,
@@ -26,29 +28,44 @@ const Savanna: React.FC = ({
   setIsCheck,
   setPercent,
   bestLine,
+  hearts,
+  setValHearts,
 }: any) => {
   const crystalRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLDivElement>(null);
   const guessWordRef = useRef<HTMLDivElement>(null);
-  
+  const heartsCol = useRef<Array<number>>(new Array(5).fill(''));
 
   const [sizeCrystal, setSizeCrystal] = useState(1);
   const [positionImg, setPositionImg] = useState(100);
-
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
     setSizeCrystal(1);
     setPositionImg(100);
+    setValHearts(0);
   }, [words]);
 
   useEffect(() => {
-    if (count) {
+    if (count && words) {
       setCurrentWord(words[count]);
+      setPercent(100.1);
     }
-    setPercent(100.1);
   }, [count]);
+
+  useEffect(() => {
+    if (words) {
+      if (hearts > 4) {
+        setIsCheck(true);
+        ModalFinishLevel({ right, wrong, onOk, onCancel, bestLine });
+      } else {
+        setTimeout(() => {
+          onHandleClickBtnNext();
+        }, 2000);
+      }
+    }
+  }, [wrong, right]);
 
   useEffect(() => {
     if (crystalRef.current) {
@@ -64,6 +81,7 @@ const Savanna: React.FC = ({
 
   useEffect((): any => {
     let timer: null | NodeJS.Timeout = null;
+
     if (isCheck) {
       if (guessWordRef.current) {
         timer = setTimeout(() => {
@@ -122,10 +140,10 @@ const Savanna: React.FC = ({
       guessWordRef.current.innerHTML = '';
       guessWordRef.current.classList.add('to-win-down');
     }
-    
+
     setTimeout(() => {
       setSizeCrystal(() => sizeCrystal + 0.1);
-      setPositionImg(()=>positionImg-5)
+      setPositionImg(() => positionImg - 5);
     }, 500);
 
     new Audio(rightAudio).play();
@@ -133,6 +151,8 @@ const Savanna: React.FC = ({
   };
 
   const toLost = () => {
+    setValHearts(hearts + 1);
+
     if (btnRef.current) {
       btnRef.current.childNodes.forEach((el: any) => {
         el.classList.add('savanna_no-active');
@@ -152,37 +172,54 @@ const Savanna: React.FC = ({
   };
 
   function onCheck(word: any) {
+    setIsCheck(true);
+
     if (word.word === currentWord.word) {
       toWin();
     } else {
       toLost();
     }
-    setIsCheck(true);
-    setTimeout(() => {
-      onHandleClickBtnNext();
-    }, 2000);
   }
 
   const onOk = () => {
+    setIsCheck(false);
     fetchWords(level, page + 1);
   };
 
   const onCancel = () => {
+    setIsCheck(false);
     fetchWords(level, page);
   };
 
   const onHandleClickBtnNext = () => {
-    if (count < words.length - 1) {
+    if (count < words.length - 1 && hearts < 5) {
       setCount(count + 1);
     } else {
-      ModalFinishLevel({ right, wrong, onOk, onCancel, bestLine });
+      addWrongWord(words.filter((w: object, i: number) => i > count - 1));
     }
-
     setIsCheck(false);
   };
 
   return (
     <div ref={wrapperRef} className="savanna__wrapper">
+      <div className="savanna__wrapper_setting-box">
+        <div className="life-box">
+          <div className="life-box__heart">
+            {heartsCol.current.map((e, i) => {
+              return i > hearts || i === hearts ? (
+                <HeartFilled key={i} className="life-box__heart_fulled" />
+              ) : (
+                <HeartOutlined key={i} className="life-box__heart_outliner" />
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="boxBtnFullScreen">
+          <BtnFullScreen />
+        </div>
+      </div>
+
       <div className="savanna">
         {!pending && currentWord ? (
           <>
