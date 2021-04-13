@@ -6,6 +6,8 @@ import Words from './Words/Words';
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
+import BestLineContainer from '../BestLine/BestLineContainer';
+import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
 
 const AudioCall: React.FC = ({
   words,
@@ -23,7 +25,9 @@ const AudioCall: React.FC = ({
   page,
   isCheck,
   setIsCheck,
-  bestLine
+  bestLine,
+  currentLine,
+  setCurrentLine,
 }: any) => {
   const audioCallRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLDivElement>(null);
@@ -62,6 +66,7 @@ const AudioCall: React.FC = ({
   }, [isCheck]);
 
   const toWin = () => {
+    setCurrentLine(currentLine+1);
     if (btnRef.current) {
       btnRef.current.childNodes.forEach((el: any) => {
         el.classList.add('audioCall_no-active');
@@ -75,6 +80,7 @@ const AudioCall: React.FC = ({
   };
 
   const toLost = () => {
+    setCurrentLine(0);
     if (btnRef.current) {
       btnRef.current.childNodes.forEach((el: any) => {
         el.classList.add('audioCall_no-active');
@@ -90,6 +96,7 @@ const AudioCall: React.FC = ({
   const onCheck = (word: any) => {
     if (word.word === currentWord.word) {
       toWin();
+
     } else {
       toLost();
     }
@@ -144,7 +151,15 @@ const AudioCall: React.FC = ({
   };
 
   return (
+    <div className="transition-group">
     <div className="audioCall__wrapper ">
+      <div className="boxLineBest">
+                  <div className="bestLine">Best line: </div>
+                  <div className="boxLineBestImg"></div>
+                  <div className="bestLine">x {bestLine}</div>
+                  <BtnFullScreen/>
+                </div>
+              <BestLineContainer />
       <div ref={audioCallRef} className="audioCall">
         {!pending && currentWord ? (
           <>
@@ -198,6 +213,7 @@ const AudioCall: React.FC = ({
           <Spin tip="Loading..." size="large" />
         )}
       </div>
+    </div>
     </div>
   );
 };

@@ -2,13 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import './sprintGame.scss';
 import { Image, Spin } from "antd";
 import {ArrowLeftOutlined, ArrowRightOutlined} from "@ant-design/icons";
-
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import ProgressBoxContainer from '../ProgressBox/ProgressBoxContainer';
 import shuffle from "../../../utils/shuffle";
 import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
 import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
+import BestLineContainer from '../BestLine/BestLineContainer';
 
 const TrueOrFalse: React.FC = ({
   words,
@@ -23,17 +23,15 @@ const TrueOrFalse: React.FC = ({
   setCount,
   setCurrentWord,
   setCurrentLine,
-  setBestLine,
   currentLine,
   bestLine,
   pending,
   fetchWords,
-  setPercent
+  setPercent,
 }: any) => {
   const [isTrue, setIsTrue] = useState(false);
   const [wordTranslate, setWordTranslate] = useState('');
   const [showStatistics, setShowStatistics] = useState(false);
-  const [arrCurrentLine, setArrCurrentLine] = useState([0]);
 
   const sprintBoxRef = useRef<HTMLDivElement>(null);
   const btnNoRef = useRef<HTMLDivElement>(null);
@@ -53,7 +51,6 @@ const TrueOrFalse: React.FC = ({
   }, [words]);
 
   const checkFinish = () => {
-  //  console.log(count, words.length);
     if (words) {
       if (count < words.length - 1) {
         setCount(count + 1);
@@ -122,16 +119,6 @@ const TrueOrFalse: React.FC = ({
     }
   }, [currentWord]);
 
-  useEffect(() => {
-    if (currentLine > bestLine) {
-      setBestLine(currentLine);
-    }
-    let arr = new Array(currentLine);
-    arr.fill("");
-    setArrCurrentLine(arr);
-
-  }, [currentLine])
-
   const ifTrue = () => {
     setCurrentLine(currentLine + 1);
     new Audio(rightAudio).play();
@@ -172,15 +159,20 @@ const TrueOrFalse: React.FC = ({
 
   useEffect(() => {
     const handleLeft = (event: any) => {
-      if (count < words.length - 1) {
-      if (event.code === "ArrowLeft") {
-        if (btnNoRef.current) {
-          btnNoRef.current.click();
+      if(words){
+        if (count < words.length - 1) {
+          if (event.code === "ArrowLeft") {
+            if (btnNoRef.current) {
+              btnNoRef.current.click();
+            }
+          }
         }
       }
-    }
+    
     };
     const handleRight = (event: any) => {
+      if(words){
+
       if (count < words.length - 1) {
         if (event.code === "ArrowRight") {
           if (btnYesRef.current) {
@@ -188,6 +180,7 @@ const TrueOrFalse: React.FC = ({
          }
        }
       }
+    }
     };
     document.addEventListener('keydown', handleLeft);
     document.addEventListener('keydown', handleRight);
@@ -195,7 +188,7 @@ const TrueOrFalse: React.FC = ({
       document.removeEventListener('keydown', handleLeft);
       document.removeEventListener('keydown', handleRight);
     };
-  }, []);
+  }, [words]);
 
 
 
@@ -219,14 +212,7 @@ const TrueOrFalse: React.FC = ({
                   <BtnFullScreen />
                 </div>
               </div>
-
-              <div className="boxLine">
-                {arrCurrentLine.map((e: number, i: number) =>
-                  <div className="line" key={i}>{e}</div>
-                )
-                }
-              </div>
-
+              <BestLineContainer />
               <div>
                 <Image
                   className="context_image imgSprint"
