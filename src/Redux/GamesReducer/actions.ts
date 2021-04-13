@@ -12,7 +12,8 @@ import {
     SET_CURRENT_LINE,
     SET_PAGE,
     SET_PERCENT,
-    SET_IS_CHECK
+    SET_IS_CHECK,
+    SET_VALUE_HEARTS
 } from "./actionTypes";
 
 export const setBestLine = (bestLine: number) => ({
@@ -85,4 +86,8 @@ export const setIsCheck = (isCheck: boolean) =>({
     isCheck
 })
 
+export const setValHearts = (hearts: number) =>({
+    type: SET_VALUE_HEARTS,
+    hearts
+})
 

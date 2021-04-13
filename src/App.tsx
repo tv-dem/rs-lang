@@ -37,8 +37,8 @@ const App: React.FC<AppProps> = ({ isAuth }) => {
       <HeaderContainer />
       <NavPagesContainer />
       <div className='content'>
-        {/* <TransitionGroup className="transition-group">
-          <CSSTransition
+         <TransitionGroup className="transition-group">
+        {/*  <CSSTransition
             key={location.key}
             classNames="fade"
             timeout={500}
@@ -61,8 +61,8 @@ const App: React.FC<AppProps> = ({ isAuth }) => {
           )}
           {/* <Redirect to='/home' /> */}
         </Switch>
-        {/* </CSSTransition>
-        </TransitionGroup> */}
+         {/* </CSSTransition> */}
+        </TransitionGroup>  
       </div>
       <FooterContainer />
     </>

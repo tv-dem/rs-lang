@@ -47,4 +47,5 @@ export type typeGames = {
   cards: Array<typeCard>;
   bestLine:number;
   currentLine:number;
+  hearts:number;
 };
