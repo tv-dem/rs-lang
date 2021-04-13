@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import LetterSolver from "./LetterSolver";
-import {setCurrentWord,setCount,addRightWord,addWrongWord,setPercent,setIsCheck} from "../../../Redux/GamesReducer/actions";
+import {setCurrentWord,setCount,addRightWord,addWrongWord,setPercent,setIsCheck, setCurrentLine, setBestLine} from "../../../Redux/GamesReducer/actions";
 import {getWords} from '../../../Redux/GamesReducer/thunk'
 
 const mapStateToProps = (state: any) => ({
@@ -16,6 +16,7 @@ const mapStateToProps = (state: any) => ({
   percent:state.games.timer,
   isCheck:state.games.isCheck,
   bestLine:state.games.bestLine,
+  currentLine:state.games.currentLine,
 });
 
 const mapDispatchToProps = (dispatch:any) => ({
@@ -25,7 +26,9 @@ const mapDispatchToProps = (dispatch:any) => ({
     addRightWord:(word:Object)=>dispatch(addRightWord(word)),
     addWrongWord:(word:Object)=>dispatch(addWrongWord(word)),
     setPercent:(percent:number)=>dispatch(setPercent(percent)),
-    setIsCheck:(isCheck:boolean)=>dispatch(setIsCheck(isCheck))
+    setIsCheck:(isCheck:boolean)=>dispatch(setIsCheck(isCheck)),
+    setBestLine:(bestLine:number)=>dispatch(setBestLine(bestLine)),
+    setCurrentLine:(currentLine:number)=>dispatch(setCurrentLine(currentLine)),
 })
 
 const LetterSolverContainer = connect(mapStateToProps,mapDispatchToProps)(LetterSolver);

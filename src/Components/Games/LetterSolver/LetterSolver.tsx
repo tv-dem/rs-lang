@@ -6,6 +6,8 @@ import './LetterSolver.scss';
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
+import BestLineContainer from '../BestLine/BestLineContainer';
+import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
 
 const LetterSolved: React.FC = ({
   words,
@@ -24,7 +26,9 @@ const LetterSolved: React.FC = ({
   setPercent,
   isCheck,
   setIsCheck,
-  bestLine
+  setCurrentLine,
+  bestLine,
+  currentLine,
 }: any) => {
   const wordRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -70,6 +74,7 @@ const LetterSolved: React.FC = ({
   }, [isCheck]);
 
   const toWin = () => {
+    setCurrentLine(currentLine+1);
     if (letterSolverRef.current)
       letterSolverRef.current.classList.add('winEffect');
     if (wordRef.current) wordRef.current.classList.add('right');
@@ -85,6 +90,7 @@ const LetterSolved: React.FC = ({
   };
 
   const toLost = () => {
+    setCurrentLine(0);
     if (letterSolverRef.current)
       letterSolverRef.current.classList.add('badEffect');
     new Audio(wrongAudio).play();
@@ -131,7 +137,15 @@ const LetterSolved: React.FC = ({
   };
 
   return (
+    <div className="transition-group">
     <div className="letterSolver__wrapper ">
+        <div className="boxLineBest">
+                  <div className="bestLine">Best line: </div>
+                  <div className="boxLineBestImg"></div>
+                  <div className="bestLine">x {bestLine}</div>
+                  <BtnFullScreen/>
+                </div>
+              <BestLineContainer />
       <div ref={letterSolverRef} className="letterSolver ">
         {!pending && currentWord ? (
           <>
@@ -176,6 +190,7 @@ const LetterSolved: React.FC = ({
           <Spin tip="Loading..." size="large" />
         )}
       </div>
+    </div>
     </div>
   );
 };
