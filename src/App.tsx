@@ -18,6 +18,8 @@ import DictionaryContainer from "./Pages/Dictionary/DictionaryContainer";
 import LetterSolverContainer from './Components/Games/LetterSolver/LetterSolverContainer';
 import Sprint from './Components/Games/Sprint/SprintContainer';
 import AudioCallContainer from './Components/Games/AudioCall/AudioCallContainer';
+import SavannaContainer from './Components/Games/Savanna/SavannaContainer';
+
 
 interface AppProps {
   isAuth: boolean;
@@ -35,8 +37,8 @@ const App: React.FC<AppProps> = ({ isAuth }) => {
       <HeaderContainer />
       <NavPagesContainer />
       <div className='content'>
-        {/* <TransitionGroup className="transition-group">
-          <CSSTransition
+         <TransitionGroup className="transition-group">
+        {/*  <CSSTransition
             key={location.key}
             classNames="fade"
             timeout={500}
@@ -45,7 +47,7 @@ const App: React.FC<AppProps> = ({ isAuth }) => {
         <Switch>
           <Route path='/games/LetterSolver/:level' component={LetterSolverContainer} />
           <Route path='/games/Sprint/:level' component={Sprint} />
-          <Route path='/games/Savanna/:level' component={LetterSolverContainer} />
+          <Route path='/games/Savanna/:level' component={SavannaContainer} />
           <Route path='/games/AudioCall/:level' component={AudioCallContainer} />
           <Route path='/games/:game' component={WelcomFormContainer} />
           <Route path='/games' component={GamesContainer} />
@@ -59,8 +61,8 @@ const App: React.FC<AppProps> = ({ isAuth }) => {
           )}
           {/* <Redirect to='/home' /> */}
         </Switch>
-        {/* </CSSTransition>
-        </TransitionGroup> */}
+         {/* </CSSTransition> */}
+        </TransitionGroup>  
       </div>
       <FooterContainer />
     </>

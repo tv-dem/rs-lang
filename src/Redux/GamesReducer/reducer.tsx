@@ -12,8 +12,8 @@ import {
   SET_BEST_LINE,
   SET_CURRENT_LINE,
   SET_PERCENT,
-  SET_IS_CHECK
-
+  SET_IS_CHECK,
+  SET_VALUE_HEARTS
 } from "./actionTypes";
 import { typeGames } from "./typeGames";
 import shuffle from "../../utils/shuffle";
@@ -32,7 +32,7 @@ const initState: typeGames = {
   currentLine: 0,
   percent: 100,
   isCheck: false,
- 
+  hearts:0,
   cards: [
     {
       name: "Собери слово",
@@ -158,12 +158,12 @@ const GamesReducer = (state = initState, action: any) => {
     case SET_LEVEL:
       return {
         ...state,
-        level: action.level,
+        level: action.level>5 ? 0: action.level,       
       };
     case SET_PAGE:
       return {
         ...state,
-        page: action.page,
+        page: action.page>5 ? 0: action.page,
       };
     case SET_PERCENT:
       return {
@@ -177,10 +177,10 @@ const GamesReducer = (state = initState, action: any) => {
       };
       case SET_BEST_LINE:
         return { ...state, bestLine: action.bestLine};
-        
-        case SET_CURRENT_LINE:
-          return { ...state, currentLine: action.currentLine};
-
+    case SET_CURRENT_LINE:
+      return { ...state, currentLine: action.currentLine};
+      case SET_VALUE_HEARTS:
+        return { ...state, hearts: action.hearts};
     default:
       return state;
   }
