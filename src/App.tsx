@@ -19,19 +19,26 @@ import LetterSolverContainer from './Components/Games/LetterSolver/LetterSolverC
 import Sprint from './Components/Games/Sprint/SprintContainer';
 import AudioCallContainer from './Components/Games/AudioCall/AudioCallContainer';
 import SavannaContainer from './Components/Games/Savanna/SavannaContainer';
+import {getUserSettings} from "./Redux/AuthReducer/thunk";
 
 
 interface AppProps {
   isAuth: boolean;
+  userId: string;
+  token: string;
+  getUserSettings: any;
 }
 
-const App: React.FC<AppProps> = ({ isAuth }) => {
+const App: React.FC<AppProps> = ({ isAuth,getUserSettings, userId,token }) => {
   useEffect(() => {
     window.scrollTo(0, 0)
   });
-
+  useEffect(()=>{
+    if(isAuth){
+      getUserSettings(userId, token);
+    }
+  }, [isAuth])
   let location = useLocation();
-
   return (
     <>
       <HeaderContainer />
@@ -69,8 +76,14 @@ const App: React.FC<AppProps> = ({ isAuth }) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  isAuth: state.auth.isAuth,
+const mapStateToProps = ({auth}: any) => ({
+  isAuth: auth.isAuth,
+  userId: auth.currentUser.userId,
+  token: auth.currentUser.token,
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch:any) => ({
+    getUserSettings: (userId:string, token:string) => dispatch(getUserSettings(userId, token)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

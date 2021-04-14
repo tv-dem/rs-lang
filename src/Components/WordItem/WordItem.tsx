@@ -45,9 +45,9 @@ const WordItem = ({word,modificator,option,translate, audio,audioMeaning,audioEx
     </div>
 }
 
-const mapStateToProps = ({user}:any) => ({
-    option: user.options,
-    translate: user.translate,
+const mapStateToProps = ({auth}:any) => ({
+  option: auth.userSettings.options,
+  translate: auth.userSettings.translate,
 })
 
 export default connect(mapStateToProps)(WordItem);
