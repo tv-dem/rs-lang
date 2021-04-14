@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Sprint from "./Sprint";
-import {setCurrentWord,setCount, addRightWord, addWrongWord, setCurrentLine, setBestLine, setPercent} from "../../../Redux/GamesReducer/actions";
+import {setCurrentWord,setCount, addRightWord, addWrongWord, setCurrentLine, setBestLine, setPercent, setPage} from "../../../Redux/GamesReducer/actions";
 import {getWords} from '../../../Redux/GamesReducer/thunk'
 
 const mapStateToProps = (state: any) => ({
@@ -26,6 +26,7 @@ const mapDispatchToProps = (dispatch:any) => ({
     setPercent:(percent:number)=>dispatch(setPercent(percent)),
     setBestLine:(bestLine:number)=>dispatch(setBestLine(bestLine)),
     setCurrentLine:(currentLine:number)=>dispatch(setCurrentLine(currentLine)),
+    setPage:(page:number)=>dispatch(setPage(page)),
 
 })
 

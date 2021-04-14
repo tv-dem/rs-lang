@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useCallback } from 'react';
-import { Spin } from 'antd';
 import { SoundTwoTone } from '@ant-design/icons';
 import './AudioCall.scss';
 import Words from '../Words/Words';
@@ -8,6 +7,7 @@ import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
 import BestLineContainer from '../BestLine/BestLineContainer';
 import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
+import Loading from "../../Loading/Loading";
 
 const AudioCall: React.FC = ({
   words,
@@ -28,6 +28,7 @@ const AudioCall: React.FC = ({
   bestLine,
   currentLine,
   setCurrentLine,
+  setPage,
 }: any) => {
   const audioCallRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLDivElement>(null);
@@ -104,6 +105,7 @@ const AudioCall: React.FC = ({
   };
 
   const onOk = () => {
+    setPage(page + 1);
     fetchWords(level, page + 1);
   };
 
@@ -151,12 +153,13 @@ const AudioCall: React.FC = ({
   };
 
   return (
-    <div className="transition-group">
     <div className="audioCall__wrapper ">
       <div className="boxLineBest">
+      <div className="boxLineBestLine">
                   <div className="bestLine">Best line: </div>
                   <div className="boxLineBestImg"></div>
-                  <div className="bestLine">x {bestLine}</div>
+                  <div className="bestL">x {bestLine}</div>
+                  </div>
                   <BtnFullScreen/>
                 </div>
               <BestLineContainer />
@@ -211,10 +214,9 @@ const AudioCall: React.FC = ({
             </div>
           </>
         ) : (
-          <Spin tip="Loading..." size="large" />
+          <Loading/>
         )}
       </div>
-    </div>
     </div>
   );
 };

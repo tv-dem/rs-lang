@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
-import { Spin } from 'antd';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import './Savanna.scss';
 import Words from '../Words/Words';
@@ -9,6 +8,8 @@ import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
 import imgCrystal from '../../../assets/img/crystal.png';
 import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
+import BestLineContainer from '../BestLine/BestLineContainer';
+import Loading from "../../Loading/Loading";
 
 const Savanna: React.FC = ({
   words,
@@ -31,6 +32,9 @@ const Savanna: React.FC = ({
   hearts,
   setValHearts,
   setPage,
+  currentLine,
+  setCurrentLine,
+
 }: any) => {
   const crystalRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -149,11 +153,11 @@ const Savanna: React.FC = ({
 
     new Audio(rightAudio).play();
     addRightWord(currentWord);
+  setCurrentLine(currentLine + 1);
   };
 
   const toLost = () => {
     setValHearts(hearts + 1);
-
     if (btnRef.current) {
       btnRef.current.childNodes.forEach((el: any) => {
         el.classList.add('savanna_no-active');
@@ -170,6 +174,7 @@ const Savanna: React.FC = ({
 
     new Audio(wrongAudio).play();
     addWrongWord(currentWord);
+    setCurrentLine(0);
   };
 
   function onCheck(word: any) {
@@ -204,8 +209,13 @@ const Savanna: React.FC = ({
 
   return (
     <div ref={wrapperRef} className="savanna__wrapper">
-      <div className="savanna__wrapper_setting-box">
-        <div className="life-box">
+         <div className="savanna__wrapper_setting-box">
+     
+
+        <div className="boxLineBest">
+          
+      <div className="boxLineBestLine">
+      <div className="life-box">
           <div className="life-box__heart">
             {heartsCol.current.map((e, i) => {
               return i > hearts || i === hearts ? (
@@ -216,11 +226,18 @@ const Savanna: React.FC = ({
             })}
           </div>
         </div>
+                  <div className="bestLine">Best line: </div>
+                  <div className="boxLineBestImg"></div>
+                  <div className="bestL">x {bestLine}</div>
+                  </div>
+                  <BtnFullScreen/>
+                </div>
 
-        <div className="boxBtnFullScreen">
+        {/* <div className="boxBtnFullScreen">
           <BtnFullScreen />
-        </div>
+        </div> */}
       </div>
+      <BestLineContainer />
 
       <div className="savanna">
         {!pending && currentWord ? (
@@ -254,7 +271,7 @@ const Savanna: React.FC = ({
             />
           </>
         ) : (
-          <Spin tip="Loading..." size="large" />
+          <Loading/>
         )}
       </div>
     </div>
