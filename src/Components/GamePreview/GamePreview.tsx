@@ -1,10 +1,14 @@
 import React from "react";
 import './GamePreview.scss';
+import {useHistory} from "react-router-dom";
 
-const GamePreview = ({src, description}:any) => {
-    console.log(src)
+const GamePreview = ({src,isTextBook,currentGame, description, getAggregatedWords,userId, type, group, page, token}:any) => {
+  const history = useHistory();
     return(
-        <div className='game-preview'>
+        <div onClick={()=> {
+          getAggregatedWords(userId, type, group, page, token,isTextBook);
+          history.push(`/games/${currentGame}/${group}`);
+        }} className='game-preview'>
             <img src={src} alt=""/>
             <div className="game-preview__description">
                 <span>{description}</span>

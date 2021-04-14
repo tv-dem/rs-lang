@@ -25,7 +25,8 @@ const initState = {
         {
             title: 'level 6'
         },
-    ]
+    ],
+    wordsInSection: 0,
 }
 
 const TextBookReducer = (state = initState, action:any) => {
@@ -43,7 +44,7 @@ const TextBookReducer = (state = initState, action:any) => {
             return {...state, currLevel: Number(action.level)}
         case UPDATE_WORDS:
             console.log(action)
-            return {...state, words: action.words}
+            return {...state, words: action.words, wordsInSection: action.wordsInSection}
         default:
             return state
     }

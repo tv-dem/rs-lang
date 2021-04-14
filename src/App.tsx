@@ -42,7 +42,7 @@ const App: React.FC<AppProps> = ({ isAuth }) => {
             key={location.key}
             classNames="fade"
             timeout={500}
-            
+
           > */}
         <Switch>
           <Route path='/games/LetterSolver/:level' component={LetterSolverContainer} />
@@ -56,13 +56,13 @@ const App: React.FC<AppProps> = ({ isAuth }) => {
           {isAuth && (
             <>
               <Route path='/statistic' component={StatisticContainer} />
-              <Route path='/dictionary/:section/:page' component={DictionaryContainer} />
+              <Route path='/dictionary/:section/:level/:page' component={DictionaryContainer} />
             </>
           )}
           {/* <Redirect to='/home' /> */}
         </Switch>
          {/* </CSSTransition> */}
-        </TransitionGroup>  
+        </TransitionGroup>
       </div>
       <FooterContainer />
     </>
