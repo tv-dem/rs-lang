@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import './sprintGame.scss';
-import { Image, Spin } from "antd";
+import { Image } from "antd";
 import {ArrowLeftOutlined, ArrowRightOutlined} from "@ant-design/icons";
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import ProgressBoxContainer from '../ProgressBox/ProgressBoxContainer';
@@ -9,6 +9,7 @@ import rightAudio from '../../../assets/audio/right_answer.mp3';
 import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
 import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
 import BestLineContainer from '../BestLine/BestLineContainer';
+import Loading from "../../Loading/Loading";
 
 const TrueOrFalse: React.FC = ({
   words,
@@ -28,6 +29,8 @@ const TrueOrFalse: React.FC = ({
   pending,
   fetchWords,
   setPercent,
+  setPage,
+
 }: any) => {
   const [isTrue, setIsTrue] = useState(false);
   const [wordTranslate, setWordTranslate] = useState('');
@@ -76,12 +79,8 @@ const TrueOrFalse: React.FC = ({
       setCurrentWord(words[count]);
       setIsTrue(Boolean(arrNumTranslate[count] % 2));
     }
-    if (sprintBoxRef.current) {
-      sprintBoxRef.current.classList.add('hiddenSprint');
-      sprintBoxRef.current.classList.remove('visibleCorrect');
-      sprintBoxRef.current.classList.remove('visibleIncorrect');
-    }
   }, [count]);
+
 
   const endGame = () => {
     new Audio(wrongAudio).play();
@@ -98,6 +97,7 @@ const TrueOrFalse: React.FC = ({
   }, [showStatistics]);
 
   const onOk = () => {
+    setPage(page + 1);
     fetchWords(level, page + 1);
     setShowStatistics(false);
   }
@@ -117,9 +117,14 @@ const TrueOrFalse: React.FC = ({
         setWordTranslate(arrTranslate[countRandom].wordTranslate);
       }
     }
+    if (sprintBoxRef.current) {
+      sprintBoxRef.current.classList.add('hiddenSprint');
+      sprintBoxRef.current.classList.remove('visibleCorrect');
+      sprintBoxRef.current.classList.remove('visibleIncorrect');
+    }
   }, [currentWord]);
 
-  const ifTrue = () => {
+  const toWin = () => {
     setCurrentLine(currentLine + 1);
     new Audio(rightAudio).play();
     addRightWord(currentWord);
@@ -129,7 +134,7 @@ const TrueOrFalse: React.FC = ({
     }
   }
 
-  const ifFalse = () => {
+  const toLost = () => {
     setCurrentLine(0);
     new Audio(wrongAudio).play();
     addWrongWord(currentWord);
@@ -141,18 +146,18 @@ const TrueOrFalse: React.FC = ({
 
   const clickNo = () => {
     if (isTrue) {
-      ifFalse();
+      toLost();
     } else {
-      ifTrue();
+      toWin();
     }
     checkFinish();
   }
 
   const clickYes = () => {
     if (isTrue) {
-      ifTrue();
+      toWin();
     } else {
-      ifFalse();
+      toLost();
     }
     checkFinish();
   }
@@ -194,7 +199,6 @@ const TrueOrFalse: React.FC = ({
 
 
   return (
-    <div className="transition-group">
       <div className="sprintWrapper">
 
         <div className="sprintBox" ref={sprintBoxRef}>
@@ -203,10 +207,10 @@ const TrueOrFalse: React.FC = ({
           {!pending && currentWord ? (
             <>
               <div className="boxTitleSprint">
-                <div className="boxLineBest">
+                <div className="boxLineBestLine">
                   <div className="bestLine">Best line: </div>
                   <div className="boxLineBestImg"></div>
-                  <div className="bestLine">x {bestLine}</div>
+                  <div className="bestL">x {bestLine}</div>
                 </div>
                 <div className="boxBtnFullScreen">
                   <BtnFullScreen />
@@ -238,14 +242,14 @@ const TrueOrFalse: React.FC = ({
             </>
           ) : (
             <div className="loadingBox">
-              <Spin tip="Loading..." size="large" />
+              <Loading/>
             </div>
           )}
         </div>
         {words ?
           <div className="ProgressSprintBox">
             <ProgressBoxContainer
-              seconds={Number(words.length * 30)}
+              seconds={Number(words.length * 3)}
               isCheck={false}
               onCheck={endGame}
             />
@@ -253,7 +257,6 @@ const TrueOrFalse: React.FC = ({
           : <></>
         }
       </div>
-    </div>
   );
 }
 
