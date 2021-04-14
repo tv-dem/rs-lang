@@ -4,9 +4,13 @@
     justify-content: space-around;
     align-items: center;
     text-align: center;
-    height: 550px;
+    height: 100%;
 }
 
 .welcomeForm__form {
     width: 20%;
+}
+
+.ant-typography .welcomeForm-howToPlay {
+    width: 80%;
 }

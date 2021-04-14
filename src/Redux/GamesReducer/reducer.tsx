@@ -123,6 +123,7 @@ const GamesReducer = (state = initState, action: any) => {
         currentWord: null,
         currentLine: 0,
         bestLine:0,
+        page:0,
       };
 
     case SET_CURRENT_CARD:
