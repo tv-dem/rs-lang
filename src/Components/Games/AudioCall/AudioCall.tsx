@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useCallback } from 'react';
+import { Button, Spin } from 'antd';
 import { SoundTwoTone } from '@ant-design/icons';
 import './AudioCall.scss';
 import Words from '../Words/Words';
@@ -31,7 +32,11 @@ const AudioCall: React.FC = ({
   setPage,
 }: any) => {
   const audioCallRef = useRef<HTMLDivElement>(null);
-  const btnRef = useRef<HTMLDivElement>(null);
+  const btnRef = useRef<HTMLDivElement>(null); 
+  const btnNoKnowRef = useRef<HTMLDivElement>(null); 
+  const btnNextRef = useRef<HTMLDivElement>(null); 
+
+
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
@@ -45,6 +50,28 @@ const AudioCall: React.FC = ({
 
   useEffect(() => {
     playAudio();
+    const handleClick = (event: any) => {
+
+      if(words){
+        if (count < words.length - 1) {
+
+          if (btnNoKnowRef.current) {
+            if(event.code === `Space`) btnNoKnowRef.current.click()                
+          }
+
+          if (btnRef.current) {
+            btnRef.current.childNodes.forEach((el: any, index:number) => {            
+            if(event.code === `Digit${index+1}` || event.code === `Numpad${index+1}`) el.lastChild.click()                
+            });
+          }                      
+        }
+      }
+    
+    };
+
+    document.addEventListener('keydown', handleClick);
+
+    return () =>   document.removeEventListener('keydown', handleClick); 
   }, [currentWord]);
 
   const playAudio = useCallback(() => {
@@ -55,6 +82,7 @@ const AudioCall: React.FC = ({
   }, [currentWord]);
 
   useEffect(() => {
+    let handleClick:EventListener|null=null;
     if (!isCheck) {
       if (btnRef.current) {
         btnRef.current.childNodes.forEach((el: any) => {
@@ -63,7 +91,21 @@ const AudioCall: React.FC = ({
           el.classList.remove('audioCall_is-selected-lose');
         });
       }
+    }else{
+       handleClick = (event: any) => {
+        if(words){
+          if (count < words.length - 1) {
+  
+            if (btnNextRef.current) {
+              if(event.code === `Enter`) btnNextRef.current.click()                
+            }
+          }}
+      }
     }
+
+if(handleClick) document.addEventListener('keydown', handleClick);
+
+    return () => { if(handleClick) document.removeEventListener('keydown', handleClick);} 
   }, [isCheck]);
 
   const toWin = () => {
@@ -71,7 +113,7 @@ const AudioCall: React.FC = ({
     if (btnRef.current) {
       btnRef.current.childNodes.forEach((el: any) => {
         el.classList.add('audioCall_no-active');
-        if (el.firstChild.innerHTML === currentWord.wordTranslate)
+        if (el.lastChild.innerHTML === currentWord.wordTranslate)
           el.classList.add('audioCall_is-selected-win');
       });
     }
@@ -85,7 +127,7 @@ const AudioCall: React.FC = ({
     if (btnRef.current) {
       btnRef.current.childNodes.forEach((el: any) => {
         el.classList.add('audioCall_no-active');
-        if (el.firstChild.innerHTML === currentWord.wordTranslate)
+        if (el.lastChild.innerHTML === currentWord.wordTranslate)
           el.classList.add('audioCall_is-selected-lose');
       });
     }
@@ -197,16 +239,18 @@ const AudioCall: React.FC = ({
 
             <div className="audioCall__next-box">
               {isCheck ? (
-                <div
+                <Button
                   className="audioCall__next-box_btn-next"
-                  onClick={onHandleClickBtnNext}
+                  onClick={onHandleClickBtnNext}                
+                 ref={btnNextRef}
                 >
                   Далее
-                </div>
+                </Button>
               ) : (
                 <div
                   className="audioCall__next-box_btn-next"
                   onClick={onHandleClickBtnNotKnow}
+                  ref={btnNoKnowRef}
                 >
                   Не знаю
                 </div>

@@ -57,7 +57,28 @@ const Savanna: React.FC = ({
       setCurrentWord(words[count]);
       setPercent(100.1);
     }
+   
   }, [count]);
+
+
+  useEffect(()=>{
+    const handleClick = (event: any) => {
+      if(words){
+        if (count < words.length - 1) {
+          if (btnRef.current) {
+            btnRef.current.childNodes.forEach((el: any, index:number) => {            
+            if(event.code === `Digit${index+1}` || event.code === `Numpad${index+1}`) el.lastChild.click()                
+            });
+          }                      
+        }
+      }
+    
+    };
+
+    document.addEventListener('keydown', handleClick);
+
+    return () =>   document.removeEventListener('keydown', handleClick);  
+  },[currentWord])
 
   useEffect(() => {
     if (words) {
@@ -132,8 +153,8 @@ const Savanna: React.FC = ({
   const toWin = () => {
     if (btnRef.current) {
       btnRef.current.childNodes.forEach((el: any) => {
-        el.classList.add('savanna_no-active');
-        if (el.firstChild.innerHTML === currentWord.wordTranslate)
+        el.classList.add('savanna_no-active');        
+        if (el.lastChild.innerHTML === currentWord.wordTranslate)
           el.classList.add('savanna_is-selected-win');
       });
     }
@@ -161,7 +182,7 @@ const Savanna: React.FC = ({
     if (btnRef.current) {
       btnRef.current.childNodes.forEach((el: any) => {
         el.classList.add('savanna_no-active');
-        if (el.firstChild.innerHTML === currentWord.wordTranslate)
+        if (el.lastChild.innerHTML === currentWord.wordTranslate)
           el.classList.add('savanna_is-selected-lose');
       });
     }

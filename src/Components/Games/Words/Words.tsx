@@ -11,13 +11,15 @@ const Words = ({ words, currentWord, onCheck, btnRef , numOfWords }: any) => {
 
   return (
     <div className="variants-answer" ref={btnRef}>
-      {filterAnswerVariants.map((word: any) => (
+      {filterAnswerVariants.map((word: any,index:number) => (
         <div key={word.id} className="variants-answer__choose-box_btn-check">
+
+          <div className="variants-answer__choose-box_btn-check_color-number">  {index+1}</div>              
           <div
-            className="variants-answer__choose-box_btn-check_background"
+            className="variants-answer__choose-box_btn-check_background "
             onClick={() => onCheck(word)}
           >
-            {word.wordTranslate}
+           {word.wordTranslate} 
           </div>
         </div>
       ))}
