@@ -11,6 +11,7 @@ import {
 } from "@ant-design/icons";
 
 interface NawPagesProps {
+    currDictLevel:Number,
     currLevel: any;
     currPage: any;
     currDictSection: any;
@@ -18,9 +19,9 @@ interface NawPagesProps {
     isAuth: boolean;
 }
 
-const NawPages: React.FC<NawPagesProps> = ({ currLevel, currPage, currDictSection, currDictPage, isAuth }) => {
+const NawPages: React.FC<NawPagesProps> = ({ currLevel,currDictLevel, currPage, currDictSection, currDictPage, isAuth }) => {
   const ref = useRef<HTMLInputElement>(null);
-
+  console.log('curr', currDictLevel)
   return (
     <nav className='nav-pages' ref={ref}>
       <div className='nav-pages__top'>
@@ -56,7 +57,7 @@ const NawPages: React.FC<NawPagesProps> = ({ currLevel, currPage, currDictSectio
         {isAuth && (
           <>
             <li>
-              <NavLink activeClassName='active' to={`/dictionary/${currDictSection.section}/${currDictPage}`}>
+              <NavLink activeClassName='active' to={`/dictionary/${currDictSection.section}/${currDictLevel}/${currDictPage}`}>
                 <div className='li-item'>
                   <h2>Словарь</h2>
                   <ReadOutlined style={{ fontSize: '40px' }} />

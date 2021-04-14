@@ -13,8 +13,7 @@ const TextBookContent: FC = ({words, options, createUserWord,updateUserWord, use
     }
 
     return <div className={`text-book__content h${currLevel}`}>
-        {words.filter(({userWord}:any) => userWord ? userWord.difficulty !== 'delete' : true)
-            .map(({id, _id, userWord, word, audio, audioMeaning, audioExample, textMeaning, image, textExample, transcription, textExampleTranslate, textMeaningTranslate, wordTranslate}: any, i: number) => {
+        {words.map(({id, _id, userWord, word, audio, audioMeaning, audioExample, textMeaning, image, textExample, transcription, textExampleTranslate, textMeaningTranslate, wordTranslate}: any, i: number) => {
             return <WordItem
                 modificator={userWord ? userWord.difficulty : ''}
                 audioExample={audioExample}

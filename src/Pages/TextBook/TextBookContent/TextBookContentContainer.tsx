@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import TextBookContent from "./TextBookContent";
-import {createUserWordTC, getAggregatedWordsTC, updateUserWordTC} from "../../../Redux/TextBookReducer/thunk";
+import {createUserWordTC, updateUserWordTC} from "../../../Redux/TextBookReducer/thunk";
 
 const MapStateToProps = ({textBook, auth}: any) => ({
     currPage: textBook.currPage,

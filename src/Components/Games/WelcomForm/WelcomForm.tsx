@@ -82,7 +82,6 @@ const WelcomForm = ({
               {currentGame.name}
             </Text>
           </Title>
-
           <Title level={5} className="welcomeForm-howToPlay">
             <Text style={descriptionsStyle} strong>
               {currentGame.howToPlay}

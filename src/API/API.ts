@@ -120,7 +120,6 @@ class API {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        wordsPerDay: 0,
         optional
       })
     })
