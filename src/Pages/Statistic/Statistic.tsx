@@ -70,7 +70,6 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
   const labels = ["Собери слово", "Саванна", "Аудио вызов", "Спринт"];
 
   function callback(key: string) {
-    console.log(key);
   };
 
   useEffect(() => onLoad(), [onLoad]);
