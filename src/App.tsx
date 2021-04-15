@@ -56,13 +56,13 @@ const App: React.FC<AppProps> = ({ isAuth, getUserSettings, userId, token, refre
             <Route path='/games' component={GamesContainer} />
             <Route path='/textbook/:level/:page' component={TextBookContainer} />
             <Route path='/home' component={MainPageContainer} />
-            <Route path='/' component={StartPage} />
             {isAuth && (
               <>
                 <Route path='/statistic' component={StatisticContainer} />
                 <Route path='/dictionary/:section/:level/:page' component={DictionaryContainer} />
               </>
             )}
+            <Route path='/' component={StartPage} />
             {/* <Redirect to='/home' /> */}
           </Switch>
         </TransitionGroup>
