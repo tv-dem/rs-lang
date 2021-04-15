@@ -50,6 +50,7 @@ const AudioCall: React.FC = ({
   useEffect(() => {
     playAudio();
     const handleClick = (event: any) => {
+      event.preventDefault();
       if (words) {
         if (count < words.length - 1) {
           if (btnNoKnowRef.current) {
@@ -93,6 +94,7 @@ const AudioCall: React.FC = ({
       }
     } else {
       handleClick = (event: any) => {
+        event.preventDefault();
         if (words) {
           if (count < words.length - 1) {
             if (btnNextRef.current) {

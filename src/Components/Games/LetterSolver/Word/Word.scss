@@ -15,7 +15,6 @@
 
 .context_btn_next,
 .context_btn_check {
-  
     display: flex;
     flex-direction: row;
     text-align: center;
@@ -31,7 +30,7 @@
     color: rgb(250, 250, 250);
     box-shadow: 0px 0px 9px 2px #55654e inset;
     &:hover {
-        background-color: #70e4ae8c;     
+        background-color: #70e4ae8c;
         transform: scale(1.1);
         transition: 0.2s transform;
     }
@@ -40,6 +39,9 @@
 @media screen and (max-width: 768px) {
     .context_btn_next,
     .context_btn_check {
+        margin: 10px 0;
+    }
+    .word-box {
         margin: 10px 0;
     }
 }

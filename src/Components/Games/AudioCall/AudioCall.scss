@@ -6,7 +6,7 @@
     flex-direction: column;
     height: 100%;
     background-image: url(../../../assets/img/fonAudioCall.jpg);
-    background-size: cover; 
+    background-size: cover;
 }
 
 .audioCall_to-left {
@@ -46,7 +46,7 @@
         justify-content: space-between;
         align-items: center;
         width: 80%;
-        height: 40%;
+        height: 200px;
         margin: 20px;
         &_image {
             cursor: pointer;
@@ -95,7 +95,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 20px;
         &_btn-next {
             display: flex;
             justify-content: center;
@@ -104,7 +103,7 @@
             font-size: 1.1rem;
             font-weight: 400;
             border-radius: 5px;
-            min-width: 100px;
+            width: 100px;
             height: 40px;
             background-color: #15141452;
             //  background: linear-gradient(to top, #a5b1ee, #a7ff81);
@@ -112,6 +111,7 @@
             color: rgb(250, 250, 250);
             transform: scale(1);
             transition: 0.2s transform;
+            margin: 40px;
             &:hover {
                 // background: linear-gradient(to top, #a7ff81, #a5b1ee);
                 background-color: #e97a728f;
@@ -196,25 +196,27 @@
     opacity: 1;
 }
 
-@media screen and (max-width: 768px)  {
-    .audioCall__wrapper .audioCall__view-box_btn-sound{
+@media screen and (max-width: 768px) {
+    .audioCall__wrapper .audioCall__view-box_btn-sound {
         width: 100px;
         height: 100px;
-    }   
-    .audioCall__wrapper .audioCall__next-box_btn-next, .audioCall .variants-answer__choose-box_btn-check{
-font-size: 1rem;
-border-radius: 5px;
-min-width: 70px;
-height: 30px;
     }
-    .audioCall__wrapper .audioCall__view-box{  
+    .audioCall__wrapper .audioCall__next-box_btn-next,
+    .audioCall .variants-answer__choose-box_btn-check {
+        font-size: .8rem;
+        border-radius: 5px;
+        min-width: 70px;
+        height: 30px;
+    }
+    .audioCall__wrapper .audioCall__view-box {
+        height: 140px;
         &_image {
             width: 100px;
-            height: 100px;          
+            height: 100px;
         }
-        &_answer {           
+        &_answer {
             font-size: 1rem;
-            font-weight: 500;           
+            font-weight: 500;
         }
     }
 }

@@ -63,6 +63,7 @@ const Savanna: React.FC = ({
 
   useEffect(()=>{
     const handleClick = (event: any) => {
+      event.preventDefault();
       if(words){
         if (count < words.length - 1) {
           if (btnRef.current) {
