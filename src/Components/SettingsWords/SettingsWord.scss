@@ -1,9 +1,9 @@
 @import "../../styles/variables";
 .settings-words{
-  //display: block;
+  display: block;
   font-size: 30px;
-  padding: 10px 0;
-  color: $primary-5!important;
+  padding: 40px;
+  color: white!important;
   float: right;
   transition: transform .5s ease-in;
   cursor: pointer;

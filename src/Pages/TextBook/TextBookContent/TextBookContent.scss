@@ -1,33 +1,32 @@
 @import "../../../styles/variables";
 .text-book{
   &__content {
-    min-height: 50vh;
     border-radius: 5px;
     padding: 20px;
-    box-shadow: 0 0 10px gainsboro;
-    &.h1 {
-      border: 1px solid $primary-1;
-    }
-
-    &.h2 {
-      border: 1px solid $primary-2;
-    }
-
-    &.h3 {
-      border: 1px solid $primary-3;
-    }
-
-    &.h4 {
-      border: 1px solid $primary-4;
-    }
-
-    &.h5 {
-      border: 1px solid $primary-5;
-    }
-
-    &.h6 {
-      border: 1px solid $primary-6;
-    }
+    //box-shadow: 0 0 10px gainsboro;
+    //&.h1 {
+    //  border: 1px solid $primary-1;
+    //}
+    //
+    //&.h2 {
+    //  border: 1px solid $primary-2;
+    //}
+    //
+    //&.h3 {
+    //  border: 1px solid $primary-3;
+    //}
+    //
+    //&.h4 {
+    //  border: 1px solid $primary-4;
+    //}
+    //
+    //&.h5 {
+    //  border: 1px solid $primary-5;
+    //}
+    //
+    //&.h6 {
+    //  border: 1px solid $primary-6;
+    //}
   }
 }
 

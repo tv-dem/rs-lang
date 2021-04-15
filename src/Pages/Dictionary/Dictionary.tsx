@@ -22,7 +22,7 @@ const TextBook: FC = ({refreshSection, wordsInSection, pending, refreshPage, ref
         getWords(userId, section === 'learn' ? ['learn', 'hard'] : [section], Number(level) - 1, Number(page) - 1, token)
     }, [])
     return <div className='wrapper'>
-        <div className="text-book">
+        <div className={`text-book b${currLevel}`}>
             <SettingsWordsContainer/>
             <Panel panelInfo={sections.map(({title, section}: any) => {
                 return {

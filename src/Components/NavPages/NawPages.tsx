@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React, {useRef} from 'react';
 import './NawPages.scss'
-import { NavLink } from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import {
   BarChartOutlined,
   BookOutlined,
@@ -11,30 +11,30 @@ import {
 } from "@ant-design/icons";
 
 interface NawPagesProps {
-    currDictLevel:Number,
-    currLevel: any;
-    currPage: any;
-    currDictSection: any;
-    currDictPage: any;
-    isAuth: boolean;
+  currDictLevel: Number,
+  currLevel: any;
+  currPage: any;
+  currDictSection: any;
+  currDictPage: any;
+  isAuth: boolean;
 }
 
-const NawPages: React.FC<NawPagesProps> = ({ currLevel,currDictLevel, currPage, currDictSection, currDictPage, isAuth }) => {
+const NawPages: React.FC<NawPagesProps> = ({currLevel, currDictLevel, currPage, currDictSection, currDictPage, isAuth}) => {
   const ref = useRef<HTMLInputElement>(null);
   console.log('curr', currDictLevel)
   return (
     <nav className='nav-pages' ref={ref}>
-      <div className='nav-pages__top'>
-        <MenuOutlined onClick={() => (
-          ref.current!.classList.toggle('active')
-        )} style={{ fontSize: '40px' }} />
-      </div>
+      <NavLink activeClassName='active' to='/'>
+        <div className='nav-pages__top'>
+          <span>RS</span>
+        </div>
+      </NavLink>
       <ul>
         <li>
           <NavLink activeClassName='active' to='/home'>
             <div className='li-item'>
               <h2>Домой</h2>
-              <HomeOutlined style={{ fontSize: '40px' }} />
+              <HomeOutlined style={{fontSize: '40px'}}/>
             </div>
           </NavLink>
         </li>
@@ -42,7 +42,7 @@ const NawPages: React.FC<NawPagesProps> = ({ currLevel,currDictLevel, currPage, 
           <NavLink activeClassName='active' to={`/textbook/${currLevel}/${currPage}`}>
             <div className='li-item'>
               <h2>Учебник</h2>
-              <BookOutlined style={{ fontSize: '40px' }} />
+              <BookOutlined style={{fontSize: '40px'}}/>
             </div>
           </NavLink>
         </li>
@@ -50,17 +50,18 @@ const NawPages: React.FC<NawPagesProps> = ({ currLevel,currDictLevel, currPage, 
           <NavLink activeClassName='active' to='/games'>
             <div className='li-item'>
               <h2>Игры</h2>
-              <BuildOutlined style={{ fontSize: '40px' }} />
+              <BuildOutlined style={{fontSize: '40px'}}/>
             </div>
           </NavLink>
         </li>
         {isAuth && (
           <>
             <li>
-              <NavLink activeClassName='active' to={`/dictionary/${currDictSection.section}/${currDictLevel}/${currDictPage}`}>
+              <NavLink activeClassName='active'
+                       to={`/dictionary/${currDictSection.section}/${currDictLevel}/${currDictPage}`}>
                 <div className='li-item'>
                   <h2>Словарь</h2>
-                  <ReadOutlined style={{ fontSize: '40px' }} />
+                  <ReadOutlined style={{fontSize: '40px'}}/>
                 </div>
               </NavLink>
             </li>
@@ -68,7 +69,7 @@ const NawPages: React.FC<NawPagesProps> = ({ currLevel,currDictLevel, currPage, 
               <NavLink activeClassName='active' to='/statistic'>
                 <div className='li-item'>
                   <h2>Статистика</h2>
-                  <BarChartOutlined style={{ fontSize: '40px' }} />
+                  <BarChartOutlined style={{fontSize: '40px'}}/>
                 </div>
               </NavLink>
             </li>
