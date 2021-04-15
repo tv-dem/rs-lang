@@ -5,8 +5,8 @@ import {ArrowLeftOutlined, ArrowRightOutlined} from "@ant-design/icons";
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import ProgressBoxContainer from '../ProgressBox/ProgressBoxContainer';
 import shuffle from "../../../utils/shuffle";
-import rightAudio from '../../../assets/audio/right_answer.mp3';
-import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
+import AudioToggleContainer from '../AudioToggle/AudioToggleContainer'
+import { audioAnswer } from '../../../utils/audio';
 import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
 import BestLineContainer from '../BestLine/BestLineContainer';
 import Loading from "../../Loading/Loading";
@@ -30,7 +30,7 @@ const TrueOrFalse: React.FC = ({
   fetchWords,
   setPercent,
   setPage,
-
+  isSound,
 }: any) => {
   const [isTrue, setIsTrue] = useState(false);
   const [wordTranslate, setWordTranslate] = useState('');
@@ -83,7 +83,8 @@ const TrueOrFalse: React.FC = ({
 
 
   const endGame = () => {
-    new Audio(wrongAudio).play();
+    if (isSound) audioAnswer[1].play();
+
     for (let i = count; i < words.length; i++) {
       addWrongWord(words[i]);
     }
@@ -126,7 +127,7 @@ const TrueOrFalse: React.FC = ({
 
   const toWin = () => {
     setCurrentLine(currentLine + 1);
-    new Audio(rightAudio).play();
+    if (isSound) audioAnswer[0].play();
     addRightWord(currentWord);
     if (sprintBoxRef.current) {
       sprintBoxRef.current.classList.remove('hiddenSprint');
@@ -136,7 +137,7 @@ const TrueOrFalse: React.FC = ({
 
   const toLost = () => {
     setCurrentLine(0);
-    new Audio(wrongAudio).play();
+    if (isSound) audioAnswer[1].play();
     addWrongWord(currentWord);
     if (sprintBoxRef.current) {
       sprintBoxRef.current.classList.remove('hiddenSprint');
@@ -212,6 +213,9 @@ const TrueOrFalse: React.FC = ({
                   <div className="boxLineBestImg"></div>
                   <div className="bestL">x {bestLine}</div>
                 </div>
+                <div className="boxSoundEffect">
+                <AudioToggleContainer/>
+                  </div>
                 <div className="boxBtnFullScreen">
                   <BtnFullScreen />
                 </div>

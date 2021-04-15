@@ -4,8 +4,8 @@ import ProgressBoxContainer from '../ProgressBox/ProgressBoxContainer';
 import Word from './Word/Word';
 import './LetterSolver.scss';
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
-import rightAudio from '../../../assets/audio/right_answer.mp3';
-import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
+import AudioToggleContainer from '../AudioToggle/AudioToggleContainer'
+import { audioAnswer } from '../../../utils/audio';
 import BestLineContainer from '../BestLine/BestLineContainer';
 import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
 import Loading from "../../Loading/Loading";
@@ -31,44 +31,46 @@ const LetterSolved: React.FC = ({
   currentLine,
   bestLine,
   setPage,
+  isSound,
 }: any) => {
   const wordRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
   const letterSolverRef = useRef<HTMLDivElement>(null);
-  const btnCheckRef = useRef<HTMLDivElement>(null); 
-  const btnNextRef = useRef<HTMLDivElement>(null); 
-  
+  const btnCheckRef = useRef<HTMLDivElement>(null);
+  const btnNextRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
 
-  const  handleClick = (event: any) => {
-      if(words){
+    const handleClick = (event: any) => {
+      event.preventDefault();
+      if (words) {
         if (count < words.length - 1) {
           if (btnNextRef.current) {
-            if(event.code === `Enter`) btnNextRef.current.click()                
-          }         
+            if (event.code === `Enter`) btnNextRef.current.click()
+          }
           if (btnCheckRef.current) {
-            if(event.code === `Space`) btnCheckRef.current.click()                
-          }            
+            if (event.code === `Space`) btnCheckRef.current.click()
+          }
         }
-      }    
+      }
     };
-    if(handleClick) document.addEventListener('keydown', handleClick);
+    if (handleClick) document.addEventListener('keydown', handleClick);
 
-    return () => { if(handleClick) document.removeEventListener('keydown', handleClick);} 
+    return () => { if (handleClick) document.removeEventListener('keydown', handleClick); }
 
   }, [words]);
 
   useEffect(() => {
     if (count) {
-      setCurrentWord(words[count]);       
+      setCurrentWord(words[count]);
     }
   }, [count]);
 
-  
+
 
   useEffect(() => {
 
@@ -83,7 +85,7 @@ const LetterSolved: React.FC = ({
         answerRef.current.classList.remove('hidden');
       }
     } else {
-      
+
 
       if (imageRef.current && progressRef.current && answerRef.current) {
         imageRef.current.classList.remove('toChangePlaceImg');
@@ -97,17 +99,17 @@ const LetterSolved: React.FC = ({
         letterSolverRef.current.classList.remove('winEffect');
         letterSolverRef.current.classList.remove('badEffect');
       }
-     
+
     }
-    
+
   }, [isCheck]);
 
   const toWin = () => {
-    setCurrentLine(currentLine+1);
+    setCurrentLine(currentLine + 1);
     if (letterSolverRef.current)
       letterSolverRef.current.classList.add('winEffect');
     if (wordRef.current) wordRef.current.classList.add('right');
-    new Audio(rightAudio).play();
+    if (isSound) audioAnswer[0].play();
     setTimeout(
       () =>
         new Audio(
@@ -122,7 +124,7 @@ const LetterSolved: React.FC = ({
     setCurrentLine(0);
     if (letterSolverRef.current)
       letterSolverRef.current.classList.add('badEffect');
-    new Audio(wrongAudio).play();
+    if (isSound) audioAnswer[1].play();
     setTimeout(
       () =>
         new Audio(
@@ -143,13 +145,13 @@ const LetterSolved: React.FC = ({
     setIsCheck(true);
   };
 
-  const onOk=()=>{
+  const onOk = () => {
     setPage(page + 1);
-    fetchWords(level,page+1)
+    fetchWords(level, page + 1)
   }
 
-  const onCancel=()=>{
-    fetchWords(level,page)
+  const onCancel = () => {
+    fetchWords(level, page)
   }
 
   const onHandleClickBtnNext = () => {
@@ -160,7 +162,7 @@ const LetterSolved: React.FC = ({
     if (count < words.length - 1) {
       setCount(count + 1);
     } else {
-      ModalFinishLevel({right, wrong,onOk,onCancel, bestLine});
+      ModalFinishLevel({ right, wrong, onOk, onCancel, bestLine });
     }
     setPercent(100);
     setIsCheck(false);
@@ -168,15 +170,17 @@ const LetterSolved: React.FC = ({
 
   return (
     <div className="letterSolver__wrapper ">
-    <div className="boxLineBest">
-      <div className="boxLineBestLine">
-                  <div className="bestLine">Best line: </div>
-                  <div className="boxLineBestImg"></div>
-                  <div className="bestL">x {bestLine}</div>
-                  </div>
-                  <BtnFullScreen/>
-                </div>
-              <BestLineContainer />
+      <div className="boxLineBest">
+        <div className="boxLineBestLine">
+          <div className="bestLine">Best line: </div>
+          <div className="boxLineBestImg"></div>
+          <div className="bestL">x {bestLine}</div>
+        </div>
+        <BtnFullScreen />
+      </div>
+      <AudioToggleContainer />
+
+      <BestLineContainer />
       <div ref={letterSolverRef} className="letterSolver ">
         {!pending && currentWord ? (
           <>
@@ -185,9 +189,7 @@ const LetterSolved: React.FC = ({
                 <Image
                   className="context_image"
                   alt="Loading"
-                  fallback={`Error loading file ${currentWord.image}`}
-                  width="300px"
-                  height="200px"
+                  fallback={`Error loading file ${currentWord.image}`}                
                   src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
                 ></Image>
               </div>
@@ -202,7 +204,7 @@ const LetterSolved: React.FC = ({
               </div>
               <div className="letterSolver__view-box_progress-box" ref={progressRef}>
                 <ProgressBoxContainer
-                  seconds={Number(60)}               
+                  seconds={Number(60)}
                   isCheck={isCheck}
                   onCheck={onCheck}
                 />
@@ -220,7 +222,7 @@ const LetterSolved: React.FC = ({
             />
           </>
         ) : (
-          <Loading/>
+          <Loading />
         )}
       </div>
     </div>
