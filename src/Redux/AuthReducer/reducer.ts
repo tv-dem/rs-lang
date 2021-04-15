@@ -6,10 +6,15 @@ import {
   AUTH_USER_FAILURE,
   AUTH_USER_SUCCESS,
   SET_IS_AUTH_USER,
+  SET_USER_SETTINGS,
 } from './actionTypes';
 import * as actions from './actions';
 
 const initialState = {
+  userSettings: {
+    translate: true,
+    options: true,
+  },
   isLoading: false,
   user: {} as NewUser,
   authError: '',
@@ -70,6 +75,12 @@ const authReducer = (state = initialState, action: ActionTypes) => {
         isLoading: false,
         authError: action.payload,
       };
+    }
+    case SET_USER_SETTINGS: {
+      return {
+        ...state,
+        userSettings: action.payload,
+      }
     }
 
     default: {

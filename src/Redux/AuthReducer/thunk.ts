@@ -5,7 +5,7 @@ import {
   createUserFailure,
   authUserSuccess,
   authUserFailure,
-  setIsAuthUser,
+  setIsAuthUser, setUserSettings,
 } from './actions';
 import API from '../../API/API';
 
@@ -27,6 +27,20 @@ export const createUser = (name: string, password: string, email: string, avatar
     }
   }
 };
+
+export const getUserSettings = (userId:string, token:string) => (dispatch:any) => {
+  debugger
+  API.getUserSettings(userId, token).then(res => {
+    dispatch(setUserSettings(res.optional))
+  })
+}
+
+export const setSettings = (userId: string, settings:Object, token:string, isAuth:boolean) => (dispatch:any) => {
+  if(isAuth) {
+    API.updateUserSettings(userId, settings, token)
+  }
+  dispatch(setUserSettings(settings))
+}
 
 export const loginUser = (email: string, password: string) => async (dispatch: any) => {
   dispatch(authUserStarted());

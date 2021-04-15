@@ -13,8 +13,8 @@ const TextBook: FC = ({refreshSection, wordsInSection, pending, refreshPage, ref
     useEffect(() => {
         onLoad(currSection.title)
     }, [onLoad, currSection])
-    console.log('pending', wordsInSection)
     const {section, level, page}: any = useParams();
+    console.log('section, level, page',section, level, page)
     useEffect(() => {
         refreshPage(Number(page));
         refreshLevel(Number(level));
@@ -51,7 +51,7 @@ const TextBook: FC = ({refreshSection, wordsInSection, pending, refreshPage, ref
             {pending ? <Loading/> : <>
                 {wordsInSection > 0 ? <>
                     <DictionaryContentContainer/>
-                    <GameButton/>
+                    <GameButton type={section === 'learn' ? ['learn', 'hard'] : [section]} isTextBook={false}  page={currPage-1} group={currLevel-1}/>
                     <div className="text-book__pagination">
                         <Pagination
                             onChange={(page) => {

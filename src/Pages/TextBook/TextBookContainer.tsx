@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import TextBook from "./TextBook";
 import { changeLevelAC, changeTextBookPageAC, } from "../../Redux/TextBookReducer/actions";
 import { push } from "connected-react-router";
-import { createUserWordTC, getAggregatedWordsTC, getTextBookWordsTC } from "../../Redux/TextBookReducer/thunk";
+import { createUserWordTC, getWords, getTextBookWordsTC } from "../../Redux/TextBookReducer/thunk";
+
 
 const MapStateToProps = ({textBook, auth}: any) => ({
     words: textBook.words,
@@ -13,15 +14,14 @@ const MapStateToProps = ({textBook, auth}: any) => ({
     userId: auth.currentUser.userId,
     token: auth.currentUser.token,
     pending: textBook.pending,
+    wordsInSection: textBook.wordsInSection,
     isAuth: auth.isAuth,
 })
 
 const MapDispatchToProps = (dispatch: any) => ({
+    getWords: (userId: string, type:Array<string>,group:number, page:number, token:string) => dispatch(getWords(userId,type,group,page, token)),
     fetchWords: (group: number, page: number) => {
         dispatch(getTextBookWordsTC(group, page))
-    },
-    getAggregatedWords: (userId: string, group: number, page:number, token:string) => {
-        dispatch(getAggregatedWordsTC(userId, group, page, token))
     },
     onLoad: (page: any, level: any) => {
         dispatch(changeHeaderTitleAC('Учебник'))

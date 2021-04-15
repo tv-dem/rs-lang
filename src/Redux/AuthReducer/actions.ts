@@ -5,6 +5,7 @@ import {
   AUTH_USER_FAILURE,
   AUTH_USER_SUCCESS,
   SET_IS_AUTH_USER,
+  SET_USER_SETTINGS
 } from './actionTypes';
 import {
   AuthUserStarted,
@@ -16,6 +17,12 @@ import {
   CurrentUser,
   SetIsAuthUser,
 } from './interfaces';
+
+export const setUserSettings = (settings:Object) => ({
+  type: SET_USER_SETTINGS,
+  payload: settings,
+})
+
 
 export const authUserStarted = (): AuthUserStarted => ({
   type: AUTH_USER_STARTED,

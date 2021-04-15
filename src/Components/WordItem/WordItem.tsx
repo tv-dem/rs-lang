@@ -10,7 +10,7 @@ const WordItem = ({word,modificator,option,translate, audio,audioMeaning,audioEx
         new Audio('https://api-rs-lang.herokuapp.com/'+audioMeaning),
         new Audio('https://api-rs-lang.herokuapp.com/'+audioExample),
     ])
-    return <div className={`word-item ${modificator}`}>
+  return <div className={`word-item ${modificator}`}>
         <div className="word-item__info">
             <img
                 src={'https://api-rs-lang.herokuapp.com/'+image}
@@ -23,10 +23,13 @@ const WordItem = ({word,modificator,option,translate, audio,audioMeaning,audioEx
             }}/>
             <Popover
                 content={() => <div>
-                    <p>{textMeaning}</p>
-                    {translate && <p>{textMeaningTranslate}</p>}
+                  <p dangerouslySetInnerHTML={{__html: textMeaning}}/>
+                    {
+                      // @ts-ignore
+                      translate && <p>{textMeaningTranslate}</p>
+                    }
                     <br/>
-                    <p>{textExample}</p>
+                    <p dangerouslySetInnerHTML = {{__html:textExample}}/>
                     {translate && <p>{textExampleTranslate}</p>}
                 </div>}
                 title={`${word} - ${transcription}`}>
@@ -42,9 +45,9 @@ const WordItem = ({word,modificator,option,translate, audio,audioMeaning,audioEx
     </div>
 }
 
-const mapStateToProps = ({user}:any) => ({
-    option: user.options,
-    translate: user.translate,
+const mapStateToProps = ({auth}:any) => ({
+  option: auth.userSettings.options,
+  translate: auth.userSettings.translate,
 })
 
 export default connect(mapStateToProps)(WordItem);

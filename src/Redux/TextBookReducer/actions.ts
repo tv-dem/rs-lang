@@ -20,9 +20,10 @@ export const removePending = () => ({
     pending: false,
 })
 
-export const updateWords = (words: any) => ({
+export const updateWords = (words: any, wordsInSection:number) => ({
     type: UPDATE_WORDS,
-    words
+    words,
+    wordsInSection
 })
 
 export const fetchError = (errorMessage:string) => ({

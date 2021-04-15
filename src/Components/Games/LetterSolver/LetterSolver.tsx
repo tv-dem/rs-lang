@@ -37,10 +37,29 @@ const LetterSolved: React.FC = ({
   const progressRef = useRef<HTMLDivElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
   const letterSolverRef = useRef<HTMLDivElement>(null);
+  const btnCheckRef = useRef<HTMLDivElement>(null); 
+  const btnNextRef = useRef<HTMLDivElement>(null); 
   
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
+
+  const  handleClick = (event: any) => {
+      if(words){
+        if (count < words.length - 1) {
+          if (btnNextRef.current) {
+            if(event.code === `Enter`) btnNextRef.current.click()                
+          }         
+          if (btnCheckRef.current) {
+            if(event.code === `Space`) btnCheckRef.current.click()                
+          }            
+        }
+      }    
+    };
+    if(handleClick) document.addEventListener('keydown', handleClick);
+
+    return () => { if(handleClick) document.removeEventListener('keydown', handleClick);} 
+
   }, [words]);
 
   useEffect(() => {
@@ -49,8 +68,12 @@ const LetterSolved: React.FC = ({
     }
   }, [count]);
 
+  
+
   useEffect(() => {
+
     if (isCheck) {
+
       if (imageRef.current && progressRef.current && answerRef.current) {
         imageRef.current.classList.remove('toBackPlaceImg');
         imageRef.current.classList.add('toChangePlaceImg');
@@ -60,6 +83,8 @@ const LetterSolved: React.FC = ({
         answerRef.current.classList.remove('hidden');
       }
     } else {
+      
+
       if (imageRef.current && progressRef.current && answerRef.current) {
         imageRef.current.classList.remove('toChangePlaceImg');
         imageRef.current.classList.add('toBackPlaceImg');
@@ -72,7 +97,9 @@ const LetterSolved: React.FC = ({
         letterSolverRef.current.classList.remove('winEffect');
         letterSolverRef.current.classList.remove('badEffect');
       }
+     
     }
+    
   }, [isCheck]);
 
   const toWin = () => {
@@ -185,6 +212,8 @@ const LetterSolved: React.FC = ({
             <Word
               wordSplit={currentWord.letters}
               wordRef={wordRef}
+              btnCheckRef={btnCheckRef}
+              btnNextRef={btnNextRef}
               isCheck={isCheck}
               onCheck={onCheck}
               onHandleClickBtnNext={onHandleClickBtnNext}

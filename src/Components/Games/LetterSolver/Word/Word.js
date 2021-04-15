@@ -11,6 +11,8 @@ const Word = ({
   isCheck,
   onHandleClickBtnNext,
   wordRef,
+  btnCheckRef,
+  btnNextRef
 }) => {
   const [letters, setLetters] = useState(wordSplit);
 
@@ -57,11 +59,11 @@ const Word = ({
         </DragDropContext>
       </div>
       {isCheck ? (
-        <Button className="context_btn_next" onClick={onHandleClickBtnNext}>
+        <Button ref={btnNextRef} className="context_btn_next" onClick={onHandleClickBtnNext}>
           NEXT
         </Button>
       ) : (
-        <Button className="context_btn_check" onClick={() => onCheck(letters)}>
+        <Button ref={btnCheckRef} className="context_btn_check" onClick={() => onCheck(letters)}>
          CHECK
         </Button>
       )}
