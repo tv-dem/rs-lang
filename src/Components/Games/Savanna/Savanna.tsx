@@ -4,8 +4,8 @@ import './Savanna.scss';
 import Words from '../Words/Words';
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import ProgressBoxContainer from '../ProgressBox/ProgressBoxContainer';
-import rightAudio from '../../../assets/audio/right_answer.mp3';
-import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
+import AudioToggleContainer from '../AudioToggle/AudioToggleContainer'
+import { audioAnswer } from '../../../utils/audio';
 import imgCrystal from '../../../assets/img/crystal.png';
 import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
 import BestLineContainer from '../BestLine/BestLineContainer';
@@ -34,7 +34,7 @@ const Savanna: React.FC = ({
   setPage,
   currentLine,
   setCurrentLine,
-
+  isSound,
 }: any) => {
   const crystalRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -172,7 +172,8 @@ const Savanna: React.FC = ({
       setPositionImg(() => positionImg - 5);
     }, 500);
 
-    new Audio(rightAudio).play();
+    if (isSound) audioAnswer[0].play();
+
     addRightWord(currentWord);
   setCurrentLine(currentLine + 1);
   };
@@ -193,7 +194,8 @@ const Savanna: React.FC = ({
       guessWordRef.current.classList.add('to-up');
     }
 
-    new Audio(wrongAudio).play();
+    if (isSound) audioAnswer[1].play();
+
     addWrongWord(currentWord);
     setCurrentLine(0);
   };
@@ -236,6 +238,7 @@ const Savanna: React.FC = ({
         <div className="boxLineBest">
           
       <div className="boxLineBestLine">
+        
       <div className="life-box">
           <div className="life-box__heart">
             {heartsCol.current.map((e, i) => {
@@ -246,6 +249,7 @@ const Savanna: React.FC = ({
               );
             })}
           </div>
+
         </div>
                   <div className="bestLine">Best line: </div>
                   <div className="boxLineBestImg"></div>
@@ -258,6 +262,8 @@ const Savanna: React.FC = ({
           <BtnFullScreen />
         </div> */}
       </div>
+      <AudioToggleContainer/>
+
       <BestLineContainer />
 
       <div className="savanna">

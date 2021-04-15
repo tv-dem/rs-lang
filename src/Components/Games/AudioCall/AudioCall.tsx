@@ -4,11 +4,11 @@ import { SoundTwoTone } from '@ant-design/icons';
 import './AudioCall.scss';
 import Words from '../Words/Words';
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
-import rightAudio from '../../../assets/audio/right_answer.mp3';
-import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
+import AudioToggleContainer from '../AudioToggle/AudioToggleContainer'
+import { audioAnswer } from '../../../utils/audio';
 import BestLineContainer from '../BestLine/BestLineContainer';
 import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
-import Loading from "../../Loading/Loading";
+import Loading from '../../Loading/Loading';
 
 const AudioCall: React.FC = ({
   words,
@@ -30,13 +30,12 @@ const AudioCall: React.FC = ({
   currentLine,
   setCurrentLine,
   setPage,
+  isSound,
 }: any) => {
   const audioCallRef = useRef<HTMLDivElement>(null);
-  const btnRef = useRef<HTMLDivElement>(null); 
-  const btnNoKnowRef = useRef<HTMLDivElement>(null); 
-  const btnNextRef = useRef<HTMLDivElement>(null); 
-
-
+  const btnRef = useRef<HTMLDivElement>(null);
+  const btnNoKnowRef = useRef<HTMLDivElement>(null);
+  const btnNextRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
@@ -51,27 +50,28 @@ const AudioCall: React.FC = ({
   useEffect(() => {
     playAudio();
     const handleClick = (event: any) => {
-
-      if(words){
+      if (words) {
         if (count < words.length - 1) {
-
           if (btnNoKnowRef.current) {
-            if(event.code === `Space`) btnNoKnowRef.current.click()                
+            if (event.code === `Space`) btnNoKnowRef.current.click();
           }
 
           if (btnRef.current) {
-            btnRef.current.childNodes.forEach((el: any, index:number) => {            
-            if(event.code === `Digit${index+1}` || event.code === `Numpad${index+1}`) el.lastChild.click()                
+            btnRef.current.childNodes.forEach((el: any, index: number) => {
+              if (
+                event.code === `Digit${index + 1}` ||
+                event.code === `Numpad${index + 1}`
+              )
+                el.lastChild.click();
             });
-          }                      
+          }
         }
       }
-    
     };
 
     document.addEventListener('keydown', handleClick);
 
-    return () =>   document.removeEventListener('keydown', handleClick); 
+    return () => document.removeEventListener('keydown', handleClick);
   }, [currentWord]);
 
   const playAudio = useCallback(() => {
@@ -82,7 +82,7 @@ const AudioCall: React.FC = ({
   }, [currentWord]);
 
   useEffect(() => {
-    let handleClick:EventListener|null=null;
+    let handleClick: EventListener | null = null;
     if (!isCheck) {
       if (btnRef.current) {
         btnRef.current.childNodes.forEach((el: any) => {
@@ -91,25 +91,27 @@ const AudioCall: React.FC = ({
           el.classList.remove('audioCall_is-selected-lose');
         });
       }
-    }else{
-       handleClick = (event: any) => {
-        if(words){
+    } else {
+      handleClick = (event: any) => {
+        if (words) {
           if (count < words.length - 1) {
-  
             if (btnNextRef.current) {
-              if(event.code === `Enter`) btnNextRef.current.click()                
+              if (event.code === `Enter`) btnNextRef.current.click();
             }
-          }}
-      }
+          }
+        }
+      };
     }
 
-if(handleClick) document.addEventListener('keydown', handleClick);
+    if (handleClick) document.addEventListener('keydown', handleClick);
 
-    return () => { if(handleClick) document.removeEventListener('keydown', handleClick);} 
+    return () => {
+      if (handleClick) document.removeEventListener('keydown', handleClick);
+    };
   }, [isCheck]);
 
   const toWin = () => {
-    setCurrentLine(currentLine+1);
+    setCurrentLine(currentLine + 1);
     if (btnRef.current) {
       btnRef.current.childNodes.forEach((el: any) => {
         el.classList.add('audioCall_no-active');
@@ -117,8 +119,7 @@ if(handleClick) document.addEventListener('keydown', handleClick);
           el.classList.add('audioCall_is-selected-win');
       });
     }
-
-    new Audio(rightAudio).play();
+    if (isSound) audioAnswer[0].play();
     addRightWord(currentWord);
   };
 
@@ -132,14 +133,13 @@ if(handleClick) document.addEventListener('keydown', handleClick);
       });
     }
 
-    new Audio(wrongAudio).play();
+    if (isSound) audioAnswer[1].play();
     addWrongWord(currentWord);
   };
 
   const onCheck = (word: any) => {
     if (word.word === currentWord.word) {
       toWin();
-
     } else {
       toLost();
     }
@@ -155,8 +155,6 @@ if(handleClick) document.addEventListener('keydown', handleClick);
     fetchWords(level, page);
   };
 
-
-  
   const effectCarusel = () => {
     if (audioCallRef.current) {
       audioCallRef.current.classList.remove('audioCall_to-place');
@@ -194,17 +192,20 @@ if(handleClick) document.addEventListener('keydown', handleClick);
     setIsCheck(true);
   };
 
+
   return (
     <div className="audioCall__wrapper ">
       <div className="boxLineBest">
-      <div className="boxLineBestLine">
-                  <div className="bestLine">Best line: </div>
-                  <div className="boxLineBestImg"></div>
-                  <div className="bestL">x {bestLine}</div>
-                  </div>
-                  <BtnFullScreen/>
-                </div>
-              <BestLineContainer />
+        <div className="boxLineBestLine">
+          <div className="bestLine">Best line: </div>
+          <div className="boxLineBestImg"></div>
+          <div className="bestL">x {bestLine}</div>
+        </div>
+        <BtnFullScreen />
+      </div>
+     <AudioToggleContainer/>
+      <BestLineContainer />
+     
       <div ref={audioCallRef} className="audioCall">
         {!pending && currentWord ? (
           <>
@@ -241,8 +242,8 @@ if(handleClick) document.addEventListener('keydown', handleClick);
               {isCheck ? (
                 <Button
                   className="audioCall__next-box_btn-next"
-                  onClick={onHandleClickBtnNext}                
-                 ref={btnNextRef}
+                  onClick={onHandleClickBtnNext}
+                  ref={btnNextRef}
                 >
                   Далее
                 </Button>
@@ -258,7 +259,7 @@ if(handleClick) document.addEventListener('keydown', handleClick);
             </div>
           </>
         ) : (
-          <Loading/>
+          <Loading />
         )}
       </div>
     </div>

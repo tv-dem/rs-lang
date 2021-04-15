@@ -17,3 +17,11 @@
     font-weight: bold;
     color: $s-primary-1;
 }
+
+@media screen and (max-width: 768px)  {
+    .cell{
+        width: 40px;
+        height: 40px;
+        font-size: large;
+    }   
+}

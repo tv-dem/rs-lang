@@ -15,6 +15,7 @@ const mapStateToProps = (state: any) => ({
   page:state.games.page,
   bestLine:state.games.bestLine,
   currentLine:state.games.currentLine,
+  isSound:state.games.isSound,
 });
 
 const mapDispatchToProps = (dispatch:any) => ({

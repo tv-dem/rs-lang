@@ -48,4 +48,5 @@ export type typeGames = {
   bestLine:number;
   currentLine:number;
   hearts:number;
+  isSound:boolean;
 };

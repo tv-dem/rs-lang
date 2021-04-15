@@ -1,15 +1,15 @@
 .letterSolver__wrapper {
     background: linear-gradient(to top, #d19aed, #f1da36);
     display: flex;
-    flex-direction: column;
-    height: 100%;
+    flex-direction: column;    
     width: 100%;
     background-image: url(../../../assets/img/fonLetters.jpg);
     background-size: cover;
+    height: 100vh;
 }
 
 .letterSolver {
-    height: 550px;
+    // height: 550px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -134,4 +134,17 @@ answer-box__word-wordTranslate {
         left: 0.5px;
         transform: translateX(4%);
     }
+}
+
+@media screen and (max-width: 768px)  {
+    .letterSolver__view-box_image-box .context_image,.ant-image-mask{
+        width: 150px;
+        height: 100px;
+        
+    }  
+  
+    .toChangePlaceProgress {     
+        transform: translateX(-250%);
+    }
+    
 }
