@@ -17,7 +17,7 @@ const mapStateToProps = (state: any) => ({
   bestLine:state.games.bestLine,
   hearts:state.games.hearts,
   currentLine:state.games.currentLine,
-
+  isSound:state.games.isSound,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

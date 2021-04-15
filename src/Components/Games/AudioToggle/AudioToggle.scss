@@ -1,0 +1,27 @@
+.sound-box {
+    width: 90%;
+    margin: 0 0 0 50px;
+    &_sound-on, &_sound-off {
+        width: 45px;
+         height: 45px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        cursor: pointer;
+    }
+    &_sound-on{
+        background-image: url(../../../assets/img/volume-on.png);
+    }
+    &_sound-off {        
+        background-image: url(../../../assets/img/volume-off.png);
+    }
+}
+
+@media screen and (max-width: 768px)  {
+    .sound-box {    
+        margin: 0 0 0 30px;
+        &_sound-on, &_sound-off {
+            width: 30px;
+             height: 30px;         
+        }      
+    }       
+}

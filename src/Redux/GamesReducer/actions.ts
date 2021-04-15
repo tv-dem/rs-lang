@@ -13,7 +13,8 @@ import {
     SET_PAGE,
     SET_PERCENT,
     SET_IS_CHECK,
-    SET_VALUE_HEARTS
+    SET_VALUE_HEARTS,
+    SET_IS_SOUND
 } from "./actionTypes";
 
 export const setBestLine = (bestLine: number) => ({
@@ -91,3 +92,7 @@ export const setValHearts = (hearts: number) =>({
     hearts
 })
 
+export const setIsSound = (isSound: boolean) =>({
+    type: SET_IS_SOUND,
+    isSound
+})
