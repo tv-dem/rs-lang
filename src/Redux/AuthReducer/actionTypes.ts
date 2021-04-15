@@ -3,6 +3,7 @@ export const AUTH_USER_SUCCESS = 'auth/AUTH_USER_SUCCESS';
 export const AUTH_USER_FAILURE = 'auth/AUTH_USER_FAILURE';
 export const CREATE_USER_SUCCESS = 'auth/CREATE_USER_SUCCESS';
 export const CREATE_USER_FAILURE = 'auth/CREATE_USER_FAILURE';
+export const REFRESH_USER_TOKEN = 'auth/REFRESH_USER_TOKEN';
 export const SET_IS_AUTH_USER = 'SET_IS_AUTH_USER';
 export const SET_USER_SETTINGS = 'auth/SET_USER_SETTINGS';
 

@@ -7,6 +7,7 @@ import {
   AUTH_USER_SUCCESS,
   SET_IS_AUTH_USER,
   SET_USER_SETTINGS,
+  REFRESH_USER_TOKEN,
 } from './actionTypes';
 import * as actions from './actions';
 
@@ -54,6 +55,15 @@ const authReducer = (state = initialState, action: ActionTypes) => {
     }
 
     case AUTH_USER_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        authError: '',
+        currentUser: action.payload,
+      };
+    }
+
+    case REFRESH_USER_TOKEN: {
       return {
         ...state,
         isLoading: false,

@@ -41,3 +41,8 @@ export interface SetIsAuthUser {
   type: string;
   payload: boolean;
 }
+
+export interface RefreshUserToken {
+  type: string;
+  payload: CurrentUser;
+}

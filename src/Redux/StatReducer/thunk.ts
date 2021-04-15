@@ -16,12 +16,19 @@ export const setStat = (userId: string, token: string, body: Stat) => async (dis
   try {
     const json = await API.setUserStatistics(userId, token, body);
     dispatch(setTermStat(json));
-    console.log(json);
   } catch (err) {
     if (err.message === '400') {
       dispatch(updateStatFailure('Bad request'));
+
+      setTimeout(() => {
+        dispatch(updateStatFailure(''));
+      }, 1000);
     } else if (err.message === '401') {
       dispatch(updateStatFailure('Access token is missing or invalid'));
+
+      setTimeout(() => {
+        dispatch(updateStatFailure(''));
+      }, 1000);
     } else {
       console.error(`Unhandled rejection, status.code=${err.message}`);
     }
@@ -42,13 +49,16 @@ export const getStat = (userId: string, token: string) => async (dispatch: any) 
       gameStatSavanna: JSON.parse(String(gameStatSavanna)),
       gameStatAudio: JSON.parse(String(gameStatAudio)),
     }));
-    console.log(json);
   } catch (err) {
     if (err.message === '401') {
       dispatch(updateStatFailure('Access token is missing or invalid'));
     } else if (err.message === '404') {
       dispatch(updateStatFailure('Statistics not found'));
       dispatch(setInitialStat());
+
+      setTimeout(() => {
+        dispatch(updateStatFailure(''));
+      }, 1000);
     } else {
       console.error(`Unhandled rejection, status.code=${err.message}`);
     }

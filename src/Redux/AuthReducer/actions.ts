@@ -5,7 +5,8 @@ import {
   AUTH_USER_FAILURE,
   AUTH_USER_SUCCESS,
   SET_IS_AUTH_USER,
-  SET_USER_SETTINGS
+  SET_USER_SETTINGS,
+  REFRESH_USER_TOKEN,
 } from './actionTypes';
 import {
   AuthUserStarted,
@@ -16,9 +17,10 @@ import {
   AuthUserSuccess,
   CurrentUser,
   SetIsAuthUser,
+  RefreshUserToken,
 } from './interfaces';
 
-export const setUserSettings = (settings:Object) => ({
+export const setUserSettings = (settings: Object) => ({
   type: SET_USER_SETTINGS,
   payload: settings,
 })
@@ -52,4 +54,9 @@ export const authUserSuccess = (user: CurrentUser): AuthUserSuccess => ({
 export const setIsAuthUser = (param: boolean): SetIsAuthUser => ({
   type: SET_IS_AUTH_USER,
   payload: param,
+} as const);
+
+export const refreshUserToken = (user: CurrentUser): RefreshUserToken => ({
+  type: REFRESH_USER_TOKEN,
+  payload: user,
 } as const);

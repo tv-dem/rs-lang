@@ -108,7 +108,12 @@ class API {
         'Content-Type': 'application/json'
       },
     })
-      .then(res => res.json());
+      .then(res => {
+        if (res.status !== 200) {
+          throw new Error(`${res.status}`)
+        }
+        return res.json();
+      })
   }
 
   updateUserSettings(userId: string, optional: Object, token: string) {
@@ -203,6 +208,24 @@ class API {
         'Content-Type': 'application/json'
       },
       body: mapBody,
+    })
+      .then(res => {
+        if (res.status !== 200) {
+          throw new Error(`${res.status}`);
+        }
+
+        return res.json();
+      });
+  }
+
+  getNewToken(userId: string, refreshToken: string) {
+    return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/tokens`, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + refreshToken,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
     })
       .then(res => {
         if (res.status !== 200) {
