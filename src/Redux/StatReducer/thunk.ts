@@ -16,7 +16,6 @@ export const setStat = (userId: string, token: string, body: Stat) => async (dis
   try {
     const json = await API.setUserStatistics(userId, token, body);
     dispatch(setTermStat(json));
-    console.log(json);
   } catch (err) {
     if (err.message === '400') {
       dispatch(updateStatFailure('Bad request'));
@@ -42,7 +41,6 @@ export const getStat = (userId: string, token: string) => async (dispatch: any) 
       gameStatSavanna: JSON.parse(String(gameStatSavanna)),
       gameStatAudio: JSON.parse(String(gameStatAudio)),
     }));
-    console.log(json);
   } catch (err) {
     if (err.message === '401') {
       dispatch(updateStatFailure('Access token is missing or invalid'));

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useLocation } from "react-router";
-import { Redirect } from "react-router-dom";
-import { connect } from 'react-redux';
+// import { Redirect } from "react-router-dom";
+// import { connect } from 'react-redux';
 import {
   TransitionGroup,
   CSSTransition
@@ -19,56 +19,69 @@ import LetterSolverContainer from './Components/Games/LetterSolver/LetterSolverC
 import Sprint from './Components/Games/Sprint/SprintContainer';
 import AudioCallContainer from './Components/Games/AudioCall/AudioCallContainer';
 import SavannaContainer from './Components/Games/Savanna/SavannaContainer';
-import {getUserSettings} from "./Redux/AuthReducer/thunk";
+// import { getUserSettings, getNewUserToken } from "./Redux/AuthReducer/thunk";
+import { CurrentUser } from './Redux/AuthReducer/interfaces';
 
+const parseJwt = (token: string): CurrentUser | null => {
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch (e) {
+    return null;
+  }
+};
 
 interface AppProps {
   isAuth: boolean;
   userId: string;
   token: string;
-  getUserSettings: any;
+  refreshToken: string;
+  getUserSettings: (userId: string, refreshToken: string) => void;
+  getNewUserToken: (userId: string, refreshToken: string) => void;
 }
 
-const App: React.FC<AppProps> = ({ isAuth,getUserSettings, userId,token }) => {
+const App: React.FC<AppProps> = ({ isAuth, getUserSettings, userId, token, refreshToken, getNewUserToken }) => {
   useEffect(() => {
     window.scrollTo(0, 0)
   });
-  useEffect(()=>{
-    if(isAuth){
-      getUserSettings(userId, token);
-    }
-  }, [isAuth])
+
+  useEffect(() => {
+    // if (isAuth) {
+    getNewUserToken(userId, refreshToken);
+    getUserSettings(userId, token);
+    // }
+  }, []);
+
   let location = useLocation();
   return (
     <>
       <HeaderContainer />
       <NavPagesContainer />
       <div className='content'>
-         <TransitionGroup className="transition-group">
-        {/*  <CSSTransition
+        <TransitionGroup className="transition-group">
+          {/*  <CSSTransition
             key={location.key}
             classNames="fade"
             timeout={500}
 
           > */}
-        <Switch>
-          <Route path='/games/LetterSolver/:level' component={LetterSolverContainer} />
-          <Route path='/games/Sprint/:level' component={Sprint} />
-          <Route path='/games/Savanna/:level' component={SavannaContainer} />
-          <Route path='/games/AudioCall/:level' component={AudioCallContainer} />
-          <Route path='/games/:game' component={WelcomFormContainer} />
-          <Route path='/games' component={GamesContainer} />
-          <Route path='/textbook/:level/:page' component={TextBookContainer} />
-          <Route path='/home' component={MainPageContainer} />
-          {isAuth && (
-            <>
-              <Route path='/statistic' component={StatisticContainer} />
-              <Route path='/dictionary/:section/:level/:page' component={DictionaryContainer} />
-            </>
-          )}
-          {/* <Redirect to='/home' /> */}
-        </Switch>
-         {/* </CSSTransition> */}
+          <Switch>
+            <Route path='/games/LetterSolver/:level' component={LetterSolverContainer} />
+            <Route path='/games/Sprint/:level' component={Sprint} />
+            <Route path='/games/Savanna/:level' component={SavannaContainer} />
+            <Route path='/games/AudioCall/:level' component={AudioCallContainer} />
+            <Route path='/games/:game' component={WelcomFormContainer} />
+            <Route path='/games' component={GamesContainer} />
+            <Route path='/textbook/:level/:page' component={TextBookContainer} />
+            <Route path='/home' component={MainPageContainer} />
+            {isAuth && (
+              <>
+                <Route path='/statistic' component={StatisticContainer} />
+                <Route path='/dictionary/:section/:level/:page' component={DictionaryContainer} />
+              </>
+            )}
+            {/* <Redirect to='/home' /> */}
+          </Switch>
+          {/* </CSSTransition> */}
         </TransitionGroup>
       </div>
       <FooterContainer />
@@ -76,14 +89,16 @@ const App: React.FC<AppProps> = ({ isAuth,getUserSettings, userId,token }) => {
   );
 };
 
-const mapStateToProps = ({auth}: any) => ({
-  isAuth: auth.isAuth,
-  userId: auth.currentUser.userId,
-  token: auth.currentUser.token,
-});
+// const mapStateToProps = ({ auth }: any) => ({
+//   isAuth: auth.isAuth,
+//   userId: auth.currentUser.userId,
+//   token: auth.currentUser.token,
+// });
 
-const mapDispatchToProps = (dispatch:any) => ({
-    getUserSettings: (userId:string, token:string) => dispatch(getUserSettings(userId, token)),
-})
+// const mapDispatchToProps = (dispatch: any) => ({
+//   getUserSettings: (userId: string, token: string) => dispatch(getUserSettings(userId, token)),
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+// export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+export default App;
