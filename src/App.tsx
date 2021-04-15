@@ -17,6 +17,10 @@ import LetterSolverContainer from './Components/Games/LetterSolver/LetterSolverC
 import Sprint from './Components/Games/Sprint/SprintContainer';
 import AudioCallContainer from './Components/Games/AudioCall/AudioCallContainer';
 import SavannaContainer from './Components/Games/Savanna/SavannaContainer';
+import StartPage from "./Pages/StartPage/StartPage";
+import {getUserSettings} from "./Redux/AuthReducer/thunk";
+
+
 interface AppProps {
   isAuth: boolean;
   userId: string;
@@ -52,6 +56,7 @@ const App: React.FC<AppProps> = ({ isAuth, getUserSettings, userId, token, refre
             <Route path='/games' component={GamesContainer} />
             <Route path='/textbook/:level/:page' component={TextBookContainer} />
             <Route path='/home' component={MainPageContainer} />
+            <Route path='/' component={StartPage} />
             {isAuth && (
               <>
                 <Route path='/statistic' component={StatisticContainer} />
