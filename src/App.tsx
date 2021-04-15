@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useLocation } from "react-router";
 // import { Redirect } from "react-router-dom";
-// import { connect } from 'react-redux';
 import {
   TransitionGroup,
-  CSSTransition
 } from "react-transition-group";
 import NavPagesContainer from "./Components/NavPages/NavPagesContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
@@ -19,17 +17,6 @@ import LetterSolverContainer from './Components/Games/LetterSolver/LetterSolverC
 import Sprint from './Components/Games/Sprint/SprintContainer';
 import AudioCallContainer from './Components/Games/AudioCall/AudioCallContainer';
 import SavannaContainer from './Components/Games/Savanna/SavannaContainer';
-// import { getUserSettings, getNewUserToken } from "./Redux/AuthReducer/thunk";
-import { CurrentUser } from './Redux/AuthReducer/interfaces';
-
-const parseJwt = (token: string): CurrentUser | null => {
-  try {
-    return JSON.parse(atob(token.split('.')[1]));
-  } catch (e) {
-    return null;
-  }
-};
-
 interface AppProps {
   isAuth: boolean;
   userId: string;
@@ -45,10 +32,8 @@ const App: React.FC<AppProps> = ({ isAuth, getUserSettings, userId, token, refre
   });
 
   useEffect(() => {
-    // if (isAuth) {
     getNewUserToken(userId, refreshToken);
     getUserSettings(userId, token);
-    // }
   }, []);
 
   let location = useLocation();
@@ -58,12 +43,6 @@ const App: React.FC<AppProps> = ({ isAuth, getUserSettings, userId, token, refre
       <NavPagesContainer />
       <div className='content'>
         <TransitionGroup className="transition-group">
-          {/*  <CSSTransition
-            key={location.key}
-            classNames="fade"
-            timeout={500}
-
-          > */}
           <Switch>
             <Route path='/games/LetterSolver/:level' component={LetterSolverContainer} />
             <Route path='/games/Sprint/:level' component={Sprint} />
@@ -81,24 +60,11 @@ const App: React.FC<AppProps> = ({ isAuth, getUserSettings, userId, token, refre
             )}
             {/* <Redirect to='/home' /> */}
           </Switch>
-          {/* </CSSTransition> */}
         </TransitionGroup>
       </div>
       <FooterContainer />
     </>
   );
 };
-
-// const mapStateToProps = ({ auth }: any) => ({
-//   isAuth: auth.isAuth,
-//   userId: auth.currentUser.userId,
-//   token: auth.currentUser.token,
-// });
-
-// const mapDispatchToProps = (dispatch: any) => ({
-//   getUserSettings: (userId: string, token: string) => dispatch(getUserSettings(userId, token)),
-// })
-
-// export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 export default App;
