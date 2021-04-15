@@ -150,13 +150,10 @@ class API {
       },
     })
       .then(res => {
-        if (res.ok) {
-          return res.json();
+        if (res.status !== 200) {
+          throw new Error(`${res.status}`)
         }
-        if (res.status === 401) {
-          return null;
-        }
-        return null
+        return res.json();
       })
   }
 
@@ -171,13 +168,10 @@ class API {
       },
     })
       .then(res => {
-        if (res.ok) {
-          return res.json();
+        if (res.status !== 200) {
+          throw new Error(`${res.status}`)
         }
-        if (res.status === 401) {
-          return null;
-        }
-        return null
+        return res.json();
       })
   }
 

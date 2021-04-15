@@ -19,7 +19,7 @@ const TextBook: FC = ({getWords, wordsInSection, onLoad, pending, onSelectLevel,
             fetchWords(currLevel - 1, currPage - 1)
     }, [currPage, currLevel, isAuth])
     return <div className='wrapper'>
-        <div className="text-book">
+        <div className={`text-book b${currLevel}`}>
             <SettingsWordsContainer/>
             <Panel panelInfo={levels.map(({title}: any, i: number) => ({
                 title,

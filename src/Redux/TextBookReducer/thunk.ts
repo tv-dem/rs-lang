@@ -1,5 +1,6 @@
 import API from "../../API/API";
 import {fetchError, removePending, setPending, updateWords} from "./actions";
+import {setIsAuthUser} from "../AuthReducer/actions";
 
 
 export const getWords = (userId: string,  type:Array<string>, group:number, page:number, token: string) => (dispatch:any) => {
@@ -24,7 +25,10 @@ export const getWords = (userId: string,  type:Array<string>, group:number, page
         fetchError('error');
       }
       dispatch(removePending());
-    })
+    }).catch(e => {
+      dispatch(removePending());
+        dispatch(setIsAuthUser(false))
+  })
 }
 
 

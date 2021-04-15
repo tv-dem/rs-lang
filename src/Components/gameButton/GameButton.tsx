@@ -1,8 +1,6 @@
 import {Button, Drawer} from "antd";
-import GamePreview from "../GamePreview/GamePreview";
 import React, {useState} from "react";
 import GamePreviewContainer from "../GamePreview/GamePreviewContainer";
-import {isatty} from "tty";
 
 const GameButton = ({type, group, page, isTextBook}:any) => {
     const [visible, setVisible] = useState(false);
