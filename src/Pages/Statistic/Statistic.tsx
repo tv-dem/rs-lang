@@ -189,25 +189,25 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
                 <Tabs type="card">
                   <TabPane tab="Собери слово" key={nanoid()}>
                     {gameStatWord
-                      ? <Table dataSource={gameStatWord} columns={columns} />
+                      ? <Table dataSource={gameStatWord} columns={columns} scroll={{ x: true }} />
                       : 'Вы еще не играли в эту игру!'
                     }
                   </TabPane>
                   <TabPane tab="Саванна" key={nanoid()}>
                     {gameStatSavanna
-                      ? <Table dataSource={gameStatSavanna} columns={columns} />
+                      ? <Table dataSource={gameStatSavanna} columns={columns} scroll={{ x: true }} />
                       : 'Вы еще не играли в эту игру!'
                     }
                   </TabPane>
                   <TabPane tab="Аудио вызов" key={nanoid()}>
                     {gameStatAudio
-                      ? <Table dataSource={gameStatAudio} columns={columns} />
+                      ? <Table dataSource={gameStatAudio} columns={columns} scroll={{ x: true }} />
                       : 'Вы еще не играли в эту игру!'
                     }
                   </TabPane>
                   <TabPane tab="Спринт" key={nanoid()}>
                     {gameStatSprint
-                      ? <Table dataSource={gameStatSprint} columns={columns} />
+                      ? <Table dataSource={gameStatSprint} columns={columns} scroll={{ x: true }} />
                       : 'Вы еще не играли в эту игру!'
                     }
                   </TabPane>
