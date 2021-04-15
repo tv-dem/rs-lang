@@ -82,7 +82,6 @@ export const getNewUserToken = (userId: string, refreshToken: string) => async (
     dispatch(refreshUserToken({ ...currentUser, ...json }));
     dispatch(setIsAuthUser(true));
     localStorage.setItem('currentUser', JSON.stringify({ ...currentUser, ...json }));
-    console.log(json);
   } catch (err) {
     if (err.message === '403') {
       dispatch(authUserFailure('Access token is missing, expired or invalid'));
