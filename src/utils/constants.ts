@@ -29,3 +29,46 @@ export const columns = [
     key: nanoid(),
   },
 ];
+
+export const ligaData = [
+  {
+    liga: 'I',
+    coords: '-10px -14px'
+  },
+  {
+    liga: 'I',
+    coords: '-10px -14px'
+  },
+  {
+    liga: 'II',
+    coords: '-142px -14px'
+  },
+  {
+    liga: 'II',
+    coords: '-142px -14px'
+  },
+  {
+    liga: 'III',
+    coords: '-274px -14px'
+  },
+  {
+    liga: 'III',
+    coords: '-274px -14px'
+  },
+  {
+    liga: 'IV',
+    coords: '-10px -124px'
+  },
+  {
+    liga: 'IV',
+    coords: '-10px -124px'
+  },
+  {
+    liga: 'V',
+    coords: '-142px -124px'
+  },
+  {
+    liga: 'VI',
+    coords: '-274px -124px'
+  }
+];

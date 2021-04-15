@@ -10,6 +10,10 @@
   &__wrapper {
     margin: 0 auto;
     width: 80%;
+
+    @media (max-width: 420px) {
+      width: 98%;
+    }
   }
 
   & .list-info {
@@ -38,6 +42,10 @@
     font-weight: 300;
     line-height: 1.2;
 
+    @media (max-width: 420px) {
+      font-size: 36px;
+    }
+
     & svg {
       margin-right: 5px;
       width: 60px;
@@ -54,6 +62,10 @@
     font-size: 22px;
     font-weight: 500;
     line-height: 1.2;
+
+    @media (max-width: 420px) {
+      font-size: 16px;
+    }
 
     & svg {
       margin-right: 5px;

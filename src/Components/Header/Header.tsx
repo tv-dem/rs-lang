@@ -7,7 +7,7 @@ const Header = ({ title, currLevel }: any) => {
     // <div className='content'>
     <header className='header'>
       <div className="wrapper">
-        <h1>{title}</h1>
+        {/* <h1>{title}</h1> */}
         <UserBar />
       </div>
     </header>

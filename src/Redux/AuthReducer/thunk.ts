@@ -35,9 +35,9 @@ export const getUserSettings = (userId: string, token: string) => async (dispatc
     dispatch(setUserSettings(json.optional));
   } catch (err) {
     if (err.message === '401') {
-      dispatch(authUserFailure('Access token is missing or invalid'));
+      console.error('Access token is missing or invalid');
     } else if (err.message === '404') {
-      dispatch(authUserFailure(`Settings not found`));
+      console.error(`Settings not found`);
     } else {
       console.error(`Unhandled rejection, status.code=${err.message}`);
     }
