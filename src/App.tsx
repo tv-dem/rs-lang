@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useLocation } from "react-router";
-// import { Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import {
   TransitionGroup,
 } from "react-transition-group";
@@ -18,8 +18,6 @@ import Sprint from './Components/Games/Sprint/SprintContainer';
 import AudioCallContainer from './Components/Games/AudioCall/AudioCallContainer';
 import SavannaContainer from './Components/Games/Savanna/SavannaContainer';
 import StartPage from "./Pages/StartPage/StartPage";
-import {getUserSettings} from "./Redux/AuthReducer/thunk";
-
 
 interface AppProps {
   isAuth: boolean;
@@ -48,6 +46,7 @@ const App: React.FC<AppProps> = ({ isAuth, getUserSettings, userId, token, refre
       <div className='content'>
         <TransitionGroup className="transition-group">
           <Switch>
+            <Route exact path='/' component={StartPage} />
             <Route path='/games/LetterSolver/:level' component={LetterSolverContainer} />
             <Route path='/games/Sprint/:level' component={Sprint} />
             <Route path='/games/Savanna/:level' component={SavannaContainer} />
@@ -56,14 +55,13 @@ const App: React.FC<AppProps> = ({ isAuth, getUserSettings, userId, token, refre
             <Route path='/games' component={GamesContainer} />
             <Route path='/textbook/:level/:page' component={TextBookContainer} />
             <Route path='/home' component={MainPageContainer} />
-            <Route path='/' component={StartPage} />
             {isAuth && (
               <>
                 <Route path='/statistic' component={StatisticContainer} />
                 <Route path='/dictionary/:section/:level/:page' component={DictionaryContainer} />
               </>
             )}
-            {/* <Redirect to='/home' /> */}
+            <Redirect to='/' />
           </Switch>
         </TransitionGroup>
       </div>
