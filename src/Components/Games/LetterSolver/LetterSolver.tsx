@@ -44,7 +44,7 @@ const LetterSolved: React.FC = ({
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
-
+  
     const handleClick = (event: any) => {
       event.preventDefault();
       if (words) {
