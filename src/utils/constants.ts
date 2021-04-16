@@ -13,19 +13,24 @@ export const columns = [
     dataIndex: 'time',
     key: nanoid(),
   },
+  // {
+  //   title: 'Уровень:',
+  //   dataIndex: 'level',
+  //   key: nanoid(),
+  // },
   {
-    title: 'Уровень:',
-    dataIndex: 'level',
+    title: 'Изучено слов:',
+    dataIndex: 'total',
     key: nanoid(),
   },
   {
-    title: 'Раунд:',
-    dataIndex: 'round',
+    title: 'процент правильных ответов:',
+    dataIndex: 'correctPrecent',
     key: nanoid(),
   },
   {
-    title: 'Результат:',
-    dataIndex: 'result',
+    title: 'Лучшая серия:',
+    dataIndex: 'bestLine',
     key: nanoid(),
   },
 ];

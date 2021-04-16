@@ -30,6 +30,8 @@ const TrueOrFalse: React.FC = ({
   fetchWords,
   setPercent,
   setPage,
+  SetGameStat,
+  UpdateGameStat
 
 }: any) => {
   const [isTrue, setIsTrue] = useState(false);
@@ -45,6 +47,14 @@ const TrueOrFalse: React.FC = ({
     ModalFinishLevel({ right, wrong, onOk, onCancel, bestLine });
     setShowStatistics(false);
   }
+
+  useEffect(()=>{
+    SetGameStat('gameStatSprint',0,0)
+  },[])
+
+  useEffect(()=>{
+    UpdateGameStat('gameStatSprint', bestLine, count, right.length);
+  }, [count])
 
   useEffect(() => {
     if (words) {
@@ -173,7 +183,7 @@ const TrueOrFalse: React.FC = ({
           }
         }
       }
-    
+
     };
     const handleRight = (event: any) => {
       if(words){

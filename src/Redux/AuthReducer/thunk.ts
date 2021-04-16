@@ -29,7 +29,6 @@ export const createUser = (name: string, password: string, email: string, avatar
 };
 
 export const getUserSettings = (userId:string, token:string) => (dispatch:any) => {
-  debugger
   API.getUserSettings(userId, token).then(res => {
     dispatch(setUserSettings(res.optional))
   })

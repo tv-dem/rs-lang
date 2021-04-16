@@ -30,13 +30,27 @@ const AudioCall: React.FC = ({
   currentLine,
   setCurrentLine,
   setPage,
+  SetGameStat,
+  UpdateGameStat,
+  stat
 }: any) => {
   const audioCallRef = useRef<HTMLDivElement>(null);
-  const btnRef = useRef<HTMLDivElement>(null); 
-  const btnNoKnowRef = useRef<HTMLDivElement>(null); 
-  const btnNextRef = useRef<HTMLDivElement>(null); 
+  const btnRef = useRef<HTMLDivElement>(null);
+  const btnNoKnowRef = useRef<HTMLDivElement>(null);
+  const btnNextRef = useRef<HTMLDivElement>(null);
 
 
+  useEffect(()=>{
+    debugger;
+    console.log(stat)
+    SetGameStat('gameStatAudio',0,0,0)
+  },[])
+
+  useEffect(()=>{
+    debugger;
+    console.log(stat)
+    UpdateGameStat('gameStatAudio', bestLine, count, right.length);
+  }, [count])
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
@@ -56,22 +70,22 @@ const AudioCall: React.FC = ({
         if (count < words.length - 1) {
 
           if (btnNoKnowRef.current) {
-            if(event.code === `Space`) btnNoKnowRef.current.click()                
+            if(event.code === `Space`) btnNoKnowRef.current.click()
           }
 
           if (btnRef.current) {
-            btnRef.current.childNodes.forEach((el: any, index:number) => {            
-            if(event.code === `Digit${index+1}` || event.code === `Numpad${index+1}`) el.lastChild.click()                
+            btnRef.current.childNodes.forEach((el: any, index:number) => {
+            if(event.code === `Digit${index+1}` || event.code === `Numpad${index+1}`) el.lastChild.click()
             });
-          }                      
+          }
         }
       }
-    
+
     };
 
     document.addEventListener('keydown', handleClick);
 
-    return () =>   document.removeEventListener('keydown', handleClick); 
+    return () =>   document.removeEventListener('keydown', handleClick);
   }, [currentWord]);
 
   const playAudio = useCallback(() => {
@@ -80,6 +94,7 @@ const AudioCall: React.FC = ({
         `https://api-rs-lang.herokuapp.com/${currentWord.audio}`,
       ).play();
   }, [currentWord]);
+
 
   useEffect(() => {
     let handleClick:EventListener|null=null;
@@ -95,9 +110,9 @@ const AudioCall: React.FC = ({
        handleClick = (event: any) => {
         if(words){
           if (count < words.length - 1) {
-  
+
             if (btnNextRef.current) {
-              if(event.code === `Enter`) btnNextRef.current.click()                
+              if(event.code === `Enter`) btnNextRef.current.click()
             }
           }}
       }
@@ -105,8 +120,9 @@ const AudioCall: React.FC = ({
 
 if(handleClick) document.addEventListener('keydown', handleClick);
 
-    return () => { if(handleClick) document.removeEventListener('keydown', handleClick);} 
+    return () => { if(handleClick) document.removeEventListener('keydown', handleClick);}
   }, [isCheck]);
+
 
   const toWin = () => {
     setCurrentLine(currentLine+1);
@@ -156,7 +172,7 @@ if(handleClick) document.addEventListener('keydown', handleClick);
   };
 
 
-  
+
   const effectCarusel = () => {
     if (audioCallRef.current) {
       audioCallRef.current.classList.remove('audioCall_to-place');
@@ -241,7 +257,7 @@ if(handleClick) document.addEventListener('keydown', handleClick);
               {isCheck ? (
                 <Button
                   className="audioCall__next-box_btn-next"
-                  onClick={onHandleClickBtnNext}                
+                  onClick={onHandleClickBtnNext}
                  ref={btnNextRef}
                 >
                   Далее

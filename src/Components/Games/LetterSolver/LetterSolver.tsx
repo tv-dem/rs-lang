@@ -31,15 +31,26 @@ const LetterSolved: React.FC = ({
   currentLine,
   bestLine,
   setPage,
+  SetGameStat,
+  UpdateGameStat
 }: any) => {
   const wordRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
   const letterSolverRef = useRef<HTMLDivElement>(null);
-  const btnCheckRef = useRef<HTMLDivElement>(null); 
-  const btnNextRef = useRef<HTMLDivElement>(null); 
-  
+  const btnCheckRef = useRef<HTMLDivElement>(null);
+  const btnNextRef = useRef<HTMLDivElement>(null);
+
+
+  useEffect(()=>{
+    SetGameStat('gameStatWord',0,0,0)
+  },[])
+
+
+  useEffect(()=>{
+    UpdateGameStat('gameStatWord', bestLine, count, right.length);
+  }, [count])
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
@@ -48,27 +59,27 @@ const LetterSolved: React.FC = ({
       if(words){
         if (count < words.length - 1) {
           if (btnNextRef.current) {
-            if(event.code === `Enter`) btnNextRef.current.click()                
-          }         
+            if(event.code === `Enter`) btnNextRef.current.click()
+          }
           if (btnCheckRef.current) {
-            if(event.code === `Space`) btnCheckRef.current.click()                
-          }            
+            if(event.code === `Space`) btnCheckRef.current.click()
+          }
         }
-      }    
+      }
     };
     if(handleClick) document.addEventListener('keydown', handleClick);
 
-    return () => { if(handleClick) document.removeEventListener('keydown', handleClick);} 
+    return () => { if(handleClick) document.removeEventListener('keydown', handleClick);}
 
   }, [words]);
 
   useEffect(() => {
     if (count) {
-      setCurrentWord(words[count]);       
+      setCurrentWord(words[count]);
     }
   }, [count]);
 
-  
+
 
   useEffect(() => {
 
@@ -83,7 +94,7 @@ const LetterSolved: React.FC = ({
         answerRef.current.classList.remove('hidden');
       }
     } else {
-      
+
 
       if (imageRef.current && progressRef.current && answerRef.current) {
         imageRef.current.classList.remove('toChangePlaceImg');
@@ -97,9 +108,9 @@ const LetterSolved: React.FC = ({
         letterSolverRef.current.classList.remove('winEffect');
         letterSolverRef.current.classList.remove('badEffect');
       }
-     
+
     }
-    
+
   }, [isCheck]);
 
   const toWin = () => {
@@ -202,7 +213,7 @@ const LetterSolved: React.FC = ({
               </div>
               <div className="letterSolver__view-box_progress-box" ref={progressRef}>
                 <ProgressBoxContainer
-                  seconds={Number(60)}               
+                  seconds={Number(60)}
                   isCheck={isCheck}
                   onCheck={onCheck}
                 />

@@ -10,13 +10,20 @@ import API from '../../API/API';
 
 export const onLoad = () => (dispatch: any) => dispatch(changeHeaderTitleAC('Статистика'));
 
-export const setStat = (userId: string, token: string, body: Stat) => async (dispatch: any) => {
+export const setStat = (userId: string, token: string, body: Object) => async (dispatch: any) => {
   dispatch(updateStatStarted());
-
   try {
     const json = await API.setUserStatistics(userId, token, body);
-    dispatch(setTermStat(json));
-    console.log(json);
+    const { longTermStat, gameStatWord, gameStatSprint, gameStatSavanna, gameStatAudio } = json.optional;
+    // @ts-ignore
+    dispatch(setTermStat({
+      ...json.optional,
+      longTermStat: JSON.parse(String(longTermStat)),
+      gameStatWord: JSON.parse(String(gameStatWord)),
+      gameStatSprint: JSON.parse(String(gameStatSprint)),
+      gameStatSavanna: JSON.parse(String(gameStatSavanna)),
+      gameStatAudio: JSON.parse(String(gameStatAudio)),
+    }));
   } catch (err) {
     if (err.message === '400') {
       dispatch(updateStatFailure('Bad request'));
@@ -30,7 +37,6 @@ export const setStat = (userId: string, token: string, body: Stat) => async (dis
 
 export const getStat = (userId: string, token: string) => async (dispatch: any) => {
   dispatch(updateStatStarted());
-
   try {
     const json = await API.getUserStatistics(userId, token);
     const { longTermStat, gameStatWord, gameStatSprint, gameStatSavanna, gameStatAudio } = json.optional;
@@ -42,7 +48,6 @@ export const getStat = (userId: string, token: string) => async (dispatch: any) 
       gameStatSavanna: JSON.parse(String(gameStatSavanna)),
       gameStatAudio: JSON.parse(String(gameStatAudio)),
     }));
-    console.log(json);
   } catch (err) {
     if (err.message === '401') {
       dispatch(updateStatFailure('Access token is missing or invalid'));

@@ -2,6 +2,8 @@ import { connect } from "react-redux";
 import Savanna from "./Savanna";
 import { setCurrentWord, setCount, addRightWord, addWrongWord, setIsCheck,setPercent,setValHearts,setPage, setCurrentLine } from "../../../Redux/GamesReducer/actions";
 import { getWords } from '../../../Redux/GamesReducer/thunk'
+import {SetGameStat, UpdateGameStat} from "../../../Redux/StatReducer/actions";
+import {setStat} from "../../../Redux/StatReducer/thunk";
 
 const mapStateToProps = (state: any) => ({
   pathname: state.router.location.pathname,
@@ -17,7 +19,9 @@ const mapStateToProps = (state: any) => ({
   bestLine:state.games.bestLine,
   hearts:state.games.hearts,
   currentLine:state.games.currentLine,
-
+  userId: state.auth.currentUser.userId,
+  token: state.auth.currentUser.token,
+  body: state.stat.stat,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -31,7 +35,9 @@ const mapDispatchToProps = (dispatch: any) => ({
   setValHearts:(hearts:number)=>dispatch(setValHearts(hearts)),
   setPage:(page:number)=>dispatch(setPage(page)),
   setCurrentLine:(currentLine:number)=>dispatch(setCurrentLine(currentLine)),
-
+  SetGameStat: (gameType: string, bestLine:number, total:number,correct:number)=>dispatch(SetGameStat(gameType, bestLine, total,correct)),
+  UpdateGameStat: (gameType: string, bestLine:number, total:number,correct:number)=>dispatch(UpdateGameStat(gameType, bestLine, total,correct)),
+  setStat: (userId:string, token:string, body:Object)=> dispatch(setStat(userId, token, body)),
 })
 
 const SavannaContainer = connect(mapStateToProps, mapDispatchToProps)(Savanna);

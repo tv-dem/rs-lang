@@ -194,7 +194,18 @@ class API {
   }
 
   setUserStatistics(userId: string, token: string, body: any) {
-    const mapBody = JSON.stringify({ optional: JSON.stringify(body) }).replace(/"/g, '\"');
+    debugger
+    const mapBody = JSON.stringify({
+      optional:
+        Object.entries(body).reduce((acc:any, [key, value]) => {
+          acc[key] = Array.isArray(value) ? JSON.stringify(value).replace(/"/g, '\"') : value;
+          return acc
+        }, {})
+    })
+
+    console.log(JSON.parse(
+      mapBody
+    ))
     return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/statistics`, {
       method: 'PUT',
       headers: {

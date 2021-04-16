@@ -1,12 +1,12 @@
-import { LongTermStat } from './interfaces';
+import {LongTermStat} from './interfaces';
 import {
   GET_LONG_TERM_STAT,
   SET_LONG_TERM_STAT,
   UPDATE_STAT_STARTED,
-  UPDATE_STAT_FAILURE,
+  UPDATE_STAT_FAILURE, UPDATE_GAME_STAT, SET_GAME_STAT,
 } from './actionTypes';
 import * as actions from './actions';
-import { nanoid } from 'nanoid';
+import {nanoid} from 'nanoid';
 
 const initialState = {
   isLoadStat: false,
@@ -27,49 +27,13 @@ const initialState = {
       currentSeries: 0,
       errorAnswers: 0,
       newWordsCount: 0,
-      studiedСardNum: { '9-00': 0 },
+      studiedСardNum: {'9-00': 0},
       timeNow: `${new Date().getHours()}`,
     },
-    gameStatWord: [
-      {
-        key: nanoid(),
-        date: new Date().toLocaleDateString(),
-        time: `${new Date().getHours()}-${new Date().getMinutes()}`,
-        level: 0,
-        round: 0,
-        result: 0,
-      },
-    ],
-    gameStatSavanna: [
-      {
-        key: nanoid(),
-        date: new Date().toLocaleDateString(),
-        time: `${new Date().getHours()}-00`,
-        level: 0,
-        round: 0,
-        result: 0,
-      },
-    ],
-    gameStatAudio: [
-      {
-        key: nanoid(),
-        date: new Date().toLocaleDateString(),
-        time: `${new Date().getHours()}-00`,
-        level: 0,
-        round: 0,
-        result: 0,
-      },
-    ],
-    gameStatSprint: [
-      {
-        key: nanoid(),
-        date: new Date().toLocaleDateString(),
-        time: `${new Date().getHours()}-00`,
-        level: 0,
-        round: 0,
-        result: 0,
-      },
-    ],
+    gameStatWord: [{}],
+    gameStatSavanna: [{}],
+    gameStatAudio: [{}],
+    gameStatSprint: [{}],
   },
   errorStat: '',
 };
@@ -97,6 +61,7 @@ const statReducer = (state = initialState, action: ActionTypes) => {
     }
 
     case SET_LONG_TERM_STAT: {
+      debugger;
       return {
         ...state,
         stat: action.payload,
@@ -112,6 +77,42 @@ const statReducer = (state = initialState, action: ActionTypes) => {
         isLoadStat: false,
         errorStat: '',
       };
+    }
+
+    case SET_GAME_STAT: {
+      // @ts-ignore
+      const {gameType, stat} = action.payload;
+      // @ts-ignore
+      const arr = state.stat[gameType].slice();
+      arr.push(stat);
+      debugger;
+      return {
+        ...state,
+        stat: {
+          ...state.stat,
+          // @ts-ignore
+          [gameType]: arr,
+        }
+      }
+    }
+
+    case UPDATE_GAME_STAT: {
+      debugger;
+      // @ts-ignore
+      const {gameType, bestLine, total, correct} = action.payload;
+      // @ts-ignore
+      const stat = [...state.stat[gameType]];
+      stat[stat.length - 1].bestLine = bestLine;
+      stat[stat.length - 1].total = total;
+      stat[stat.length - 1].correctPrecent = `${total ? Math.trunc((correct/total) * 1000)/10 : 0}%`;
+      return {
+        ...state,
+        stat: {
+          ...state.stat,
+          // @ts-ignore
+          [gameType]: stat,
+        }
+      }
     }
 
     default: {

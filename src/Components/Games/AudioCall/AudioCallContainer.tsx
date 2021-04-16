@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import AudioCall from "./AudioCall";
 import { setCurrentWord, setCount, addRightWord, addWrongWord, setIsCheck, setCurrentLine, setBestLine, setPage} from "../../../Redux/GamesReducer/actions";
 import { getWords } from '../../../Redux/GamesReducer/thunk'
+import {SetGameStat, UpdateGameStat} from "../../../Redux/StatReducer/actions";
 
 const mapStateToProps = (state: any) => ({
   pathname: state.router.location.pathname,
@@ -16,6 +17,7 @@ const mapStateToProps = (state: any) => ({
   isCheck: state.games.isCheck,
   bestLine:state.games.bestLine,
   currentLine:state.games.currentLine,
+  stat: state.stat,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -28,6 +30,9 @@ const mapDispatchToProps = (dispatch: any) => ({
   setBestLine:(bestLine:number)=>dispatch(setBestLine(bestLine)),
   setCurrentLine:(currentLine:number)=>dispatch(setCurrentLine(currentLine)),
   setPage:(page:number)=>dispatch(setPage(page)),
+
+  SetGameStat: (gameType: string, bestLine:number, total:number,correct:number)=>dispatch(SetGameStat(gameType, bestLine, total,correct)),
+  UpdateGameStat: (gameType: string, bestLine:number, total:number,correct:number)=>dispatch(UpdateGameStat(gameType, bestLine, total,correct))
 })
 
 const AudioCallContainer = connect(mapStateToProps, mapDispatchToProps)(AudioCall);
