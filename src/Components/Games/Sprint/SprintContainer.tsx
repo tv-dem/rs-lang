@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import Sprint from "./Sprint";
 import {setCurrentWord,setCount, addRightWord, addWrongWord, setCurrentLine, setBestLine, setPercent, setPage} from "../../../Redux/GamesReducer/actions";
 import {getWords} from '../../../Redux/GamesReducer/thunk'
+import {SetGameStat, UpdateGameStat} from "../../../Redux/StatReducer/actions";
 
 const mapStateToProps = (state: any) => ({
   pathname: state.router.location.pathname,
@@ -28,6 +29,8 @@ const mapDispatchToProps = (dispatch:any) => ({
     setBestLine:(bestLine:number)=>dispatch(setBestLine(bestLine)),
     setCurrentLine:(currentLine:number)=>dispatch(setCurrentLine(currentLine)),
     setPage:(page:number)=>dispatch(setPage(page)),
+  SetGameStat: (gameType: string, bestLine:number, total:number,correct:number)=>dispatch(SetGameStat(gameType, bestLine, total,correct)),
+  UpdateGameStat: (gameType: string, bestLine:number, total:number,correct:number)=>dispatch(UpdateGameStat(gameType, bestLine, total,correct))
 
 })
 

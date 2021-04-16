@@ -32,6 +32,8 @@ const LetterSolved: React.FC = ({
   bestLine,
   setPage,
   isSound,
+  SetGameStat,
+  UpdateGameStat
 }: any) => {
   const wordRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -41,6 +43,13 @@ const LetterSolved: React.FC = ({
   const btnCheckRef = useRef<HTMLDivElement>(null);
   const btnNextRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    SetGameStat('gameStatWord', 0, 0, 0)
+  }, [])
+
+  useEffect(() => {
+    UpdateGameStat('gameStatWord', bestLine, count, right.length);
+  }, [count])
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
@@ -61,7 +70,6 @@ const LetterSolved: React.FC = ({
     if (handleClick) document.addEventListener('keydown', handleClick);
 
     return () => { if (handleClick) document.removeEventListener('keydown', handleClick); }
-
   }, [words]);
 
   useEffect(() => {
@@ -189,7 +197,7 @@ const LetterSolved: React.FC = ({
                 <Image
                   className="context_image"
                   alt="Loading"
-                  fallback={`Error loading file ${currentWord.image}`}                
+                  fallback={`Error loading file ${currentWord.image}`}
                   src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
                 ></Image>
               </div>

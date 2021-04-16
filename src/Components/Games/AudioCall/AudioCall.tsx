@@ -31,11 +31,26 @@ const AudioCall: React.FC = ({
   setCurrentLine,
   setPage,
   isSound,
+  SetGameStat,
+  UpdateGameStat,
+  stat
 }: any) => {
   const audioCallRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLDivElement>(null);
   const btnNoKnowRef = useRef<HTMLDivElement>(null);
   const btnNextRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    debugger;
+    console.log(stat)
+    SetGameStat('gameStatAudio', 0, 0, 0)
+  }, [])
+
+  useEffect(() => {
+    debugger;
+    console.log(stat)
+    UpdateGameStat('gameStatAudio', bestLine, count, right.length);
+  }, [count])
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
@@ -82,6 +97,7 @@ const AudioCall: React.FC = ({
       ).play();
   }, [currentWord]);
 
+
   useEffect(() => {
     let handleClick: EventListener | null = null;
     if (!isCheck) {
@@ -98,7 +114,7 @@ const AudioCall: React.FC = ({
         if (words) {
           if (count < words.length - 1) {
             if (btnNextRef.current) {
-              if (event.code === `Enter`) btnNextRef.current.click();
+              if (event.code === `Enter`) btnNextRef.current.click()
             }
           }
         }
@@ -111,6 +127,7 @@ const AudioCall: React.FC = ({
       if (handleClick) document.removeEventListener('keydown', handleClick);
     };
   }, [isCheck]);
+
 
   const toWin = () => {
     setCurrentLine(currentLine + 1);
@@ -205,9 +222,9 @@ const AudioCall: React.FC = ({
         </div>
         <BtnFullScreen />
       </div>
-     <AudioToggleContainer/>
+      <AudioToggleContainer />
       <BestLineContainer />
-     
+
       <div ref={audioCallRef} className="audioCall">
         {!pending && currentWord ? (
           <>
