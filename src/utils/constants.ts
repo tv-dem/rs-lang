@@ -18,14 +18,15 @@ export const columns = [
   //   dataIndex: 'level',
   //   key: nanoid(),
   // },
+
   {
     title: 'Изучено слов:',
-    dataIndex: 'total',
+    dataIndex: 'count',
     key: nanoid(),
   },
   {
     title: 'процент правильных ответов:',
-    dataIndex: 'correctPrecent',
+    dataIndex: 'correctPercent',
     key: nanoid(),
   },
   {
@@ -33,4 +34,47 @@ export const columns = [
     dataIndex: 'bestLine',
     key: nanoid(),
   },
+];
+
+export const ligaData = [
+  {
+    liga: 'I',
+    coords: '-10px -14px'
+  },
+  {
+    liga: 'I',
+    coords: '-10px -14px'
+  },
+  {
+    liga: 'II',
+    coords: '-142px -14px'
+  },
+  {
+    liga: 'II',
+    coords: '-142px -14px'
+  },
+  {
+    liga: 'III',
+    coords: '-274px -14px'
+  },
+  {
+    liga: 'III',
+    coords: '-274px -14px'
+  },
+  {
+    liga: 'IV',
+    coords: '-10px -124px'
+  },
+  {
+    liga: 'IV',
+    coords: '-10px -124px'
+  },
+  {
+    liga: 'V',
+    coords: '-142px -124px'
+  },
+  {
+    liga: 'VI',
+    coords: '-274px -124px'
+  }
 ];

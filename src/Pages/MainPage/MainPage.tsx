@@ -1,18 +1,48 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Progress, Card } from 'antd';
 import { ReactComponent as AwardSvg } from '../../assets/svg/award.svg';
 import { ReactComponent as LevelUpSvg } from '../../assets/svg/level-up.svg';
 import { ReactComponent as ArrowUpSvg } from '../../assets/svg/up-arrow.svg';
 import { ReactComponent as StarSvg } from '../../assets/svg/star.svg';
 import { ReactComponent as RatingSvg } from '../../assets/svg/rating.svg';
+import { Stat } from '../../Redux/StatReducer/interfaces';
+import { CurrentUser } from '../../Redux/AuthReducer/interfaces';
+import { ligaData } from '../../utils/constants';
 import './MainPage.scss';
 
-const MainPage: React.FC = ({ onLoad }: any) => {
-  useEffect(() => onLoad(), [onLoad])
+interface MainPageProps {
+  onLoad: () => void;
+  getStat: (userId: string, token: string) => void;
+  stat: Stat;
+  isLoadStat: boolean;
+  errorStat: string;
+  currentUser: CurrentUser,
+}
 
-  const gridStyle = {
-    width: '50%',
-  };
+const MainPage: React.FC<MainPageProps> = ({ onLoad, getStat, isLoadStat, errorStat, stat, currentUser }: any) => {
+  const { longTermStat } = stat;
+  const { learnedWords } = longTermStat[longTermStat.length - 1];
+  const { userId, token } = currentUser;
+  const countWordsInLevel = 360;
+  const totalCountWords = 3600;
+
+  const [mainPageState, setMainPageState] = useState({
+    currentLevel: Math.trunc(learnedWords * countWordsInLevel / totalCountWords),
+    currentPoints: (learnedWords / countWordsInLevel - Math.trunc((learnedWords / countWordsInLevel))) * countWordsInLevel,
+  });
+
+  useEffect(() => onLoad(), [onLoad]);
+
+  useEffect(() => {
+    getStat(userId, token);
+  }, []);
+
+  useEffect(() => {
+    setMainPageState({
+      currentLevel: Math.trunc(learnedWords * countWordsInLevel / totalCountWords),
+      currentPoints: (learnedWords / countWordsInLevel - Math.trunc((learnedWords / countWordsInLevel))) * countWordsInLevel,
+    });
+  }, [learnedWords]);
 
   return (
     <>
@@ -24,7 +54,7 @@ const MainPage: React.FC = ({ onLoad }: any) => {
               Ваши достижения:
             </h5>
             <Card>
-              <Card.Grid style={gridStyle}>
+              <Card.Grid className='achievement__grid'>
                 <div className="achievement__body">
                   <div className="achievement__body_row">
                     <div className="level-container">
@@ -32,7 +62,7 @@ const MainPage: React.FC = ({ onLoad }: any) => {
                         Уровень
                       </h5>
                       <span className="level">
-                        1
+                        {mainPageState.currentLevel}
                       </span>
                     </div>
                     <div className="level-icon">
@@ -41,12 +71,12 @@ const MainPage: React.FC = ({ onLoad }: any) => {
                   </div>
                   <p>
                     <ArrowUpSvg className='level-progress' />
-                    <span className='level-text'>2</span>
+                    <span className='level-text'>{mainPageState.currentLevel === 10 ? mainPageState.currentLevel : mainPageState.currentLevel + 1}</span>
                   </p>
-                  <Progress percent={30} />
+                  <Progress percent={Math.floor(mainPageState.currentLevel / countWordsInLevel * 100)} steps={10} />
                 </div>
               </Card.Grid>
-              <Card.Grid style={gridStyle}>
+              <Card.Grid className='achievement__grid'>
                 <div className="achievement__body">
                   <div className="achievement__body_row">
                     <div className="level-container">
@@ -54,7 +84,7 @@ const MainPage: React.FC = ({ onLoad }: any) => {
                         Очки Уровня
                       </h5>
                       <span className="level --green">
-                        1
+                        {mainPageState.currentPoints}
                       </span>
                     </div>
                     <div className="level-icon --green">
@@ -63,11 +93,11 @@ const MainPage: React.FC = ({ onLoad }: any) => {
                   </div>
                   <p>
                     Очков на уровне:&nbsp;
-                    <span className='level-text'>20</span>
+                    <span className='level-text'>{countWordsInLevel}</span>
                   </p>
                 </div>
               </Card.Grid>
-              <Card.Grid style={gridStyle}>
+              <Card.Grid className='achievement__grid'>
                 <div className="achievement__body">
                   <div className="achievement__body_row">
                     <div className="level-container">
@@ -75,7 +105,7 @@ const MainPage: React.FC = ({ onLoad }: any) => {
                         Всего очков:
                       </h5>
                       <span className="level --blue">
-                        0
+                        {learnedWords}
                       </span>
                     </div>
                     <div className="level-icon --blue">
@@ -87,7 +117,7 @@ const MainPage: React.FC = ({ onLoad }: any) => {
                   </p>
                 </div>
               </Card.Grid>
-              <Card.Grid style={gridStyle}>
+              <Card.Grid className='achievement__grid'>
                 <div className="achievement__body">
                   <div className="achievement__body_row">
                     <div className="level-container">
@@ -95,15 +125,20 @@ const MainPage: React.FC = ({ onLoad }: any) => {
                         Лига
                       </h5>
                       <span className="level --red">
-                        I
+                        {ligaData[mainPageState.currentLevel].liga}
                       </span>
                     </div>
-                    <div className="level-icon --red">
+                    <div
+                      className="level-icon --red">
                       <AwardSvg />
                     </div>
                   </div>
                   <p>
-                    <span title="user rank" className="level-rank" />
+                    <span
+                      title="user rank"
+                      className="level-rank"
+                      style={{ backgroundPosition: `${ligaData[mainPageState.currentLevel].coords}` }}
+                    />
                   </p>
                 </div>
               </Card.Grid>

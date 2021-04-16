@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Savanna from "./Savanna";
-import { setCurrentWord, setCount, addRightWord, addWrongWord, setIsCheck,setPercent,setValHearts,setPage, setCurrentLine } from "../../../Redux/GamesReducer/actions";
+import { setCurrentWord, setCount, addRightWord, addWrongWord, setIsCheck, setPercent, setValHearts, setPage, setCurrentLine } from "../../../Redux/GamesReducer/actions";
 import { getWords } from '../../../Redux/GamesReducer/thunk'
 import {SetGameStat, UpdateGameStat} from "../../../Redux/StatReducer/actions";
 import {createUserWord, setStat} from "../../../Redux/StatReducer/thunk";
@@ -16,9 +16,10 @@ const mapStateToProps = (state: any) => ({
   level: state.games.level,
   page: state.games.page,
   isCheck: state.games.isCheck,
-  bestLine:state.games.bestLine,
-  hearts:state.games.hearts,
-  currentLine:state.games.currentLine,
+  bestLine: state.games.bestLine,
+  hearts: state.games.hearts,
+  currentLine: state.games.currentLine,
+  isSound: state.games.isSound,
   userId: state.auth.currentUser.userId,
   token: state.auth.currentUser.token,
   body: state.stat.stat,
@@ -36,10 +37,10 @@ const mapDispatchToProps = (dispatch: any) => ({
   setPage:(page:number)=>dispatch(setPage(page)),
   setCurrentLine:(currentLine:number)=>dispatch(setCurrentLine(currentLine)),
   SetGameStat: (gameType: string, bestLine:number, total:number,correct:number)=>dispatch(SetGameStat(gameType, bestLine, total,correct)),
-  UpdateGameStat: (gameType: string, bestLine:number, total:number,correct:number)=>dispatch(UpdateGameStat(gameType, bestLine, total,correct)),
-  setStat: (userId:string, token:string, body:Object)=> dispatch(setStat(userId, token, body)),
   createUserWord: (userId:string, wordId:string, difficulty:string, optional: Object, token:string) =>
     createUserWord(userId, wordId, difficulty, optional, token),
+  UpdateGameStat: (gameType: string, stat: any) => dispatch(UpdateGameStat(gameType, stat)),
+  setStat: (userId: string, token: string, body: Object) => dispatch(setStat(userId, token, body)),
 })
 
 const SavannaContainer = connect(mapStateToProps, mapDispatchToProps)(Savanna);

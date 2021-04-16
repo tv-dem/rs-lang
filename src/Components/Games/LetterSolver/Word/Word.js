@@ -59,13 +59,13 @@ const Word = ({
         </DragDropContext>
       </div>
       {isCheck ? (
-        <Button ref={btnNextRef} className="context_btn_next" onClick={onHandleClickBtnNext}>
+        <div ref={btnNextRef} className="context_btn_next" onClick={onHandleClickBtnNext}>
           NEXT
-        </Button>
+        </div>
       ) : (
-        <Button ref={btnCheckRef} className="context_btn_check" onClick={() => onCheck(letters)}>
+        <div ref={btnCheckRef} className="context_btn_check" onClick={() => onCheck(letters)}>
          CHECK
-        </Button>
+        </div>
       )}
     </>
   );

@@ -4,7 +4,6 @@ import {
   updateStatFailure,
   setInitialStat,
 } from './actions';
-import { Stat } from './interfaces';
 import { changeHeaderTitleAC } from "../HeaderReducer/actions";
 import API from '../../API/API';
 
@@ -27,8 +26,16 @@ export const setStat = (userId: string, token: string, body: Object) => async (d
   } catch (err) {
     if (err.message === '400') {
       dispatch(updateStatFailure('Bad request'));
+
+      setTimeout(() => {
+        dispatch(updateStatFailure(''));
+      }, 1000);
     } else if (err.message === '401') {
       dispatch(updateStatFailure('Access token is missing or invalid'));
+
+      setTimeout(() => {
+        dispatch(updateStatFailure(''));
+      }, 1000);
     } else {
       console.error(`Unhandled rejection, status.code=${err.message}`);
     }
@@ -36,8 +43,9 @@ export const setStat = (userId: string, token: string, body: Object) => async (d
 };
 
 export const createUserWord = (userId:string, wordId:string, difficulty:string, optional: Object, token:string) => {
+  debugger
   API.createUserWord(wordId, userId, difficulty, optional, token).then(res => {
-    console.log(res)
+    console.log('res', res)
   });
 }
 
@@ -60,6 +68,10 @@ export const getStat = (userId: string, token: string) => async (dispatch: any) 
     } else if (err.message === '404') {
       dispatch(updateStatFailure('Statistics not found'));
       dispatch(setInitialStat());
+
+      setTimeout(() => {
+        dispatch(updateStatFailure(''));
+      }, 1000);
     } else {
       console.error(`Unhandled rejection, status.code=${err.message}`);
     }

@@ -11,26 +11,24 @@
     background-size: cover;
     background-position-y: 100%;
     transition: linear 0.5s background-position-y;
-    &_setting-box{
+    &_setting-box {
         width: 90%;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;        
+        justify-content: space-between;
     }
-
-    &_setting-box .life-box{
-display: flex;
-justify-content: center;
-&__heart{
-    &_outliner,&_fulled{
-        color:white;
-        font-size: 1.5rem;
+    &_setting-box .life-box {
+        display: flex;
+        justify-content: center;
+        &__heart {
+            &_outliner,
+            &_fulled {
+                color: white;
+                font-size: 1.5rem;
+            }
+        }
     }
 }
-    }
-}
-
-
 
 .savanna__wrapper .savanna {
     height: 550px;
@@ -64,7 +62,7 @@ justify-content: center;
         align-items: center;
         width: 65%;
         &_btn-check {
-            display:flex;
+            display: flex;
             flex-direction: row;
             justify-content: flex-start;
             text-align: center;
@@ -81,18 +79,17 @@ justify-content: center;
             margin: 10px;
             overflow: hidden;
             white-space: nowrap;
-            &_color-number{
-                color:#e74c4c;
+            &_color-number {
+                color: #e74c4c;
                 margin-right: 5px;
                 font-size: 1rem;
             }
-            &_background {               
+            &_background {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 width: 100%;
                 height: 100%;
-                
             }
             &:hover {
                 box-shadow: 0px 0px 9px 2px #f6f8f5 inset;
@@ -165,4 +162,28 @@ justify-content: center;
 .savanna .savanna_is-selected-win {
     box-shadow: 0px 0px 9px 2px #6bd85d inset;
     opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+    .savanna__wrapper .savanna {
+        height: 350px;
+    }
+    .savanna .variants-answer {
+        &__choose-box {
+            width: 45%;
+            &_btn-check {
+                font-size: 1rem;
+                font-weight: 400;
+                border-radius: 5px;
+                min-width: 80px;
+                height: 30px;
+                padding: 3px;
+                margin: 5px;
+                &_color-number {
+                    margin-right: 2px;
+                    font-size: 0.7rem;
+                }
+            }
+        }
+    }
 }

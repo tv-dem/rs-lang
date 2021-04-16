@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useCallback, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
+import { nanoid } from 'nanoid';
 import './Savanna.scss';
 import Words from '../Words/Words';
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import ProgressBoxContainer from '../ProgressBox/ProgressBoxContainer';
-import rightAudio from '../../../assets/audio/right_answer.mp3';
-import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
+import AudioToggleContainer from '../AudioToggle/AudioToggleContainer'
+import { audioAnswer } from '../../../utils/audio';
 import imgCrystal from '../../../assets/img/crystal.png';
 import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
 import BestLineContainer from '../BestLine/BestLineContainer';
@@ -35,14 +36,13 @@ const Savanna: React.FC = ({
   setPage,
   currentLine,
   setCurrentLine,
-  SetGameStat,
+  isSound,
   UpdateGameStat,
   setStat,
   userId,
   token,
   body,
-  createUserWord,
-  updateUserWord
+  createUserWord
 }: any) => {
   const crystalRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -53,22 +53,36 @@ const Savanna: React.FC = ({
   const [sizeCrystal, setSizeCrystal] = useState(1);
   const [positionImg, setPositionImg] = useState(100);
 
-  useEffect(()=>{
-    SetGameStat('gameStatSavanna',0,0,0)
-    return () => {
-      setStat(userId, token, body);
+  useEffect(() => {
+    if(currentWord){
+      debugger
+      if(!currentWord.userWord) {
+        createUserWord(userId, currentWord.id, 'learn', {}, token)
+      }
     }
-  },[])
+    console.log('prev state', body);
+    console.log('prev state', body['gameStatSavanna']);
 
-  useEffect(()=>{
-    if(!currentWord){
-      return;
+    // // @ts-ignore
+    const currentStat = [...body['gameStatSavanna']];
+    currentStat.push({ bestLine, count, correctPercent: `${count ? Math.trunc((right.length / count) * 1000) / 10 : 0}%` });
+    UpdateGameStat('gameStatSavanna', currentStat);
+
+    return () => {
+      const currentStat = [...body['gameStatSavanna']];
+      currentStat.push({
+        bestLine,
+        count,
+        correctPercent: `${count ? Math.trunc((right.length / count) * 1000) / 10 : 0}%`,
+        key: nanoid(),
+        date: new Date().toLocaleDateString(),
+        time: `${new Date().getHours()}-${new Date().getMinutes()}`
+      });
+      console.log(userId, token, { ...body, gameStatSavanna: currentStat });
+      setStat(userId, token, { ...body, gameStatSavanna: currentStat });
     }
-    if(currentWord.userWord) {
-      updateUserWord(userId, currentWord.id, 'learn', {}, token)
-    }
-    UpdateGameStat('gameStatSavanna', bestLine, count, right.length);
-  },[count])
+  }, [count]);
+
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
     setSizeCrystal(1);
@@ -85,13 +99,14 @@ const Savanna: React.FC = ({
   }, [count]);
 
 
-  useEffect(()=>{
+  useEffect(() => {
     const handleClick = (event: any) => {
-      if(words){
+      event.preventDefault();
+      if (words) {
         if (count < words.length - 1) {
           if (btnRef.current) {
-            btnRef.current.childNodes.forEach((el: any, index:number) => {
-            if(event.code === `Digit${index+1}` || event.code === `Numpad${index+1}`) el.lastChild.click()
+            btnRef.current.childNodes.forEach((el: any, index: number) => {
+              if (event.code === `Digit${index + 1}` || event.code === `Numpad${index + 1}`) el.lastChild.click()
             });
           }
         }
@@ -101,8 +116,8 @@ const Savanna: React.FC = ({
 
     document.addEventListener('keydown', handleClick);
 
-    return () =>   document.removeEventListener('keydown', handleClick);
-  },[currentWord])
+    return () => document.removeEventListener('keydown', handleClick);
+  }, [currentWord])
 
   useEffect(() => {
     if (words) {
@@ -197,9 +212,10 @@ const Savanna: React.FC = ({
       setPositionImg(() => positionImg - 5);
     }, 500);
 
-    new Audio(rightAudio).play();
+    if (isSound) audioAnswer[0].play();
+
     addRightWord(currentWord);
-  setCurrentLine(currentLine + 1);
+    setCurrentLine(currentLine + 1);
   };
 
   const toLost = () => {
@@ -218,7 +234,8 @@ const Savanna: React.FC = ({
       guessWordRef.current.classList.add('to-up');
     }
 
-    new Audio(wrongAudio).play();
+    if (isSound) audioAnswer[1].play();
+
     addWrongWord(currentWord);
     setCurrentLine(0);
   };
@@ -255,34 +272,38 @@ const Savanna: React.FC = ({
 
   return (
     <div ref={wrapperRef} className="savanna__wrapper">
-         <div className="savanna__wrapper_setting-box">
+      <div className="savanna__wrapper_setting-box">
 
 
         <div className="boxLineBest">
 
-      <div className="boxLineBestLine">
-      <div className="life-box">
-          <div className="life-box__heart">
-            {heartsCol.current.map((e, i) => {
-              return i > hearts || i === hearts ? (
-                <HeartFilled key={i} className="life-box__heart_fulled" />
-              ) : (
-                <HeartOutlined key={i} className="life-box__heart_outliner" />
-              );
-            })}
+          <div className="boxLineBestLine">
+
+            <div className="life-box">
+              <div className="life-box__heart">
+                {heartsCol.current.map((e, i) => {
+                  return i > hearts || i === hearts ? (
+                    <HeartFilled key={i} className="life-box__heart_fulled" />
+                  ) : (
+                    <HeartOutlined key={i} className="life-box__heart_outliner" />
+                  );
+                })}
+              </div>
+
+            </div>
+            <div className="bestLine">Best line: </div>
+            <div className="boxLineBestImg"></div>
+            <div className="bestL">x {bestLine}</div>
           </div>
+          <BtnFullScreen />
         </div>
-                  <div className="bestLine">Best line: </div>
-                  <div className="boxLineBestImg"></div>
-                  <div className="bestL">x {bestLine}</div>
-                  </div>
-                  <BtnFullScreen/>
-                </div>
 
         {/* <div className="boxBtnFullScreen">
           <BtnFullScreen />
         </div> */}
       </div>
+      <AudioToggleContainer />
+
       <BestLineContainer />
 
       <div className="savanna">
@@ -317,7 +338,7 @@ const Savanna: React.FC = ({
             />
           </>
         ) : (
-          <Loading/>
+          <Loading />
         )}
       </div>
     </div>

@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 import AudioCall from "./AudioCall";
-import { setCurrentWord, setCount, addRightWord, addWrongWord, setIsCheck, setCurrentLine, setBestLine, setPage} from "../../../Redux/GamesReducer/actions";
+import { setCurrentWord, setCount, addRightWord, addWrongWord, setIsCheck, setCurrentLine, setBestLine, setPage } from "../../../Redux/GamesReducer/actions";
 import { getWords } from '../../../Redux/GamesReducer/thunk'
-import {SetGameStat, UpdateGameStat} from "../../../Redux/StatReducer/actions";
+import { SetGameStat, UpdateGameStat } from "../../../Redux/StatReducer/actions";
 
 const mapStateToProps = (state: any) => ({
   pathname: state.router.location.pathname,
@@ -15,8 +15,9 @@ const mapStateToProps = (state: any) => ({
   level: state.games.level,
   page: state.games.page,
   isCheck: state.games.isCheck,
-  bestLine:state.games.bestLine,
-  currentLine:state.games.currentLine,
+  bestLine: state.games.bestLine,
+  currentLine: state.games.currentLine,
+  isSound: state.games.isSound,
   stat: state.stat,
 });
 
@@ -27,12 +28,12 @@ const mapDispatchToProps = (dispatch: any) => ({
   addRightWord: (word: Object) => dispatch(addRightWord(word)),
   addWrongWord: (word: Object) => dispatch(addWrongWord(word)),
   setIsCheck: (isCheck: boolean) => dispatch(setIsCheck(isCheck)),
-  setBestLine:(bestLine:number)=>dispatch(setBestLine(bestLine)),
-  setCurrentLine:(currentLine:number)=>dispatch(setCurrentLine(currentLine)),
-  setPage:(page:number)=>dispatch(setPage(page)),
+  setBestLine: (bestLine: number) => dispatch(setBestLine(bestLine)),
+  setCurrentLine: (currentLine: number) => dispatch(setCurrentLine(currentLine)),
+  setPage: (page: number) => dispatch(setPage(page)),
 
-  SetGameStat: (gameType: string, bestLine:number, total:number,correct:number)=>dispatch(SetGameStat(gameType, bestLine, total,correct)),
-  UpdateGameStat: (gameType: string, bestLine:number, total:number,correct:number)=>dispatch(UpdateGameStat(gameType, bestLine, total,correct))
+  SetGameStat: (gameType: string, bestLine: number, total: number, correct: number) => dispatch(SetGameStat(gameType, bestLine, total, correct)),
+  UpdateGameStat: (gameType: string, stat: any) => dispatch(UpdateGameStat(gameType, stat))
 })
 
 const AudioCallContainer = connect(mapStateToProps, mapDispatchToProps)(AudioCall);

@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
 import './sprintGame.scss';
 import { Image } from "antd";
-import {ArrowLeftOutlined, ArrowRightOutlined} from "@ant-design/icons";
+import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
 import ProgressBoxContainer from '../ProgressBox/ProgressBoxContainer';
 import shuffle from "../../../utils/shuffle";
-import rightAudio from '../../../assets/audio/right_answer.mp3';
-import wrongAudio from '../../../assets/audio/wrong-answer.mp3';
+import AudioToggleContainer from '../AudioToggle/AudioToggleContainer'
+import { audioAnswer } from '../../../utils/audio';
 import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
 import BestLineContainer from '../BestLine/BestLineContainer';
 import Loading from "../../Loading/Loading";
+import {nanoid} from "nanoid";
 
 const TrueOrFalse: React.FC = ({
   words,
@@ -30,9 +31,14 @@ const TrueOrFalse: React.FC = ({
   fetchWords,
   setPercent,
   setPage,
+  isSound,
   SetGameStat,
-  UpdateGameStat
-
+  UpdateGameStat,
+                                 setStat,
+                                 userId,
+                                 token,
+                                 body,
+                                 updateUserWord
 }: any) => {
   const [isTrue, setIsTrue] = useState(false);
   const [wordTranslate, setWordTranslate] = useState('');
@@ -47,14 +53,35 @@ const TrueOrFalse: React.FC = ({
     ModalFinishLevel({ right, wrong, onOk, onCancel, bestLine });
     setShowStatistics(false);
   }
+  useEffect(() => {
+    if(currentWord){
+      if(currentWord.userWord) {
+        updateUserWord(userId, currentWord.id, 'learn', {}, token)
+      }
+    }
+    console.log('prev state', body);
+    console.log('prev state', body['gameStatSprint']);
 
-  useEffect(()=>{
-    SetGameStat('gameStatSprint',0,0)
-  },[])
+    // // @ts-ignore
+    const currentStat = [...body['gameStatSprint']];
+    currentStat.push({ bestLine, count, correctPercent: `${count ? Math.trunc((right.length / count) * 1000) / 10 : 0}%` });
+    UpdateGameStat('gameStatSavanna', currentStat);
 
-  useEffect(()=>{
-    UpdateGameStat('gameStatSprint', bestLine, count, right.length);
-  }, [count])
+    return () => {
+      const currentStat = [...body['gameStatSprint']];
+      currentStat.push({
+        bestLine,
+        count,
+        correctPercent: `${count ? Math.trunc((right.length / count) * 1000) / 10 : 0}%`,
+        key: nanoid(),
+        date: new Date().toLocaleDateString(),
+        time: `${new Date().getHours()}-${new Date().getMinutes()}`
+      });
+      console.log(userId, token, { ...body, gameStatSavanna: currentStat });
+      setStat(userId, token, { ...body, gameStatSavanna: currentStat });
+    }
+  }, [count]);
+
 
   useEffect(() => {
     if (words) {
@@ -68,7 +95,7 @@ const TrueOrFalse: React.FC = ({
       if (count < words.length - 1) {
         setCount(count + 1);
       } else {
-        if(btnNoRef.current && btnYesRef.current){
+        if (btnNoRef.current && btnYesRef.current) {
           btnNoRef.current.style.display = "none";
           btnYesRef.current.style.display = "none";
         }
@@ -93,7 +120,8 @@ const TrueOrFalse: React.FC = ({
 
 
   const endGame = () => {
-    new Audio(wrongAudio).play();
+    if (isSound) audioAnswer[1].play();
+
     for (let i = count; i < words.length; i++) {
       addWrongWord(words[i]);
     }
@@ -136,7 +164,7 @@ const TrueOrFalse: React.FC = ({
 
   const toWin = () => {
     setCurrentLine(currentLine + 1);
-    new Audio(rightAudio).play();
+    if (isSound) audioAnswer[0].play();
     addRightWord(currentWord);
     if (sprintBoxRef.current) {
       sprintBoxRef.current.classList.remove('hiddenSprint');
@@ -146,7 +174,7 @@ const TrueOrFalse: React.FC = ({
 
   const toLost = () => {
     setCurrentLine(0);
-    new Audio(wrongAudio).play();
+    if (isSound) audioAnswer[1].play();
     addWrongWord(currentWord);
     if (sprintBoxRef.current) {
       sprintBoxRef.current.classList.remove('hiddenSprint');
@@ -174,7 +202,7 @@ const TrueOrFalse: React.FC = ({
 
   useEffect(() => {
     const handleLeft = (event: any) => {
-      if(words){
+      if (words) {
         if (count < words.length - 1) {
           if (event.code === "ArrowLeft") {
             if (btnNoRef.current) {
@@ -186,16 +214,16 @@ const TrueOrFalse: React.FC = ({
 
     };
     const handleRight = (event: any) => {
-      if(words){
+      if (words) {
 
-      if (count < words.length - 1) {
-        if (event.code === "ArrowRight") {
-          if (btnYesRef.current) {
-           btnYesRef.current.click();
-         }
-       }
+        if (count < words.length - 1) {
+          if (event.code === "ArrowRight") {
+            if (btnYesRef.current) {
+              btnYesRef.current.click();
+            }
+          }
+        }
       }
-    }
     };
     document.addEventListener('keydown', handleLeft);
     document.addEventListener('keydown', handleRight);
@@ -209,64 +237,67 @@ const TrueOrFalse: React.FC = ({
 
 
   return (
-      <div className="sprintWrapper">
+    <div className="sprintWrapper">
 
-        <div className="sprintBox" ref={sprintBoxRef}>
+      <div className="sprintBox" ref={sprintBoxRef}>
 
 
-          {!pending && currentWord ? (
-            <>
-              <div className="boxTitleSprint">
-                <div className="boxLineBestLine">
-                  <div className="bestLine">Best line: </div>
-                  <div className="boxLineBestImg"></div>
-                  <div className="bestL">x {bestLine}</div>
-                </div>
-                <div className="boxBtnFullScreen">
-                  <BtnFullScreen />
-                </div>
+        {!pending && currentWord ? (
+          <>
+            <div className="boxTitleSprint">
+              <div className="boxLineBestLine">
+                <div className="bestLine">Best line: </div>
+                <div className="boxLineBestImg"></div>
+                <div className="bestL">x {bestLine}</div>
               </div>
-              <BestLineContainer />
-              <div>
-                <Image
-                  className="context_image imgSprint"
-                  alt="Loading"
-                  fallback={`Error loading file ${currentWord.image}`}
-                  width="300px"
-                  height="200px"
-                  src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
-                ></Image>
+              <div className="boxSoundEffect">
+                <AudioToggleContainer />
               </div>
-              <div className="sprintWord">{currentWord.word}</div>
-              <div className="sprintWordTranslate">{wordTranslate}</div>
-              <div className="sprintBoxButton">
-                <div className="arrowLeft">
-                <ArrowLeftOutlined style ={{color:"grey"}} />
-                </div>
-                <div className="sprintBtnNo btn" ref={btnNoRef} onClick={() => clickNo()}>Не верно</div>
-                <div className="sprintBtnYes btn" ref={btnYesRef} onClick={() => clickYes()}>Верно</div>
-                <div className="arrowRight">
-                <ArrowRightOutlined style ={{color:"grey"}} />
-                </div>
+              <div className="boxBtnFullScreen">
+                <BtnFullScreen />
               </div>
-            </>
-          ) : (
-            <div className="loadingBox">
-              <Loading/>
             </div>
-          )}
-        </div>
-        {words ?
-          <div className="ProgressSprintBox">
-            <ProgressBoxContainer
-              seconds={Number(words.length * 3)}
-              isCheck={false}
-              onCheck={endGame}
-            />
+            <BestLineContainer />
+            <div>
+              <Image
+                className="context_image imgSprint"
+                alt="Loading"
+                fallback={`Error loading file ${currentWord.image}`}
+                width="300px"
+                height="200px"
+                src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
+              ></Image>
+            </div>
+            <div className="sprintWord">{currentWord.word}</div>
+            <div className="sprintWordTranslate">{wordTranslate}</div>
+            <div className="sprintBoxButton">
+              <div className="arrowLeft">
+                <ArrowLeftOutlined style={{ color: "grey" }} />
+              </div>
+              <div className="sprintBtnNo btn" ref={btnNoRef} onClick={() => clickNo()}>Не верно</div>
+              <div className="sprintBtnYes btn" ref={btnYesRef} onClick={() => clickYes()}>Верно</div>
+              <div className="arrowRight">
+                <ArrowRightOutlined style={{ color: "grey" }} />
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="loadingBox">
+            <Loading />
           </div>
-          : <></>
-        }
+        )}
       </div>
+      {words ?
+        <div className="ProgressSprintBox">
+          <ProgressBoxContainer
+            seconds={Number(words.length * 3)}
+            isCheck={false}
+            onCheck={endGame}
+          />
+        </div>
+        : <></>
+      }
+    </div>
   );
 }
 
