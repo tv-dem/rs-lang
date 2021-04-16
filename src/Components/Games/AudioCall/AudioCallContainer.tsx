@@ -33,7 +33,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   setPage: (page: number) => dispatch(setPage(page)),
 
   SetGameStat: (gameType: string, bestLine: number, total: number, correct: number) => dispatch(SetGameStat(gameType, bestLine, total, correct)),
-  UpdateGameStat: (gameType: string, bestLine: number, total: number, correct: number) => dispatch(UpdateGameStat(gameType, bestLine, total, correct))
+  UpdateGameStat: (gameType: string, stat: any) => dispatch(UpdateGameStat(gameType, stat))
 })
 
 const AudioCallContainer = connect(mapStateToProps, mapDispatchToProps)(AudioCall);

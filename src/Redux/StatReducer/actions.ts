@@ -14,35 +14,35 @@ import {
   UpdateStatStarted,
   UpdateStatFailure,
 } from './interfaces';
-import {nanoid} from "nanoid";
+import { nanoid } from "nanoid";
 
-export const UpdateGameStat = (gameType: string, bestLine:number, total:number, correct:number) => {
+export const UpdateGameStat = (gameType: string, stat: any) => {
 
   return {
-  type: UPDATE_GAME_STAT,
-  payload: {
-    bestLine,
-    total,
-    gameType,
-    correct
-  }
-}}
-
-export const SetGameStat = (gameType: string, bestLine:number, total:number, correct:number) => {
-  return {
-  type: SET_GAME_STAT,
-  payload: {
-    gameType,
-    stat: {
-      key: nanoid(),
-      date: new Date().toLocaleDateString(),
-      time: `${new Date().getHours()}-${new Date().getMinutes()}`,
-      bestLine,
-      total,
-      correct
+    type: UPDATE_GAME_STAT,
+    payload: {
+      gameType,
+      stat
     }
   }
-}}
+}
+
+export const SetGameStat = (gameType: string, bestLine: number, total: number, correct: number) => {
+  return {
+    type: SET_GAME_STAT,
+    payload: {
+      gameType,
+      stat: {
+        key: nanoid(),
+        date: new Date().toLocaleDateString(),
+        time: `${new Date().getHours()}-${new Date().getMinutes()}`,
+        bestLine,
+        total,
+        correct
+      }
+    }
+  }
+}
 //
 
 

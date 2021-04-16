@@ -4,7 +4,6 @@ import {
   updateStatFailure,
   setInitialStat,
 } from './actions';
-import { Stat } from './interfaces';
 import { changeHeaderTitleAC } from "../HeaderReducer/actions";
 import API from '../../API/API';
 

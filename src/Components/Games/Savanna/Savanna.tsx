@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useCallback, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
+import { nanoid } from 'nanoid';
 import './Savanna.scss';
 import Words from '../Words/Words';
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
@@ -52,16 +53,38 @@ const Savanna: React.FC = ({
   const [positionImg, setPositionImg] = useState(100);
 
   useEffect(() => {
-    SetGameStat('gameStatSavanna', 0, 0, 0)
-    return () => {
-      console.log(userId, token, body);
-      setStat(userId, token, body);
-    }
-  }, [])
+    SetGameStat('gameStatSavanna', 0, 0, 0);
+  }, []);
 
   useEffect(() => {
-    UpdateGameStat('gameStatSavanna', bestLine, count, right.length);
-  }, [count])
+    console.log('prev state', body);
+    console.log('prev state', body['gameStatSavanna']);
+
+    // // @ts-ignore
+    const currentStat = [...body['gameStatSavanna']];
+    // stat[stat.length - 1].bestLine = bestLine;
+    // stat[stat.length - 1].total = total;
+    // stat[stat.length - 1].correctPercent = `${total ? Math.trunc((correct / total) * 1000) / 10 : 0}%`;
+
+    currentStat.push({ bestLine, count, correctPercent: `${count ? Math.trunc((right.length / count) * 1000) / 10 : 0}%` });
+    UpdateGameStat('gameStatSavanna', currentStat);
+
+    return () => {
+      const currentStat = [...body['gameStatSavanna']];
+      currentStat.push({
+        bestLine,
+        count,
+        correctPercent: `${count ? Math.trunc((right.length / count) * 1000) / 10 : 0}%`,
+        key: nanoid(),
+        date: new Date().toLocaleDateString(),
+        time: `${new Date().getHours()}-${new Date().getMinutes()}`
+      });
+      console.log(userId, token, { ...body, gameStatSavanna: currentStat });
+      setStat(userId, token, { ...body, gameStatSavanna: currentStat });
+    }
+  }, [count]);
+
+
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
     setSizeCrystal(1);

@@ -18,14 +18,15 @@ export const columns = [
   //   dataIndex: 'level',
   //   key: nanoid(),
   // },
+
   {
     title: 'Изучено слов:',
-    dataIndex: 'total',
+    dataIndex: 'count',
     key: nanoid(),
   },
   {
     title: 'процент правильных ответов:',
-    dataIndex: 'correctPrecent',
+    dataIndex: 'correctPercent',
     key: nanoid(),
   },
   {

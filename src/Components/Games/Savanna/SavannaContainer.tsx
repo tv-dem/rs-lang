@@ -37,7 +37,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   setPage: (page: number) => dispatch(setPage(page)),
   setCurrentLine: (currentLine: number) => dispatch(setCurrentLine(currentLine)),
   SetGameStat: (gameType: string, bestLine: number, total: number, correct: number) => dispatch(SetGameStat(gameType, bestLine, total, correct)),
-  UpdateGameStat: (gameType: string, bestLine: number, total: number, correct: number) => dispatch(UpdateGameStat(gameType, bestLine, total, correct)),
+  UpdateGameStat: (gameType: string, stat: any) => dispatch(UpdateGameStat(gameType, stat)),
   setStat: (userId: string, token: string, body: Object) => dispatch(setStat(userId, token, body)),
 })
 
