@@ -71,7 +71,6 @@ class API {
   }
 
   createUserWord(wordId: string, userId: string, difficulty: string, optional: Object, token: string) {
-    console.log(wordId, userId, difficulty, optional, token)
     return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/words/${wordId}`, {
       method: 'POST',
       headers: {

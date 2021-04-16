@@ -46,6 +46,7 @@ export const getTextBookWordsTC = (group: number, page:number) => (dispatch:any)
 export const createUserWordTC = (wordId: string, userId: string, difficulty: string, optional: Object, token: string,group: number, page:number) => ((dispatch:any)=>{
     API.createUserWord(wordId,userId,difficulty,{},token)
         .then(res => {
+          debugger;
           dispatch(getWords(userId, ['learn', 'hard'], group, page, token));
         })
 })

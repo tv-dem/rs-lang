@@ -76,6 +76,7 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
   useEffect(() => onLoad(), [onLoad]);
 
   useEffect(() => {
+    debugger;
     getStat(userId, token);
   }, []);
 

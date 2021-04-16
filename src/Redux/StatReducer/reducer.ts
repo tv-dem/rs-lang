@@ -71,6 +71,7 @@ const statReducer = (state = initialState, action: ActionTypes) => {
     }
 
     case GET_LONG_TERM_STAT: {
+      debugger;
       return {
         ...state,
         stat: action.payload,
@@ -80,6 +81,7 @@ const statReducer = (state = initialState, action: ActionTypes) => {
     }
 
     case SET_GAME_STAT: {
+      debugger;
       // @ts-ignore
       const {gameType, stat} = action.payload;
       // @ts-ignore

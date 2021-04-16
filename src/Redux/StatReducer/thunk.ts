@@ -35,6 +35,12 @@ export const setStat = (userId: string, token: string, body: Object) => async (d
   }
 };
 
+export const createUserWord = (userId:string, wordId:string, difficulty:string, optional: Object, token:string) => {
+  API.createUserWord(wordId, userId, difficulty, optional, token).then(res => {
+    console.log(res)
+  });
+}
+
 export const getStat = (userId: string, token: string) => async (dispatch: any) => {
   dispatch(updateStatStarted());
   try {

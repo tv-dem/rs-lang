@@ -10,6 +10,7 @@ import imgCrystal from '../../../assets/img/crystal.png';
 import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
 import BestLineContainer from '../BestLine/BestLineContainer';
 import Loading from "../../Loading/Loading";
+import {createUserWord} from "../../../Redux/StatReducer/thunk";
 
 const Savanna: React.FC = ({
   words,
@@ -39,7 +40,9 @@ const Savanna: React.FC = ({
   setStat,
   userId,
   token,
-  body
+  body,
+  createUserWord,
+  updateUserWord
 }: any) => {
   const crystalRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -53,12 +56,17 @@ const Savanna: React.FC = ({
   useEffect(()=>{
     SetGameStat('gameStatSavanna',0,0,0)
     return () => {
-      console.log(userId, token, body);
       setStat(userId, token, body);
     }
   },[])
 
   useEffect(()=>{
+    if(!currentWord){
+      return;
+    }
+    if(currentWord.userWord) {
+      updateUserWord(userId, currentWord.id, 'learn', {}, token)
+    }
     UpdateGameStat('gameStatSavanna', bestLine, count, right.length);
   },[count])
   useEffect(() => {
