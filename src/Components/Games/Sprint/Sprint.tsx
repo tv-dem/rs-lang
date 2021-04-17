@@ -84,7 +84,7 @@ const TrueOrFalse: React.FC = ({
     if (words) {
       setCurrentWord(words[count]);
       setPercent(100);
-     
+
     }
   }, [words]);
 
@@ -127,7 +127,7 @@ const TrueOrFalse: React.FC = ({
   }
 
   useEffect(() => {
-   
+
     if (showStatistics) {
       viewStatistics();
     }
@@ -249,28 +249,20 @@ const TrueOrFalse: React.FC = ({
                 <div className="boxLineBestImg"></div>
                 <div className="bestL">x {bestLine}</div>
               </div>
-              <BestLineContainer />
-              <div className="imgBoxSprint">
-                <Image
-                  className="context_image imgSprint"
-                  width="250px"
-                  alt="Loading"
-                  fallback={`Error loading file ${currentWord.image}`}
-                  src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
-                ></Image>
+              <div className="boxSoundEffect">
+                <AudioToggleContainer/>
               </div>
               <div className="boxBtnFullScreen">
                 <BtnFullScreen />
               </div>
             </div>
             <BestLineContainer />
-            <div>
+            <div className="imgBoxSprint">
               <Image
                 className="context_image imgSprint"
+                width="250px"
                 alt="Loading"
                 fallback={`Error loading file ${currentWord.image}`}
-                width="300px"
-                height="200px"
                 src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
               ></Image>
             </div>
@@ -278,18 +270,18 @@ const TrueOrFalse: React.FC = ({
             <div className="sprintWordTranslate">{wordTranslate}</div>
             <div className="sprintBoxButton">
               <div className="arrowLeft">
-                <ArrowLeftOutlined style={{ color: "grey" }} />
+                <ArrowLeftOutlined style ={{color:"grey"}} />
               </div>
               <div className="sprintBtnNo btn" ref={btnNoRef} onClick={() => clickNo()}>Не верно</div>
               <div className="sprintBtnYes btn" ref={btnYesRef} onClick={() => clickYes()}>Верно</div>
               <div className="arrowRight">
-                <ArrowRightOutlined style={{ color: "grey" }} />
+                <ArrowRightOutlined style ={{color:"grey"}} />
               </div>
             </div>
           </>
         ) : (
           <div className="loadingBox">
-            <Loading />
+            <Loading/>
           </div>
         )}
       </div>

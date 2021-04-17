@@ -1,11 +1,14 @@
 import {Button, Drawer} from "antd";
 import React, {useState} from "react";
 import GamePreviewContainer from "../GamePreview/GamePreviewContainer";
+import {getAggregatedWords} from "../../Redux/GamesReducer/thunk";
+import {connect} from "react-redux";
 
-const GameButton = ({type, group, page, isTextBook}:any) => {
+const GameButton = ({type,userId,token, group, page, isTextBook}:any) => {
     const [visible, setVisible] = useState(false);
     const showDrawer = () => {
         setVisible(true);
+        getAggregatedWords(userId, type, group, page, token,isTextBook);
     };
     const onClose = () => {
         setVisible(false);
@@ -28,5 +31,12 @@ const GameButton = ({type, group, page, isTextBook}:any) => {
         </Drawer>
     </>
 }
+const mapStateToProps = ({auth}:any) => ({
+  userId: auth.currentUser.userId,
+  token: auth.currentUser.token,
+})
+const MapDispatchToProps = (dispatch:any) => ({
+  getAggregatedWords: (userId: string,  type:Array<string>, group:number, page:number, token: string,isTextBook:boolean) => dispatch(getAggregatedWords(userId, type, group, page, token,isTextBook)),
+})
 
-export default GameButton;
+export default connect(mapStateToProps, MapDispatchToProps)(GameButton);

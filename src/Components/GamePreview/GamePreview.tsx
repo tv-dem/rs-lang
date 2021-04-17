@@ -6,7 +6,6 @@ const GamePreview = ({src,isTextBook,currentGame, description, getAggregatedWord
   const history = useHistory();
     return(
         <div onClick={()=> {
-          getAggregatedWords(userId, type, group, page, token,isTextBook);
           history.push(`/games/${currentGame}/${group}`);
         }} className='game-preview'>
             <img src={src} alt=""/>
