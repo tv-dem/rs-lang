@@ -80,9 +80,11 @@ const TrueOrFalse: React.FC = ({
 
 
   useEffect(() => {
+
     if (words) {
       setCurrentWord(words[count]);
       setPercent(100);
+     
     }
   }, [words]);
 
@@ -125,6 +127,7 @@ const TrueOrFalse: React.FC = ({
   }
 
   useEffect(() => {
+   
     if (showStatistics) {
       viewStatistics();
     }
@@ -246,8 +249,15 @@ const TrueOrFalse: React.FC = ({
                 <div className="boxLineBestImg"></div>
                 <div className="bestL">x {bestLine}</div>
               </div>
-              <div className="boxSoundEffect">
-                <AudioToggleContainer />
+              <BestLineContainer />
+              <div className="imgBoxSprint">
+                <Image
+                  className="context_image imgSprint"
+                  width="250px"
+                  alt="Loading"
+                  fallback={`Error loading file ${currentWord.image}`}
+                  src={`https://api-rs-lang.herokuapp.com/${currentWord.image}`}
+                ></Image>
               </div>
               <div className="boxBtnFullScreen">
                 <BtnFullScreen />

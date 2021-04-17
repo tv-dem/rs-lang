@@ -39,11 +39,13 @@ const App: React.FC<AppProps> = ({ isAuth, getUserSettings, userId, token, refre
   }, []);
 
   let location = useLocation();
+  let classLocation = location.pathname.replace(/[^A-Za-zА]/g, "");
+
   return (
     <>
       <HeaderContainer />
       <NavPagesContainer />
-      <div className='content'>
+      <div className={`content ${classLocation}`}>
         <TransitionGroup className="transition-group">
           <Switch>
             <Route exact path='/' component={StartPage} />
