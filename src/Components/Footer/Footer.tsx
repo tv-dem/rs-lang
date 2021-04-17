@@ -1,18 +1,20 @@
 import React from "react";
 import "./Footer.scss";
 
+
 const Footer = () => {
   return (
     <div className="footer">
+    <a href="https://youtu.be/a8zj_fokeD4"><div className="videoApp"></div></a>
     <div className="footer__authors">
-    <ul className="footer__git-links">
-      <li><a href="https://github.com/kli2m">kli2m</a></li>
-      <li><a href="https://github.com/sovanmarat">SovanMarat</a></li>
-      </ul>
-      <ul className="footer__git-links">
-      <li><a href="https://github.com/tv-dem">tv-dem</a></li>
-      <li><a href="https://github.com/funfordima">funfordima</a></li>
-      </ul>
+    <div className="footer__git-links">
+      <div><a href="https://github.com/kli2m">kli2m</a></div>
+      <div><a href="https://github.com/sovanmarat">SovanMarat</a></div>
+      </div>
+      <div className="footer__git-links">
+      <div><a href="https://github.com/tv-dem">tv-dem</a></div>
+      <div><a href="https://github.com/funfordima">funfordima</a></div>
+      </div>
       </div>
       <div className="footer__rs-link"><a href="https://rs.school/js">
     <div className="footer__rs-link-img"/>
