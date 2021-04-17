@@ -71,7 +71,6 @@ class API {
   }
 
   createUserWord(wordId: string, userId: string, difficulty: string, optional: Object, token: string) {
-    console.log(wordId, userId, difficulty, optional, token)
     return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/words/${wordId}`, {
       method: 'POST',
       headers: {
@@ -180,6 +179,24 @@ class API {
       })
   }
 
+  getLearnedWords(userId:string, token:string){
+    const filter = JSON.stringify({"$or":[{"userWord.difficulty":"learn"},{"userWord.difficulty":"hard"}]});
+    return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/aggregatedWords?filter=${filter}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => {
+        if (res.status !== 200) {
+          throw new Error(`${res.status}`)
+        }
+        return res.json();
+      })
+  }
+
   getUserStatistics(userId: string, token: string) {
     return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/statistics`, {
       method: 'GET',
@@ -199,7 +216,17 @@ class API {
   }
 
   setUserStatistics(userId: string, token: string, body: any) {
-    const mapBody = JSON.stringify({ optional: JSON.stringify(body) }).replace(/"/g, '\"');
+    const mapBody = JSON.stringify({
+      optional:
+        Object.entries(body).reduce((acc:any, [key, value]) => {
+          acc[key] = Array.isArray(value) ? JSON.stringify(value).replace(/"/g, '\"') : value;
+          return acc
+        }, {})
+    })
+
+    console.log(JSON.parse(
+      mapBody
+    ))
     return fetch(`https://api-rs-lang.herokuapp.com/users/${userId}/statistics`, {
       method: 'PUT',
       headers: {

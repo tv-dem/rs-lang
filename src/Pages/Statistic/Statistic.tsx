@@ -138,10 +138,10 @@ const Statistic: React.FC<StatisticProps> = ({ onLoad, getStat, stat, isLoadStat
                     Всего выучено слов:
                     <span className="list-info">{learnedWords}</span>
                   </List.Item>
-                  <List.Item className='d-flex flex-btw'>
-                    Всего карточек пройдено:
-                    <span className="list-info">{learnedCards}</span>
-                  </List.Item>
+                  {/*<List.Item className='d-flex flex-btw'>*/}
+                  {/*  Всего карточек пройдено:*/}
+                  {/*  <span className="list-info">{learnedCards}</span>*/}
+                  {/*</List.Item>*/}
                 </List>
 
                 <div className="stat__wrapper">

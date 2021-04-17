@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useCallback, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
+import { nanoid } from 'nanoid';
 import './Savanna.scss';
 import Words from '../Words/Words';
 import ModalFinishLevel from '../Modal/ModalFinishLevel';
@@ -10,6 +11,7 @@ import imgCrystal from '../../../assets/img/crystal.png';
 import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
 import BestLineContainer from '../BestLine/BestLineContainer';
 import Loading from "../../Loading/Loading";
+import {createUserWord} from "../../../Redux/StatReducer/thunk";
 
 const Savanna: React.FC = ({
   words,
@@ -35,6 +37,13 @@ const Savanna: React.FC = ({
   currentLine,
   setCurrentLine,
   isSound,
+  UpdateGameStat,
+  setStat,
+  userId,
+  token,
+  body,
+  createUserWord,
+  SetGameStat
 }: any) => {
   const crystalRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -44,6 +53,35 @@ const Savanna: React.FC = ({
 
   const [sizeCrystal, setSizeCrystal] = useState(1);
   const [positionImg, setPositionImg] = useState(100);
+
+
+  useEffect(() => {
+    if(currentWord){
+      if(!currentWord.userWord) {
+        createUserWord(userId, currentWord.id, 'learn', {}, token)
+      }
+    }
+    const currentStat = [...body['gameStatSavanna']];
+    if(!currentWord){
+      currentStat.push({
+        bestLine,
+        count,
+        correctPercent: `${count ? Math.trunc((right.length / count) * 1000) / 10 : 0}%`,
+        key: nanoid(),
+        date: new Date().toLocaleDateString(),
+        time: `${new Date().getHours()}-${new Date().getMinutes()}`
+      })
+    }
+    console.log('prev state', currentWord);
+    currentStat[currentStat.length - 1].count = count;
+    currentStat[currentStat.length - 1].bestLine = bestLine;
+    currentStat[currentStat.length - 1].correctPercent = `${count ? Math.trunc((right.length / count) * 1000) / 10 : 0}%`;
+    UpdateGameStat('gameStatSavanna', currentStat);
+
+    return () => {
+      setStat(userId, token, body);
+    }
+  }, [count]);
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);
@@ -57,29 +95,29 @@ const Savanna: React.FC = ({
       setCurrentWord(words[count]);
       setPercent(100.1);
     }
-   
+
   }, [count]);
 
 
-  useEffect(()=>{
+  useEffect(() => {
     const handleClick = (event: any) => {
       event.preventDefault();
-      if(words){
+      if (words) {
         if (count < words.length - 1) {
           if (btnRef.current) {
-            btnRef.current.childNodes.forEach((el: any, index:number) => {            
-            if(event.code === `Digit${index+1}` || event.code === `Numpad${index+1}`) el.lastChild.click()                
+            btnRef.current.childNodes.forEach((el: any, index: number) => {
+              if (event.code === `Digit${index + 1}` || event.code === `Numpad${index + 1}`) el.lastChild.click()
             });
-          }                      
+          }
         }
       }
-    
+
     };
 
     document.addEventListener('keydown', handleClick);
 
-    return () =>   document.removeEventListener('keydown', handleClick);  
-  },[currentWord])
+    return () => document.removeEventListener('keydown', handleClick);
+  }, [currentWord])
 
   useEffect(() => {
     if (words) {
@@ -152,9 +190,10 @@ const Savanna: React.FC = ({
   }, [pending]);
 
   const toWin = () => {
+    console.log(bestLine)
     if (btnRef.current) {
       btnRef.current.childNodes.forEach((el: any) => {
-        el.classList.add('savanna_no-active');        
+        el.classList.add('savanna_no-active');
         if (el.lastChild.innerHTML === currentWord.wordTranslate)
           el.classList.add('savanna_is-selected-win');
       });
@@ -176,7 +215,7 @@ const Savanna: React.FC = ({
     if (isSound) audioAnswer[0].play();
 
     addRightWord(currentWord);
-  setCurrentLine(currentLine + 1);
+    setCurrentLine(currentLine + 1);
   };
 
   const toLost = () => {
@@ -233,37 +272,37 @@ const Savanna: React.FC = ({
 
   return (
     <div ref={wrapperRef} className="savanna__wrapper">
-         <div className="savanna__wrapper_setting-box">
-     
+      <div className="savanna__wrapper_setting-box">
+
 
         <div className="boxLineBest">
-          
-      <div className="boxLineBestLine">
-        
-      <div className="life-box">
-          <div className="life-box__heart">
-            {heartsCol.current.map((e, i) => {
-              return i > hearts || i === hearts ? (
-                <HeartFilled key={i} className="life-box__heart_fulled" />
-              ) : (
-                <HeartOutlined key={i} className="life-box__heart_outliner" />
-              );
-            })}
-          </div>
 
+          <div className="boxLineBestLine">
+
+            <div className="life-box">
+              <div className="life-box__heart">
+                {heartsCol.current.map((e, i) => {
+                  return i > hearts || i === hearts ? (
+                    <HeartFilled key={i} className="life-box__heart_fulled" />
+                  ) : (
+                    <HeartOutlined key={i} className="life-box__heart_outliner" />
+                  );
+                })}
+              </div>
+
+            </div>
+            <div className="bestLine">Best line: </div>
+            <div className="boxLineBestImg"></div>
+            <div className="bestL">x {bestLine}</div>
+          </div>
+          <BtnFullScreen />
         </div>
-                  <div className="bestLine">Best line: </div>
-                  <div className="boxLineBestImg"></div>
-                  <div className="bestL">x {bestLine}</div>
-                  </div>
-                  <BtnFullScreen/>
-                </div>
 
         {/* <div className="boxBtnFullScreen">
           <BtnFullScreen />
         </div> */}
       </div>
-      <AudioToggleContainer/>
+      <AudioToggleContainer />
 
       <BestLineContainer />
 
@@ -299,7 +338,7 @@ const Savanna: React.FC = ({
             />
           </>
         ) : (
-          <Loading/>
+          <Loading />
         )}
       </div>
     </div>

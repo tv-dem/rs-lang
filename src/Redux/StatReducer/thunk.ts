@@ -4,18 +4,25 @@ import {
   updateStatFailure,
   setInitialStat,
 } from './actions';
-import { Stat } from './interfaces';
 import { changeHeaderTitleAC } from "../HeaderReducer/actions";
 import API from '../../API/API';
 
 export const onLoad = () => (dispatch: any) => dispatch(changeHeaderTitleAC('Статистика'));
 
-export const setStat = (userId: string, token: string, body: Stat) => async (dispatch: any) => {
+export const setStat = (userId: string, token: string, body: Object) => async (dispatch: any) => {
   dispatch(updateStatStarted());
-
   try {
     const json = await API.setUserStatistics(userId, token, body);
-    dispatch(setTermStat(json));
+    // const { longTermStat, gameStatWord, gameStatSprint, gameStatSavanna, gameStatAudio } = json.optional;
+    // // @ts-ignore
+    // dispatch(setTermStat({
+    //   ...json.optional,
+    //   longTermStat: JSON.parse(String(longTermStat)),
+    //   gameStatWord: JSON.parse(String(gameStatWord)),
+    //   gameStatSprint: JSON.parse(String(gameStatSprint)),
+    //   gameStatSavanna: JSON.parse(String(gameStatSavanna)),
+    //   gameStatAudio: JSON.parse(String(gameStatAudio)),
+    // }));
   } catch (err) {
     if (err.message === '400') {
       dispatch(updateStatFailure('Bad request'));
@@ -35,19 +42,31 @@ export const setStat = (userId: string, token: string, body: Stat) => async (dis
   }
 };
 
+export const createUserWord = (userId:string, wordId:string, difficulty:string, optional: Object, token:string) => {
+  API.createUserWord(wordId, userId, difficulty, optional, token).then(res => {
+    console.log('res', res)
+  });
+}
+
 export const getStat = (userId: string, token: string) => async (dispatch: any) => {
   dispatch(updateStatStarted());
-
   try {
     const json = await API.getUserStatistics(userId, token);
     const { longTermStat, gameStatWord, gameStatSprint, gameStatSavanna, gameStatAudio } = json.optional;
-    dispatch(setTermStat({
-      ...json.optional,
+    const obj = {
       longTermStat: JSON.parse(String(longTermStat)),
       gameStatWord: JSON.parse(String(gameStatWord)),
       gameStatSprint: JSON.parse(String(gameStatSprint)),
       gameStatSavanna: JSON.parse(String(gameStatSavanna)),
       gameStatAudio: JSON.parse(String(gameStatAudio)),
+    }
+    const learnedWords = await API.getLearnedWords(userId, token);
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    obj.longTermStat[0].learnedWords = learnedWords[0].totalCount[0].count;
+    console.log('ppppppppppppppp', learnedWords, obj)
+    dispatch(setTermStat({
+      ...json.optional,
+      ...obj,
     }));
   } catch (err) {
     if (err.message === '401') {
