@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import Savanna from "./Savanna";
 import { setCurrentWord, setCount, addRightWord, addWrongWord, setIsCheck, setPercent, setValHearts, setPage, setCurrentLine } from "../../../Redux/GamesReducer/actions";
 import { getWords } from '../../../Redux/GamesReducer/thunk'
-import {SetGameStat, UpdateGameStat} from "../../../Redux/StatReducer/actions";
+import { SetGameStat, UpdateGameStat } from "../../../Redux/StatReducer/actions";
 import {createUserWord, setStat} from "../../../Redux/StatReducer/thunk";
 
 const mapStateToProps = (state: any) => ({
@@ -32,11 +32,11 @@ const mapDispatchToProps = (dispatch: any) => ({
   addRightWord: (word: Object) => dispatch(addRightWord(word)),
   addWrongWord: (word: Object) => dispatch(addWrongWord(word)),
   setIsCheck: (isCheck: boolean) => dispatch(setIsCheck(isCheck)),
-  setPercent:(percent:number)=>dispatch(setPercent(percent)),
-  setValHearts:(hearts:number)=>dispatch(setValHearts(hearts)),
-  setPage:(page:number)=>dispatch(setPage(page)),
-  setCurrentLine:(currentLine:number)=>dispatch(setCurrentLine(currentLine)),
-  SetGameStat: (gameType: string, bestLine:number, total:number,correct:number)=>dispatch(SetGameStat(gameType, bestLine, total,correct)),
+  setPercent: (percent: number) => dispatch(setPercent(percent)),
+  setValHearts: (hearts: number) => dispatch(setValHearts(hearts)),
+  setPage: (page: number) => dispatch(setPage(page)),
+  setCurrentLine: (currentLine: number) => dispatch(setCurrentLine(currentLine)),
+  SetGameStat: (gameType: string, bestLine: number, total: number, correct: number) => dispatch(SetGameStat(gameType, bestLine, total, correct)),
   createUserWord: (userId:string, wordId:string, difficulty:string, optional: Object, token:string) =>
     createUserWord(userId, wordId, difficulty, optional, token),
   UpdateGameStat: (gameType: string, stat: any) => dispatch(UpdateGameStat(gameType, stat)),

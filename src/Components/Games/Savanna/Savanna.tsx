@@ -42,7 +42,8 @@ const Savanna: React.FC = ({
   userId,
   token,
   body,
-  createUserWord
+  createUserWord,
+  SetGameStat
 }: any) => {
   const crystalRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -53,23 +54,15 @@ const Savanna: React.FC = ({
   const [sizeCrystal, setSizeCrystal] = useState(1);
   const [positionImg, setPositionImg] = useState(100);
 
+
   useEffect(() => {
     if(currentWord){
-      debugger
       if(!currentWord.userWord) {
         createUserWord(userId, currentWord.id, 'learn', {}, token)
       }
     }
-    console.log('prev state', body);
-    console.log('prev state', body['gameStatSavanna']);
-
-    // // @ts-ignore
     const currentStat = [...body['gameStatSavanna']];
-    currentStat.push({ bestLine, count, correctPercent: `${count ? Math.trunc((right.length / count) * 1000) / 10 : 0}%` });
-    UpdateGameStat('gameStatSavanna', currentStat);
-
-    return () => {
-      const currentStat = [...body['gameStatSavanna']];
+    if(!currentWord){
       currentStat.push({
         bestLine,
         count,
@@ -77,9 +70,16 @@ const Savanna: React.FC = ({
         key: nanoid(),
         date: new Date().toLocaleDateString(),
         time: `${new Date().getHours()}-${new Date().getMinutes()}`
-      });
-      console.log(userId, token, { ...body, gameStatSavanna: currentStat });
-      setStat(userId, token, { ...body, gameStatSavanna: currentStat });
+      })
+    }
+    console.log('prev state', currentWord);
+    currentStat[currentStat.length - 1].count = count;
+    currentStat[currentStat.length - 1].bestLine = bestLine;
+    currentStat[currentStat.length - 1].correctPercent = `${count ? Math.trunc((right.length / count) * 1000) / 10 : 0}%`;
+    UpdateGameStat('gameStatSavanna', currentStat);
+
+    return () => {
+      setStat(userId, token, body);
     }
   }, [count]);
 

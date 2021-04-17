@@ -32,13 +32,12 @@ const TrueOrFalse: React.FC = ({
   setPercent,
   setPage,
   isSound,
-  SetGameStat,
   UpdateGameStat,
                                  setStat,
                                  userId,
                                  token,
                                  body,
-                                 updateUserWord
+                                 createUserWord
 }: any) => {
   const [isTrue, setIsTrue] = useState(false);
   const [wordTranslate, setWordTranslate] = useState('');
@@ -55,20 +54,12 @@ const TrueOrFalse: React.FC = ({
   }
   useEffect(() => {
     if(currentWord){
-      if(currentWord.userWord) {
-        updateUserWord(userId, currentWord.id, 'learn', {}, token)
+      if(!currentWord.userWord) {
+        createUserWord(userId, currentWord.id, 'learn', {}, token)
       }
     }
-    console.log('prev state', body);
-    console.log('prev state', body['gameStatSprint']);
-
-    // // @ts-ignore
     const currentStat = [...body['gameStatSprint']];
-    currentStat.push({ bestLine, count, correctPercent: `${count ? Math.trunc((right.length / count) * 1000) / 10 : 0}%` });
-    UpdateGameStat('gameStatSavanna', currentStat);
-
-    return () => {
-      const currentStat = [...body['gameStatSprint']];
+    if(!currentWord){
       currentStat.push({
         bestLine,
         count,
@@ -76,9 +67,14 @@ const TrueOrFalse: React.FC = ({
         key: nanoid(),
         date: new Date().toLocaleDateString(),
         time: `${new Date().getHours()}-${new Date().getMinutes()}`
-      });
-      console.log(userId, token, { ...body, gameStatSavanna: currentStat });
-      setStat(userId, token, { ...body, gameStatSavanna: currentStat });
+      })
+    }
+    currentStat[currentStat.length - 1].count = count;
+    currentStat[currentStat.length - 1].bestLine = bestLine;
+    currentStat[currentStat.length - 1].correctPercent = `${count ? Math.trunc((right.length / count) * 1000) / 10 : 0}%`;
+    UpdateGameStat('gameStatSprint', currentStat);
+    return () => {
+      setStat(userId, token, body);
     }
   }, [count]);
 

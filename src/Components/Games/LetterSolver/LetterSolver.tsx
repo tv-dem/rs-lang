@@ -9,6 +9,7 @@ import { audioAnswer } from '../../../utils/audio';
 import BestLineContainer from '../BestLine/BestLineContainer';
 import BtnFullScreen from '../BtnFullScreen/BtnFullScreen';
 import Loading from "../../Loading/Loading";
+import {nanoid} from "nanoid";
 
 const LetterSolved: React.FC = ({
   words,
@@ -32,8 +33,12 @@ const LetterSolved: React.FC = ({
   bestLine,
   setPage,
   isSound,
-  SetGameStat,
-  UpdateGameStat
+  UpdateGameStat,
+                                  setStat,
+                                  userId,
+                                  token,
+                                  body,
+                                  createUserWord,
 }: any) => {
   const wordRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -43,13 +48,33 @@ const LetterSolved: React.FC = ({
   const btnCheckRef = useRef<HTMLDivElement>(null);
   const btnNextRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    SetGameStat('gameStatWord', 0, 0, 0)
-  }, [])
 
   useEffect(() => {
-    UpdateGameStat('gameStatWord', bestLine, count, right.length);
-  }, [count])
+    if(currentWord){
+      if(!currentWord.userWord) {
+        createUserWord(userId, currentWord.id, 'learn', {}, token)
+      }
+    }
+    const currentStat = [...body['gameStatWord']];
+    if(!currentWord){
+      currentStat.push({
+        bestLine,
+        count,
+        correctPercent: `${count ? Math.trunc((right.length / count) * 1000) / 10 : 0}%`,
+        key: nanoid(),
+        date: new Date().toLocaleDateString(),
+        time: `${new Date().getHours()}-${new Date().getMinutes()}`
+      })
+    }
+    currentStat[currentStat.length - 1].count = count;
+    currentStat[currentStat.length - 1].bestLine = bestLine;
+    currentStat[currentStat.length - 1].correctPercent = `${count ? Math.trunc((right.length / count) * 1000) / 10 : 0}%`;
+    UpdateGameStat('gameStatWord', currentStat);
+    return () => {
+      setStat(userId, token, body);
+    }
+  }, [count]);
+
 
   useEffect(() => {
     if (words) setCurrentWord(words[count]);

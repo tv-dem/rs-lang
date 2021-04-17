@@ -101,12 +101,12 @@ const WelcomForm = ({
                   className="welcomeForm__form-select"
                   onChange={onChangeSelect}
                 >
-                  <Select.Option value="1">FIRST</Select.Option>
-                  <Select.Option value="2">SECOND</Select.Option>
-                  <Select.Option value="3">THIRD</Select.Option>
-                  <Select.Option value="4">FOURTH</Select.Option>
-                  <Select.Option value="5">FIFTH</Select.Option>
-                  <Select.Option value="6">SIXTH</Select.Option>
+                  <Select.Option value="0">FIRST</Select.Option>
+                  <Select.Option value="1">SECOND</Select.Option>
+                  <Select.Option value="2">THIRD</Select.Option>
+                  <Select.Option value="3">FOURTH</Select.Option>
+                  <Select.Option value="4">FIFTH</Select.Option>
+                  <Select.Option value="5">SIXTH</Select.Option>
                 </Select>
               </Form.Item>
             </Form>

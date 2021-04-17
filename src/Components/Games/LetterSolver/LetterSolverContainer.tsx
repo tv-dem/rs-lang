@@ -3,6 +3,7 @@ import LetterSolver from "./LetterSolver";
 import { setCurrentWord, setCount, addRightWord, addWrongWord, setPercent, setIsCheck, setCurrentLine, setBestLine, setPage } from "../../../Redux/GamesReducer/actions";
 import { getWords } from '../../../Redux/GamesReducer/thunk'
 import { SetGameStat, UpdateGameStat } from "../../../Redux/StatReducer/actions";
+import {createUserWord, setStat} from "../../../Redux/StatReducer/thunk";
 
 const mapStateToProps = (state: any) => ({
   pathname: state.router.location.pathname,
@@ -19,6 +20,9 @@ const mapStateToProps = (state: any) => ({
   bestLine: state.games.bestLine,
   currentLine: state.games.currentLine,
   isSound: state.games.isSound,
+  userId: state.auth.currentUser.userId,
+  token: state.auth.currentUser.token,
+  body: state.stat.stat,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -32,8 +36,11 @@ const mapDispatchToProps = (dispatch: any) => ({
   setBestLine: (bestLine: number) => dispatch(setBestLine(bestLine)),
   setCurrentLine: (currentLine: number) => dispatch(setCurrentLine(currentLine)),
   setPage: (page: number) => dispatch(setPage(page)),
-  SetGameStat: (gameType: string, bestLine: number, total: number, correct: number) => dispatch(SetGameStat(gameType, bestLine, total, correct)),
-  UpdateGameStat: (gameType: string, stat: any) => dispatch(UpdateGameStat(gameType, stat))
+  SetGameStat: (gameType: string, bestLine:number, total:number,correct:number)=>dispatch(SetGameStat(gameType, bestLine, total,correct)),
+  createUserWord: (userId:string, wordId:string, difficulty:string, optional: Object, token:string) =>
+    createUserWord(userId, wordId, difficulty, optional, token),
+  UpdateGameStat: (gameType: string, stat: any) => dispatch(UpdateGameStat(gameType, stat)),
+  setStat: (userId: string, token: string, body: Object) => dispatch(setStat(userId, token, body)),
 
 })
 
