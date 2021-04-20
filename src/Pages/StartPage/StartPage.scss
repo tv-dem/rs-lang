@@ -1,0 +1,367 @@
+.Wrapper__StartPage {
+    width: 100%;
+    height: 100%;
+    background-image: url(../../assets/img/fon.jpg);
+    background-size: cover;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: 600;
+    background-color: #92d3bb;
+
+}
+
+.StartPage__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.StartPage__content_title {
+    display:flex;
+    align-items: center;
+    margin-top: 1rem;
+   // border: 1px solid rgb(87, 7, 107);
+    background-image: url(../../assets/img/Sun.png);
+    background-size: contain;
+    background-repeat: no-repeat no-repeat;
+    width: 400px;
+    height: 400px;
+    font-size: 1.8rem;
+    color:rgb(0, 0, 0);
+    text-align: center;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: 600;
+    border-radius: 2rem;
+    line-height: 2.5rem;
+    padding: 100px 100px;
+}
+
+.StartPage__content_words {
+    font-family: "Courier New", Courier, monospace;
+    background-image: url(../../assets/svg/cloud.svg);
+    background-size: contain;
+    background-repeat: no-repeat no-repeat;
+    width: 415px;
+    height: 343px;
+    color: aliceblue;
+    padding: 98px 122px 100px 47px;
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.StartPage__content_words_games{
+    font-family: "Courier New", Courier, monospace;
+    background-image: url(../../assets/svg/cloud.svg);
+    background-size: contain;
+    background-repeat: no-repeat no-repeat;
+    width: 318px;
+    height: 252px;
+    color: aliceblue;
+    padding: 80px 96px 104px 45px;
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+margin-left: 265px;
+    margin-top: -50px;
+
+}
+.StartPage__content_words_free {
+    font-family: "Courier New", Courier, monospace;
+    background-image: url(../../assets/svg/cloud.svg);
+    background-size: contain;
+    background-repeat: no-repeat no-repeat;
+    width: 389px;
+    height: 281px;
+    color: aliceblue;
+    padding: 88px 122px 100px 47px;
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+    margin-top: 40px;
+margin-left: 55px;
+    
+}
+.StartPage__content_Box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+
+}
+.Team_box_wrapper {
+width: 100%;
+margin-top: 70px;
+margin-bottom: 5px;
+font-size: 21px;
+}
+.Team_box {
+display: flex;
+align-items: center;
+justify-content: space-around;
+width: 100%;
+margin-top: 20px;
+}
+
+.Team_box_author {
+width: 240px;
+height: 360px;
+background-color: rgba(233, 231, 125, 0.582);
+border-radius: 1rem;
+text-align: center;
+font-size: 21px;
+display: flex;
+flex-direction: column;
+padding: 2px;
+}
+
+.Team_box_author_city {
+font-weight: 600;
+font-size: 1rem;
+line-height: 1.1rem;
+
+}
+.Team_box_title {
+margin-left: 30px;
+    border-top: 2px solid grey;
+    width: 93%;
+}
+
+.Team_box_author_photo_Box {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photoAuthor  {
+    background-repeat: no-repeat no-repeat;
+    background-size:contain;
+    width: 140px;
+    height: 140px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 9px 5px rgba(6, 56, 6, 0.75);
+    margin: 10px 0;
+}
+.Team_box_author_photo_ivan {
+    background-image: url(../../assets/img/team/ivan.jpg);
+}
+.Team_box_author_photo_tanya {
+    background-image: url(../../assets/img/team/tanya.png);
+}
+.Team_box_author_photo_dima {
+    background-image: url(../../assets/img/team/dima.jpg);
+}
+.Team_box_author_photo_marat {
+    background-image: url(../../assets/img/team/marat.jpg);
+}
+
+.Team_box_author_contribution {
+font-size: 0.8rem;
+line-height: 0.9rem;
+font-style: italic;
+margin: 0 2px;
+}
+
+.Team_box_author_mail {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top:5px;
+}
+
+.Team_author_git {
+    background-image: url(../../assets/img/github_logo.png);
+    width: 70px;
+    height: 21px;
+    background-repeat: no-repeat no-repeat;
+    background-size:contain;
+}
+.Team_author_git:hover, .Team_author_mail:hover {
+    transform: scale(1.1);
+    transition: 0.3s transform;
+}
+
+
+.Team_author_mail {
+    background-image: url(../../assets/img/mail.png);
+    width: 37px;
+    height: 19px;
+    background-repeat: no-repeat no-repeat;
+    background-size:contain;  
+}
+
+.Team_box_author_contribution_bottom {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  //  padding-bottom: 3px;
+}
+
+   .Team_box_author_wrapper {
+    line-height: 1.4rem;
+
+}
+
+@media screen and (max-width: 1100px) {
+.Team_box_author {
+width: 210px;
+}
+.StartPage__content_words_games {
+        margin-left: 150px;
+}
+}
+
+@media screen and (max-width: 920px) {
+.Team_box_author {
+width: 190px;
+height: 390px;
+
+}
+.StartPage__content_words_games {
+        margin-left: 50px;
+}
+.StartPage__content_words_free {
+    //   font-size: 1rem;
+    // line-height: 1.2rem;
+    padding: 80px 112px 100px 47px;
+    
+}
+}
+
+@media screen and (max-width: 850px) {
+ 
+.Team_box_author {
+width: 160px;
+height: 400px;
+}
+.StartPage__content_words {
+    padding: 86px 112px 90px 47px;
+    font-size: 1rem;
+}
+.StartPage__content_words_games {
+        margin-left: 0;
+        padding: 70px 96px 104px 45px;
+}
+.StartPage__content_title {
+        padding: 85px 90px 120px 90px;
+}
+}
+
+@media screen and (max-width: 770px) {
+
+.StartPage__content_words {
+    padding: 70px 112px 90px 47px;
+    font-size: 1rem;
+    line-height: 1.2rem;
+
+}
+.StartPage__content_words_games {
+      padding: 59px 96px 104px 45px;
+}
+.StartPage__content_title {
+        padding: 85px 90px 120px 90px;
+}
+}
+
+@media screen and (max-width: 745px) {
+
+.StartPage__content_words {
+  padding: 68px 82px 90px 29px;
+    font-size: 0.9rem;
+    line-height: 1.2rem;
+
+}
+.StartPage__content_words_games {
+      padding: 59px 96px 104px 45px;
+      font-size: 1rem;
+    line-height: 1.2rem;
+}
+.StartPage__content_title {
+        padding: 85px 90px 120px 90px;
+        
+}
+.StartPage__content_words_free {
+      font-size: 1rem;
+    line-height: 1.2rem;
+    padding: 70px 112px 100px 47px;
+    
+}
+}
+
+@media screen and (max-width: 710px) {
+.Team_box_author {
+width: 300px;
+height: 320px;
+margin: 5px 0;
+}
+
+.Team_box {
+    flex-direction: column;
+}
+
+.StartPage__content_words {
+    padding: 59px 95px 90px 36px;
+    font-size: 0.8rem;
+}
+.StartPage__content_words_games {
+      padding: 59px 96px 104px 45px;
+    font-size: 1rem;
+
+}
+.StartPage__content_title {
+    padding: 60px 90px 120px 90px;
+    font-size: 1.6rem;
+    line-height: 1.8rem;
+
+}
+.StartPage__content_words_free {
+        padding: 56px 107px 100px 47px;
+    font-size: 1rem;
+}
+}
+
+
+
+@media screen and (max-width: 680px) {
+
+.StartPage__content_Box {
+flex-direction: column-reverse;
+}
+.StartPage__content_words {
+    padding: 95px 112px 0 47px;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+
+}
+.StartPage__content_words_games {
+    padding: 70px 96px 0 45px;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    margin-top:1rem;
+
+
+}
+.StartPage__content_title {
+        padding: 110px 90px 120px 90px;
+    font-size: 2.4rem;
+    font-size: 1.9rem;
+
+}
+.StartPage__content_words_free {
+    padding: 80px 122px 78px 50px;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    margin-top:0;
+}
+}
+
+

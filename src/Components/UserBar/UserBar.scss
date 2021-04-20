@@ -1,0 +1,95 @@
+@import '../../styles/variables.scss';
+
+.user-bar {
+  &__wrapper {
+    // margin-left: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #000;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+      0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+
+    @media (max-width: 420px) {
+      margin: 0;
+    }
+
+    button {
+      outline: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .login-btn {
+      padding: 0 1rem;
+      margin-right: 0.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1.2rem;
+      line-height: 1.5;
+      font-weight: 400;
+      text-align: center;
+      text-transform: uppercase;
+      vertical-align: middle;
+      color: #fff;
+      border: 1px solid #95a5a6;
+      background-color: #95a5a6;
+      border-radius: 0.4rem;
+      user-select: none;
+      cursor: pointer;
+      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+      &:hover,
+      &:focus {
+        background-color: #809395;
+        border-color: $primary-2;
+      }
+    }
+  }
+
+  &_settings {
+    width: 20px;
+    height: 20px;
+
+    &:hover {
+      animation: rotate 1s linear 0s infinite normal none running;
+    }
+  }
+
+  &_title {
+    margin-left: 10px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &_logout {
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    color: #000;
+    transition: color 0.3s;
+
+    &:hover {
+      fill: $primary-5;
+      cursor: pointer;
+    }
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
+}

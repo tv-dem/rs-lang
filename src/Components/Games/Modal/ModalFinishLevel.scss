@@ -1,0 +1,130 @@
+.modal {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    &__answer {
+        width: 45%;
+    }
+}
+
+.answer-right__title {
+    color: green;
+}
+
+.answer-wrong__title {
+    color: rgb(238, 11, 11);
+}
+
+.answer-right__title,
+.answer-wrong__title {
+    font-size: 1.5rem;
+}
+
+.answer-right__words, .answer-wrong__words {
+    font-size: 1rem;
+    margin-top: 5px;
+}
+
+.word-word {
+    color: green;
+    margin-left: 5px;
+}
+
+.word-transcription {
+    color: grey;
+    margin-left: 5px;
+}
+
+.word-wordTranslate {
+    color: indigo;
+    margin-left: 5px;
+}
+
+.answer-wrong__words_word, .answer-right__words_word {
+    display: flex ;
+    width: max-content;
+}
+.diagramWrapper {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.diagramBox {
+    display: flex;
+    height: 200px;
+    width: 100px;
+    align-items: flex-end;
+    justify-content: flex-start;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #57394c;
+    padding-bottom: 0.5rem;
+    animation: 3s diagramTop ease-out;
+}
+.diagramRight {
+background-color: #5cec09b0;
+width: 40%;
+text-align: center;
+margin-left: 0.5rem;
+transition: 3s;
+box-shadow: 0px 0px 4px 2px rgba(77, 255, 60, 0.75);
+}
+
+.diagramWrong {
+width: 40%;
+background-color: #ec0909b0;
+text-align: center;
+// transform: rotateZ(270deg);
+margin-left: 0.5rem;
+box-shadow: 0px 0px 4px 2px rgba(231, 70, 70, 0.75);
+
+}
+
+.diagramText {
+    color: white;
+}
+.bestLineModal {
+    
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #dc3d45;
+    padding-top: 2px;
+    background-image: url(../../../assets/img/star.png);
+}
+
+.bestBoxLineModal {
+    color: #dc3d45;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.word-audio {
+   margin-left: 10px;
+}
+
+@media screen and (max-width: 1100px) {
+    .answer-wrong__words_word, .answer-right__words_word {
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .modal {
+        flex-direction: column;
+    }
+    .diagramWrapper{
+        height: max-content;
+        }
+}

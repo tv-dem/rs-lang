@@ -1,0 +1,315 @@
+.sprintWrapper {
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+font-size: 2rem;
+height: 100%;
+color: white;
+background: #e6f9dd;
+background-image: url(../../../assets/img/fonSprint2.jpg);
+background-size: contain;
+}
+
+.sprintBoxTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.sprintBtn {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.resultSprint {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    font-size: 1.5rem;
+
+}
+
+.sprintScore {
+    font-size: 1rem;
+    text-align: right;
+    width: 100%;
+    margin-right: 1rem;
+
+}
+
+.visibleCorrect {
+    box-shadow: 0px 0px 9px 5px rgba(77, 255, 60, 0.75);
+}
+
+.visibleIncorrect {
+    box-shadow: 0px 0px 9px 5px rgba(231, 70, 70, 0.75);
+}
+.imgSprint {
+    box-shadow: 0px 0px 9px 5px rgba(34, 33, 33, 0.75);
+}
+
+.sprintBox {
+margin: 1rem 0;
+width: 55%;
+height: 93%;
+border: 2px solid rgba(0, 0, 0, 0.2);
+border-radius: 0.7rem;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-between;
+background-color: rgba(59, 59, 59, 0.8);
+}
+
+.hiddenSprint {
+    box-shadow: none;
+    transition: 3s box-shadow;
+}
+
+.visibleSprint {
+    box-shadow: 0px 0px 9px 5px rgba(77, 255, 60, 0.75);
+
+}
+
+
+.fullScreen {
+z-index: 999; 
+width: 100%; 
+height: 100%; 
+position: absolute; 
+top: 0; 
+left: 0; 
+}
+.fullBtn {
+width: 30px; 
+}
+.ProgressSprintBox {
+margin-left:10px;
+width: 150px;
+height: 150px; 
+border-radius: 50%;
+background-color:#ead5daa8;
+
+}
+
+.fullScreenBtn {
+width: 30px; 
+height: 30px;
+margin-right: 1rem;
+top: 0; 
+background-image: url('../../../assets/img/fullscreen.png');
+background-size: cover;
+background-repeat: no-repeat;
+}
+
+.fullScreenBtn:hover {
+background-color: rgba(231, 225, 225, 0.4);
+}
+
+.btn {
+    cursor: pointer;
+    transition: 0.3s;
+    }
+
+.sprintBoxButton {
+    width: 100%; 
+    display: flex;
+    justify-content: center;
+    font-size: 1.3rem;
+    text-align: center;
+}
+.sprintBtnNo {
+width: 150px; 
+height: 35px;
+background-color: brown;
+color: white;
+margin: 1rem 1rem;
+border-radius:0.4rem;
+box-shadow: 0px 0px 3px 2px rgba(73, 73, 73, 0.75);
+}
+
+.sprintBtnNo:hover {
+background-color: rgb(218, 51, 51);
+    }
+
+.sprintBtnYes {
+width: 150px; 
+height: 35px;
+background-color: rgb(42, 165, 104);
+color: white;
+margin: 1rem 1rem;
+border-radius:0.4rem;
+box-shadow: 0px 0px 3px 2px rgba(73, 73, 73, 0.75);
+}
+
+.sprintBtnYes:hover {
+    background-color: rgb(31, 206, 118);
+        }
+
+        .sprintWord {
+            letter-spacing: 0.15rem;
+            font-weight: 550;
+
+        }
+
+        .sprintWordTranslate {
+            letter-spacing: 0.1rem;
+            font-weight: 550;
+        }
+.boxLine {
+    display: flex;
+   // width: 100%;
+    flex-wrap: wrap;
+    margin: 1rem 2rem;
+    height: 62px;
+    justify-content: center;
+}
+.line {
+   // border: 1px solid black;
+    width: 30px;
+    height: 30px;
+    background-image: url(../../../assets/img/lineBird.png);
+    background-size: cover;
+background-repeat: no-repeat;
+margin-left: 1rem;
+}
+
+.boxBtnFullScreen {
+    display: flex;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.boxSoundEffect{   
+    margin-right: 150px;
+}
+
+.boxTitleSprint {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom-style: ridge;
+    border-bottom-width: 3px;
+    border-bottom-color: #b12c49c9;
+    height: 50px;
+    background-color: #b12c494b;
+    border-radius: 6px;
+}
+.boxLineBest {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    margin: 0.5rem 0rem;
+    color: white;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.boxLineBestLine{
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+}
+
+.bestLine {
+margin-left:1rem;
+}
+
+.boxLineBestImg {
+    width: 25px;
+    height: 25px;
+    background-image: url(../../../assets/img/lineBird.png);
+    background-size: cover;
+background-repeat: no-repeat; 
+margin: 0 5px 7px 5px;
+}
+
+.imgBoxSprint {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.loadingBox {
+    width: 100%;
+height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrowRight, .arrowLeft {
+width:50px;
+height: 35px;
+background-color: #b12c4967;
+background-size: cover;
+background-repeat: no-repeat;
+margin: 1rem 1rem;
+border-radius:0.4rem;
+}
+
+@keyframes diagramTop {
+    0%,
+    25% {
+        height: 0px;
+        
+    }
+    50%,
+    100% {
+        height: 200px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .sprintWrapper {
+        font-size: 1.5rem;
+    }
+    .line {
+        width: 20px;
+        height: 20px;
+
+    }
+    .boxSoundEffect {
+            margin-right: 0;
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+    .sprintBoxButton {
+        font-size: 1rem;
+        
+    }
+    .sprintWrapper {
+        font-size: 1.3rem;
+    }
+    .ProgressSprintBox {
+        width: 100px;
+        height: 100px;
+    }
+
+    .ant-image {
+        width: 70%;
+        
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .sprintBtnNo, .sprintBtnYes, .arrowLeft, .arrowRight {
+        height: 30px;
+    }
+    .sprintBoxButton {
+        font-size: 0.8rem;
+        
+    }
+    .sprintWrapper {
+        font-size: 1rem;
+    }
+}
+
+
+.ant-image-img .context_image .imgSprint {
+    width: 100px;
+}

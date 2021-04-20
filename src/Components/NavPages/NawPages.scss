@@ -1,0 +1,123 @@
+@import "../../styles/variables";
+
+.nav-pages {
+  a {
+    text-decoration: none;
+  }
+
+  &.active {
+    left: 0;
+  }
+
+  transition: left .2s ease-in;
+
+  &__top {
+    & span {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 30px;
+      transition: transform .2s ease-in;
+      color: white;
+      position: absolute;
+      right: 10px;
+
+      &:hover {
+        color: $s-primary-3;
+      }
+    }
+
+    height: 10vh;
+    min-height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    cursor: pointer;
+    transition: .2s ease;
+  }
+
+  z-index: 200;
+  position: fixed;
+  height: 100vh;
+  width: 300px;
+  left: -240px;
+  background-color: $primary-4;
+  color: #fff;
+  top: 0;
+
+  a {
+    display: block;
+    color: white !important;
+
+    &:hover,
+    &.active {
+      color: $s-primary-3;
+    }
+  }
+
+  ul {
+    padding: 0;
+    box-sizing: border-box;
+    position: absolute;
+    margin: 0;
+    height: 70%;
+    max-height: 550px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    list-style: none;
+
+    a.active .li-item {
+      color: $s-primary-3;
+
+      h2 {
+        color: $s-primary-3;
+      }
+
+      background-color: $primary-5;
+
+      &:hover {
+        h2 {
+          margin-left: 20px;
+        }
+      }
+    }
+
+    a .li-item {
+      padding: 10px;
+      transition: background-color .3s ease-in;
+
+      &:hover {
+        h2 {
+          margin-left: 40px;
+        }
+      }
+
+      h2 {
+        color: white;
+        transition: margin .3s ease-in;
+        margin-left: 20px;
+      }
+
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    li {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+.nav-pages.active .nav-pages__top {
+  & span {
+    transform: rotate(-90deg);
+    color: #ffff40;
+  }
+}

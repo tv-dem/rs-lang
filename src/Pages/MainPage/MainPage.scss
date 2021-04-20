@@ -1,0 +1,126 @@
+.home-page {
+  padding: 10px;
+  background-color: rgba(236, 240, 241, 0.73);
+  border-radius: 3px;
+  &__container {
+    width: 100%;
+  }
+}
+
+.achievement {
+  background-color: #ecf0f1;
+  border-radius: 2px;
+  .ant-card-grid {
+    min-height: 260px;
+  }
+
+  .ant-card-grid.achievement__grid {
+    width: 50%;
+
+    @media (max-width: 620px) {
+      width: 100%;
+    }
+  }
+  &__body {
+    padding: 10px;
+    min-height: 164px;
+    &_row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      .level {
+        color: #fb6340;
+        font-size: 40px;
+        font-weight: 700;
+        &.--green {
+          color: #2dce89;
+        }
+        &.--blue {
+          color: #11cdef;
+        }
+        &.--red {
+          color: #fb6340;
+        }
+        &-container {
+          display: flex;
+          flex-direction: column;
+        }
+        &-title {
+          font-size: 18px;
+          font-weight: 500;
+          color: #95a5a6;
+          text-transform: uppercase;
+        }
+        &-icon {
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          align-self: flex-start;
+          border-radius: 50%;
+          background: linear-gradient(87deg, #fb6340, #fbb140);
+          &.--green {
+            background: linear-gradient(87deg, #2dce89, #2dcecc);
+          }
+          &.--blue {
+            background: linear-gradient(87deg, #11cdef, #1171ef);
+          }
+          &.--red {
+            background: linear-gradient(87deg, #f5365c, #f56036);
+          }
+          & svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+          }
+        }
+      }
+    }
+    & p {
+      margin: 0;
+      display: flex;
+      align-items: baseline;
+      & .level-rank {
+        margin: 0 auto;
+        height: 90px;
+        width: 110px;
+        display: block;
+        border-radius: 5px;
+        background-image: url('../../assets/img/liga.jpg');
+        background-repeat: no-repeat;
+        background-position: -10px -14px;
+      }
+    }
+    & .level-text {
+      margin-top: 10px;
+      display: flex;
+      align-items: baseline;
+      color: #fb6340;
+      font-size: 15px;
+      font-weight: 400;
+    }
+    .level-progress {
+      margin-right: 5px;
+      width: 15px;
+      height: 15px;
+      fill: #fb6340;
+    }
+  }
+  &__title {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: rgb(33, 37, 41);
+    & svg {
+      margin-right: 10px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

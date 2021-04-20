@@ -1,0 +1,17 @@
+.context-progress_bar-cirle {
+    cursor: not-allowed;
+    width: 150px;
+    user-select: none;
+}
+.ant-progress-text {
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .context-progress_bar-cirle {
+        margin-bottom: 20px;
+        width: 100px;
+    }
+}

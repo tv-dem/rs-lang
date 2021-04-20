@@ -1,0 +1,16 @@
+.welcomeForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    height: 90vh;
+}
+
+.welcomeForm__form {
+    width: 20%;
+}
+
+.ant-typography .welcomeForm-howToPlay {
+    width: 80%;
+}

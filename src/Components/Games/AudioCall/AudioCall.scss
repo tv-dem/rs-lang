@@ -1,0 +1,222 @@
+@import "../../../styles/variables.scss";
+.audioCall__wrapper {
+    background: linear-gradient(to top, #b6bee6, #88e45f);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-image: url(../../../assets/img/fonAudioCall.jpg);
+    background-size: cover;
+}
+
+.audioCall_to-left {
+    // transition-duration: 3s;
+    transition-timing-function: ease;
+    transform: translateX(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: 3s opacity, 3s visibility, 0.5s transform;
+}
+
+.audioCall_to-right {
+    transition-timing-function: ease;
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.01s transform;
+}
+
+.audioCall_to-place {
+    transition-timing-function: ease;
+    transform: translateX(0%);
+    opacity: 1;
+    visibility: visible;
+    transition: 3s opacity, 3s visibility, 0.5s transform;
+}
+
+.audioCall__wrapper .audioCall {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    &__view-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 80%;
+        height: 200px;
+        margin: 20px;
+        &_image {
+            cursor: pointer;
+            width: 150px;
+            border-radius: 50%;
+            height: 150px;
+            transform: scale(1);
+            transition: 1s transform;
+            &:hover {
+                transform: scale(1.3);
+                transition: 1s transform;
+            }
+        }
+        &_answer {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            color: #bef56e;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 5px;
+            .answer__word-word {
+                margin: 0 20px;
+            }
+        }
+        &_btn-sound {
+            cursor: pointer;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: scale(1);
+            transition: 1s transform;
+            background-image: url(../../../assets/img/play_sound.png);
+            background-size: cover;
+            &:hover {
+                transform: scale(1.3);
+                transition: 1s transform;
+            }
+        }
+    }
+    &__next-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &_btn-next {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 400;
+            border-radius: 5px;
+            width: 100px;
+            height: 40px;
+            background-color: #15141452;
+            //  background: linear-gradient(to top, #a5b1ee, #a7ff81);
+            box-shadow: 0px 0px 9px 2px #55654e inset;
+            color: rgb(250, 250, 250);
+            transform: scale(1);
+            transition: 0.2s transform;
+            margin: 40px;
+            &:hover {
+                // background: linear-gradient(to top, #a7ff81, #a5b1ee);
+                background-color: #e97a728f;
+                transform: scale(1.1);
+                transition: 0.2s transform;
+            }
+        }
+    }
+}
+
+.audioCall .variants-answer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    &__choose-box {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 65%;
+        &_btn-check {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            text-align: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 5px;
+            min-width: 150px;
+            height: 40px;
+            background-color: #15141452;
+            color: rgb(250, 250, 250);
+            //   background: linear-gradient(to top, #a5b1ee, #a7ff81);
+            box-shadow: 0px 0px 9px 2px #55654e inset;
+            //  color: $primary-5;
+            transform: scale(1);
+            transition: 0.2s transform;
+            padding: 3px;
+            margin: 3px;
+            overflow: hidden;
+            white-space: nowrap;
+            &_color-number {
+                color: #e74c4c;
+                margin-right: 5px;
+                font-size: 1rem;
+            }
+            &_background {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+            }
+            &:hover {
+                background-color: #70e4ae8c;
+                //     background: linear-gradient(to top, #a7ff81, #a5b1ee);
+                transform: scale(1.1);
+                transition: 0.2s transform;
+            }
+        }
+    }
+}
+
+.audioCall .audioCall_no-active {
+    pointer-events: none;
+    opacity: 0.8;
+    background: linear-gradient(to top, #8e91a0, #b7daa8);
+    color: white;
+}
+
+.audioCall .audioCall_is-selected-lose {
+    box-shadow: 0px 0px 9px 2px #f17704 inset;
+    background: linear-gradient(to top, #d8625a, #b7daa8);
+    opacity: 1;
+}
+
+.audioCall .audioCall_is-selected-win {
+    box-shadow: 0px 0px 9px 2px #20f104 inset;
+    background: linear-gradient(to top, #70ee5f, #b7daa8);
+    opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+    .audioCall__wrapper .audioCall__view-box_btn-sound {
+        width: 100px;
+        height: 100px;
+    }
+    .audioCall__wrapper .audioCall__next-box_btn-next,
+    .audioCall .variants-answer__choose-box_btn-check {
+        font-size: .8rem;
+        border-radius: 5px;
+        min-width: 70px;
+        height: 30px;
+    }
+    .audioCall__wrapper .audioCall__view-box {
+        height: 140px;
+        &_image {
+            width: 100px;
+            height: 100px;
+        }
+        &_answer {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+    }
+}
