@@ -26,7 +26,7 @@ RS lang - приложение для изучения английского я
 
 ## <a name="demo">Демо</a>
 
-[Демо-версия приложения](https://api-travel-app.herokuapp.com/places)
+[Демо-версия приложения](https://funfordima-rs-lang.netlify.app/)
 
 ![](https://cdn1.savepice.ru/uploads/2021/4/16/661d5237f1e8762b721e0d60c6f2a54d-full.jpg)
 
